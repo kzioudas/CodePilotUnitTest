@@ -1,0 +1,18 @@
+@startuml
+
+package com.example.codepilotunittest.annotations {
+}
+
+package com.example.codepilotunittest.core {
+}
+
+package com.example.codepilotunittest.interfaces {
+}
+
+package com.example.codepilotunittest.strategies {
+}
+
+package com.example.codepilotunittest.testcasegeneration {
+}
+
+@enduml

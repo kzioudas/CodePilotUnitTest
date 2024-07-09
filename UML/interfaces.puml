@@ -1,0 +1,13 @@
+@startuml
+
+package interfaces {
+    interface Directive {
+        +boolean check()
+    }
+
+    interface TestCaseGenerator {
+        +TestCases generateTestCases(Object input, List<Directive> directives)
+    }
+}
+
+@enduml

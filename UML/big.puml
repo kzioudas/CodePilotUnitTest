@@ -1,0 +1,144 @@
+@startuml
+
+package com.example.codepilotunittest.annotations {
+    class NotNull {
+    }
+
+    class ParameterRange {
+        +double min()
+        +double max()
+    }
+
+    class TestConfig {
+        +Class<? extends Throwable> expectedException()
+        +boolean happy()
+
+        class None extends Throwable
+    }
+}
+
+package com.example.codepilotunittest.core {
+    class JUnitTest {
+        -String methodName
+        -Map<String, Object> testInput
+        -Object expectedOutput
+
+        +boolean runTest()
+    }
+
+    class JUnitTestGenerator {
+        +void generateJUnitTests(Class<?> clazz, TestCases testCases, List<Directive> directives)
+        +String generateJUnitTestForTestCase(Class<?> clazz, TestCase testCase, List<Directive> directives)
+        +String formatParameters(Map<String, Object> params)
+        +void writeToFile(String fileName, String content)
+    }
+
+    class Parameter {
+        -String name
+        -Class<?> type
+
+        +String getName()
+        +Class<?> getType()
+    }
+
+    class TestCase {
+        -Map<String, Object> parameters
+        -Object expectedResult
+
+        +void setParameter(String name, Object value)
+        +void setExpectedResult(Object result)
+    }
+
+    class TestCases {
+        -List<TestCase> testCaseList
+
+        +void addTestCase(TestCase testCase)
+    }
+
+    class User {
+        +void provideMethodOrClassOrProject()
+        +void provideDirectives()
+    }
+}
+
+package com.example.codepilotunittest.interfaces {
+    interface Directive {
+        +boolean check()
+    }
+
+    interface TestCaseGenerator {
+        +TestCases generateTestCases(Object input, List<Directive> directives)
+    }
+}
+
+package com.example.codepilotunittest.strategies {
+    class BoundaryValueTestingStrategy {
+        +TestCases generateBoundaryValueTests(Class<?> clazz)
+    }
+
+    class DecisionBasedTestingStrategy {
+        +TestCases generateDecisionBasedTests(Object input)
+    }
+
+    class EquivalencePartitioningStrategy {
+        +TestCases generateEquivalencePartitioningTests(Object input)
+    }
+
+    class ExceptionTestingStrategy {
+        +TestCases generateExceptionTests(Object input)
+        +List<Directive> createExceptionTriggeringDirectives()
+    }
+
+    class HappyDayTestingStrategy {
+        +TestCases generateHappyDayTests(Object input)
+    }
+
+    class RainyDayTestingStrategy {
+        +TestCases generateRainyDayTests(Object input)
+    }
+}
+
+package com.example.codepilotunittest.testcasegeneration {
+    class Class {
+        +TestCases generateTestCases(Object input, List<Directive> directives)
+    }
+
+    class Method {
+        +TestCases generateTestCases(Object input, List<Directive> directives)
+        +TestCase createTestCaseFromMethod(Method method, List<Directive> directives)
+    }
+
+    class Project {
+        -List<Class<?>> classes
+
+        +TestCases generateTestCases(Object input, List<Directive> directives)
+    }
+
+    class TestCaseGeneratorFactory {
+        +TestCaseGenerator getTestCaseGenerator(Object input)
+    }
+}
+
+JUnitTestGenerator --> JUnitTest : returns
+JUnitTestGenerator ..> TestCases : uses
+TestCase *.. Parameter :contains
+TestCases *.. TestCase :contains
+BoundaryValueTestingStrategy ..> TestCaseGeneratorFactory : uses
+DecisionBasedTestingStrategy ..> TestCaseGeneratorFactory : uses
+EquivalencePartitioningStrategy ..> TestCaseGeneratorFactory : uses
+ExceptionTestingStrategy ..> TestCaseGeneratorFactory : uses
+HappyDayTestingStrategy ..> TestCaseGeneratorFactory : uses
+RainyDayTestingStrategy ..> TestCaseGeneratorFactory : uses
+TestCaseGenerator --> TestCase : returns
+TestCaseGenerator <|.. Class : implements
+TestCaseGenerator <|.. Method : implements
+TestCaseGenerator <|.. Project : implements
+TestCaseGeneratorFactory ..> Class :creates
+TestCaseGeneratorFactory ..> Method :creates
+TestCaseGeneratorFactory ..> Project :creates
+Class "1" o-- "1..*" Method
+Project "1" o-- "1..*" Class
+Class ..> Directive : uses
+Method ..> Directive : uses
+Project ..> Directive : uses
+@enduml

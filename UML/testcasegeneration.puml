@@ -1,0 +1,44 @@
+@startuml
+package interfaces {
+interface TestCaseGenerator {
+        +TestCases generateTestCases(Object input, List<Directive> directives)
+    }
+    interface Directive {
+            +boolean check()
+        }
+}
+package testcasegeneration {
+
+    class Class {
+        +TestCases generateTestCases(Object input, List<Directive> directives)
+    }
+
+    class Method {
+        +TestCases generateTestCases(Object input, List<Directive> directives)
+        +TestCase createTestCaseFromMethod(Method method, List<Directive> directives)
+    }
+
+    class Project {
+        -List<Class<?>> classes
+
+        +TestCases generateTestCases(Object input, List<Directive> directives)
+    }
+
+    class TestCaseGeneratorFactory {
+        +TestCaseGenerator getTestCaseGenerator(Object input)
+    }
+
+    TestCaseGenerator <|.. Class : implements
+    TestCaseGenerator <|.. Method : implements
+    TestCaseGenerator <|.. Project : implements
+    TestCaseGeneratorFactory ..> Class :creates
+    TestCaseGeneratorFactory ..> Method :creates
+    TestCaseGeneratorFactory ..> Project :creates
+    Class "1" o-- "1..*" Method
+    Project "1" o-- "1..*" Class
+    Class ..> Directive : uses
+    Method ..> Directive : uses
+    Project ..> Directive : uses
+}
+
+@enduml
