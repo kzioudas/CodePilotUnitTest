@@ -43,11 +43,10 @@ package core {
         +void provideDirectives()
     }
 
-    JUnitTestGenerator --> JUnitTest
-    JUnitTestGenerator --> TestCase
-    JUnitTestGenerator --> TestCases
-    TestCase --> Parameter
-    TestCases --> TestCase
+    JUnitTestGenerator --> JUnitTest : returns
+    JUnitTestGenerator ..> TestCases : uses
+    TestCase *.. Parameter :contains
+    TestCases *.. TestCase :contains
 }
 
 @enduml
