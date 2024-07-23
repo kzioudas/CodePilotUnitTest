@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-public class Class implements TestCaseGenerator {
+public class ClassRepresentation implements TestCaseGenerator {
     @Override
     public TestCases generateTestCases(Object input, List<Directive> directives) {
         TestCases testCases = new TestCases();

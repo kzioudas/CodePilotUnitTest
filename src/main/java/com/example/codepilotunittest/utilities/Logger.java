@@ -1,7 +1,8 @@
-package com.example.codepilotunittest.logging;
+package com.example.codepilotunittest.utilities;
 
 import java.util.logging.Level;
-import java.util.logging.Logger as JavaLogger;
+
+as JavaLogger;
 
 public class Logger {
     // Use the Java built-in Logger

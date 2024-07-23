@@ -4,12 +4,19 @@ package com.example.codepilotunittest.strategies;
 import com.example.codepilotunittest.core.TestCases;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
+import com.example.codepilotunittest.interfaces.TestStrategy;
+import com.example.codepilotunittest.interfaces.SrcElement;
+import com.example.codepilotunittest.core.TestCase;
+import com.example.codepilotunittest.factories.TestFactory;
 
-public class BoundaryValueTestingStrategy {
+public class BoundaryValueTestingStrategy implements TestStrategy{
 
-    public TestCases generateBoundaryValueTests(java.lang.Class<?> clazz) {
-        // Prepare specific directives for boundary value testing
+    private TestFactory testFactory = new TestFactory();
+
+    @Override
+    public void generateTestCases(SrcElement srcElement) {
+        TestCase testCase = testFactory.createTestCase();
+
         List<Directive> directives = new ArrayList<>();
         // Example directive: ensure boundary conditions are tested for each numerical field
         for (Field field : clazz.getDeclaredFields()) {
@@ -19,9 +26,11 @@ public class BoundaryValueTestingStrategy {
             }
         }
 
-        TestCaseGenerator generator = TestCaseGeneratorFactory.getTestCaseGenerator(input);
+
 
         // Generate test cases using the determined generator
         return generator.generateTestCases(input, directives);
     }
+
 }
+

@@ -15,7 +15,7 @@ This package contains custom annotations used throughout the project for marking
 This package provides the core functionality of the testing framework.
 
 - **Core Classes:**
-    - `JUnitTest`: Represents a JUnit test with a method name, input parameters, and expected output.
+    - `JUnitTest`: Represents a JUnit test with a methodRepresentation name, input parameters, and expected output.
     - `JUnitTestGenerator`: Generates JUnit test classes from the provided test cases.
     - `Parameter`: Represents a parameter with a name and type.
     - `TestCase`: Represents a single test case with parameters and expected results.
@@ -26,8 +26,8 @@ This package provides the core functionality of the testing framework.
 This package defines the interfaces used for directives and test case generation.
 
 - **Interfaces:**
-    - `Directive`: Defines a method to check certain conditions.
-    - `TestCaseGenerator`: Defines a method to generate test cases based on input and directives.
+    - `Directive`: Defines a methodRepresentation to check certain conditions.
+    - `TestCaseGenerator`: Defines a methodRepresentation to generate test cases based on input and directives.
 
 ### `com.example.codepilotunittest.strategies`
 This package includes various testing strategies used to generate different types of test cases.
@@ -45,7 +45,7 @@ This package focuses on generating test cases from classes, methods, and project
 
 - **Test Case Generation:**
     - `Class`: Generates test cases for a given class.
-    - `Method`: Generates test cases for a given method.
+    - `Method`: Generates test cases for a given methodRepresentation.
     - `Project`: Generates test cases for a collection of classes representing a project.
     - `TestCaseGeneratorFactory`: Provides factory methods to obtain appropriate `TestCaseGenerator` instances based on input.
 
