@@ -42,9 +42,9 @@ public class ProjectRepresentation implements SrcElement {
 
         if (!relationships.isEmpty()) {
             sb.append("Project Relationships: \n");
-            for (Relationship<PackageNode> relationship : relationships) {
-                sb.append("  ").append(relationship.getType()).append(" -> ").append(relationship.getTarget().getPath()).append("\n");
-            }
+//            for (Relationship<PackageNode> relationship : relationships) {
+//               sb.append("  ").append(relationship.relationshipType).append(" -> ").append(relationship.getTarget().getPath()).append("\n");
+//            }
         }
 
         return sb.toString();

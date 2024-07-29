@@ -16,7 +16,7 @@ public class ClassRepresentation implements SrcElement {
     private List<MethodRepresentation> methods;
     private Set<Relationship<LeafNode>> relationships;
 
-    public ClassRepresentation(String className, List<String> modifiers, List<String> interfaces, List<MethodRepresentation> methods, Set<Relationship<LeafNode>> relationships) {
+    public ClassRepresentation(String className, List<String> modifiers, List<String> interfaces, List<MethodRepresentation> methods, Set<Relationship<LeafNode>> relationships, List<String> classTestAnnotations) {
         this.className = className;
         this.modifiers = modifiers;
         this.interfaces = interfaces;
@@ -62,9 +62,9 @@ public class ClassRepresentation implements SrcElement {
 
         if (!relationships.isEmpty()) {
             sb.append("  Relationships: \n");
-            for (Relationship<LeafNode> relationship : relationships) {
-                sb.append("    ").append(relationship.getType()).append(" -> ").append(relationship.getTarget().getNodeName()).append("\n");
-            }
+//            for (Relationship<LeafNode> relationship : relationships) {
+//                sb.append("    ").append(relationship.getType()).append(" -> ").append(relationship.getTarget().getNodeName()).append("\n");
+//            }
         }
 
         sb.append("}");

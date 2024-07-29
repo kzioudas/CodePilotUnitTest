@@ -1,9 +1,10 @@
-package com.example.codepilotunittest.strategies;
+package codepilotunittest.strategies;
 
-import com.example.codepilotunittest.core.TestCases;
-import com.example.codepilotunittest.interfaces.TestCaseGenerator;
-import com.example.codepilotunittest.factories.TestFactory;
-import com.example.codepilotunittest.interfaces.TestStrategy;
+import codepilotunittest.core.TestCases;
+import codepilotunittest.interfaces.SrcElement;
+import codepilotunittest.interfaces.TestCaseGenerator;
+import codepilotunittest.factories.TestFactory;
+import codepilotunittest.interfaces.TestStrategy;
 
 public class HappyDayTestingStrategy implements TestStrategy {
 
@@ -13,5 +14,10 @@ public class HappyDayTestingStrategy implements TestStrategy {
 
         // Generate test cases using the determined generator
         return generator.generateTestCases(input, null);  // Assuming no directives are needed
+    }
+
+    @Override
+    public void generateTestCases(SrcElement srcElement) {
+
     }
 }

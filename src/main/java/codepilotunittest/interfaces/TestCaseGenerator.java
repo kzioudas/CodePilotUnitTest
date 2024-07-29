@@ -1,6 +1,6 @@
 package codepilotunittest.interfaces;
 
-import com.example.codepilotunittest.core.TestCases;
+import codepilotunittest.core.TestCases;
 import java.util.List;
 
 public interface TestCaseGenerator {

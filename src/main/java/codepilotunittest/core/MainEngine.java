@@ -64,10 +64,9 @@ public class MainEngine {
 
         // Iterate through each package node to gather class and method information
         for (PackageNode packageNode : packageNodes.values()) {
-            for (LeafNode leafNode : packageNode.getLeafNodes()) {
-                // Build class representation for each leaf node
-                classRepresentations.add(buildClassRepresentation(leafNode, leafNodeRelationships, parserWrapper));
-            }
+            // Build class representation for each leaf node
+            //for (LeafNode leafNode : packageNode.getLeafNodes())
+                //classRepresentations.add(buildClassRepresentation(leafNode, leafNodeRelationships, parserWrapper));
         }
 
         // Collect all project-level relationships

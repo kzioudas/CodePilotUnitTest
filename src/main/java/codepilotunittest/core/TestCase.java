@@ -1,6 +1,8 @@
 package codepilotunittest.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestCase {
@@ -13,5 +15,21 @@ public class TestCase {
 
     public void setExpectedResult(Object result) {
         expectedResult = result;
+    }
+
+    public String getMethodName() {
+        return "";
+    }
+
+    public Class<Object> getExpectedException() {
+        return null;
+    }
+
+    public char[] getExpectedResult() {
+        return new char[0];
+    }
+
+    public List<Object> getParameters() {
+        return new ArrayList<>();
     }
 }

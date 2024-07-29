@@ -9,4 +9,8 @@ public class TestCases {
     public void addTestCase(TestCase testCase) {
         testCaseList.add(testCase);
     }
+
+    public TestCase[] getTestCaseList() {
+        return testCaseList.toArray(new TestCase[testCaseList.size()]);
+    }
 }

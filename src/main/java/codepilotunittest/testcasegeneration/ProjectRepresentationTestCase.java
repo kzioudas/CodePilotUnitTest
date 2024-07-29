@@ -1,7 +1,9 @@
-package com.example.codepilotunittest.testcasegeneration;
+package codepilotunittest.testcasegeneration;
 
-import com.example.codepilotunittest.core.TestCases;
-import com.example.codepilotunittest.interfaces.TestCaseGenerator;
+import codepilotunittest.interfaces.Directive;
+import codepilotunittest.representations.ClassRepresentation;
+import codepilotunittest.core.TestCases;
+import codepilotunittest.interfaces.TestCaseGenerator;
 import java.util.List;
 
 public class ProjectRepresentationTestCase implements TestCaseGenerator {
@@ -11,13 +13,16 @@ public class ProjectRepresentationTestCase implements TestCaseGenerator {
         this.classes = classes;
     }
 
+    public ProjectRepresentationTestCase() {
+
+    }
+
     @Override
     public TestCases generateTestCases(Object input, List<Directive> directives) {
         TestCases projectTestCases = new TestCases();
-        ClassRepresentation classRepresentationTestCaseGenerator = new ClassRepresentation();
-        for (java.lang.Class<?> clazz : classes) {
-            projectTestCases.merge(classRepresentationTestCaseGenerator.generateTestCases(clazz, directives));
-        }
+
         return projectTestCases;
     }
 }
+
+

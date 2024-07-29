@@ -15,7 +15,7 @@ public class MethodRepresentation implements SrcElement {
     private List<String> modifiers;
     private Set<Relationship<LeafNode>> relationships;
 
-    public MethodRepresentation(String methodName, String returnType, List<String> parameters, List<String> modifiers, Set<Relationship<LeafNode>> relationships) {
+    public MethodRepresentation(String methodName, String returnType, List<String> parameters, List<String> modifiers, Set<Relationship<LeafNode>> relationships, List<String> testAnnotations) {
         this.methodName = methodName;
         this.returnType = returnType;
         this.parameters = parameters;
@@ -54,9 +54,9 @@ public class MethodRepresentation implements SrcElement {
 
         if (!relationships.isEmpty()) {
             sb.append("\n    Relationships: ");
-            for (Relationship<LeafNode> relationship : relationships) {
-                sb.append(relationship.getType()).append(" -> ").append(relationship.getTarget().getNodeName()).append("; ");
-            }
+//            for (Relationship<LeafNode> relationship : relationships) {
+//                sb.append(relationship.getType()).append(" -> ").append(relationship.getTarget().getNodeName()).append("; ");
+//            }
         }
 
         return sb.toString();
