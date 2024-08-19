@@ -40,12 +40,7 @@ public class ProjectRepresentation implements SrcElement {
             sb.append(classRepresentation).append("\n\n");
         }
 
-        if (!relationships.isEmpty()) {
-            sb.append("Project Relationships: \n");
-//            for (Relationship<PackageNode> relationship : relationships) {
-//               sb.append("  ").append(relationship.relationshipType).append(" -> ").append(relationship.getTarget().getPath()).append("\n");
-//            }
-        }
+
 
         return sb.toString();
     }

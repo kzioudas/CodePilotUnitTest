@@ -60,12 +60,6 @@ public class ClassRepresentation implements SrcElement {
             sb.append("  ").append(method).append("\n");
         }
 
-        if (!relationships.isEmpty()) {
-            sb.append("  Relationships: \n");
-//            for (Relationship<LeafNode> relationship : relationships) {
-//                sb.append("    ").append(relationship.getType()).append(" -> ").append(relationship.getTarget().getNodeName()).append("\n");
-//            }
-        }
 
         sb.append("}");
         return sb.toString();

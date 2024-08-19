@@ -52,12 +52,7 @@ public class MethodRepresentation implements SrcElement {
         sb.append(String.join(", ", parameters));
         sb.append(")");
 
-        if (!relationships.isEmpty()) {
-            sb.append("\n    Relationships: ");
-//            for (Relationship<LeafNode> relationship : relationships) {
-//                sb.append(relationship.getType()).append(" -> ").append(relationship.getTarget().getNodeName()).append("; ");
-//            }
-        }
+
 
         return sb.toString();
     }

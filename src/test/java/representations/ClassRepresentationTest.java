@@ -1,19 +1,16 @@
 package representations;
 
-import codepilotunittest.parser.tree.LeafNode;
-import codepilotunittest.parser.tree.Relationship;
+import codepilotunittest.parser.tree.*;
 import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
+import codepilotunittest.representations.ProjectRepresentation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.nio.file.Path;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class ClassRepresentationTest {
 
@@ -23,15 +20,71 @@ class ClassRepresentationTest {
 
     @BeforeEach
     void setUp() {
-        methodRepresentation = mock(MethodRepresentation.class);
-        relationship = mock(Relationship.class);
+        // Create a simple LeafNode (adjust the constructor as per your actual LeafNode implementation)
+        LeafNode.Method method1 = new LeafNode.Method("method1", "String", ModifierType.PUBLIC, Map.of());
+        LeafNode.Method method2 = new LeafNode.Method("method2", "int", ModifierType.PUBLIC, Map.of());
+        LeafNode startingNode = new LeafNode(
+                Path.of("/some/path"),
+                "TestNode",
+                NodeType.CLASS,
+                "Object",
+                null,
+                List.of(),
+                List.of(method1, method2),
+                List.of(),
+                Map.of(),
+                List.of(),
+                List.of(),
+                List.of(),
+                List.of(),
+                List.of()
+        );
 
-        List<String> modifiers = Arrays.asList("public", "abstract");
-        List<String> interfaces = Arrays.asList("Serializable", "Cloneable");
-        List<MethodRepresentation> methods = Arrays.asList(methodRepresentation);
-        Set<Relationship<LeafNode>> relationships = new HashSet<>(Arrays.asList(relationship));
-        List<String> annotations = Arrays.asList("NotNull");
-        classRepresentation = new ClassRepresentation("MyClass", modifiers, interfaces, methods, relationships,annotations);
+
+        LeafNode endingNode = new LeafNode(
+                Path.of("/some/path"),
+                "TestNode2",
+                NodeType.CLASS,
+                "Object",
+                null,
+                List.of(),
+                List.of(method1, method2),
+                List.of(),
+                Map.of(),
+                List.of(),
+                List.of(),
+                List.of(),
+                List.of(),
+                List.of());
+
+        // Create a relationship using the Relationship and RelationshipType
+        relationship = new Relationship<>(startingNode, endingNode, RelationshipType.ASSOCIATION);
+
+        // Relationships for the method
+        Set<Relationship<LeafNode>> methodRelationships = new HashSet<>(Arrays.asList(relationship));
+
+        // Create a method representation
+        methodRepresentation = new MethodRepresentation(
+                "myMethod",
+                "void",
+                Arrays.asList(), // parameters
+                Arrays.asList("public"), // modifiers
+                methodRelationships,
+                Arrays.asList() // testAnnotations
+        );
+
+        // Relationships for the class
+        Set<Relationship<LeafNode>> classRelationships = new HashSet<>(Arrays.asList(relationship));
+
+        // Create a class representation
+        classRepresentation = new ClassRepresentation(
+                "MyClass",
+                Arrays.asList("public", "abstract"), // modifiers
+                Arrays.asList("Serializable", "Cloneable"), // interfaces
+                Arrays.asList(methodRepresentation), // methods
+                classRelationships,
+                Arrays.asList("NotNull") // classTestAnnotations
+        );
     }
 
     @Test
@@ -71,15 +124,28 @@ class ClassRepresentationTest {
 
     @Test
     void testToString() {
-        when(methodRepresentation.toString()).thenReturn("public void myMethod() {}");
-//        when(relationship.getType()).thenReturn("association");
-//        when(relationship.getTarget()).thenReturn(mock(LeafNode.class));
-
         String result = classRepresentation.toString();
         assertNotNull(result);
         assertTrue(result.contains("public abstract class MyClass"));
         assertTrue(result.contains("implements Serializable, Cloneable"));
-        assertTrue(result.contains("public void myMethod() {}"));
-        assertTrue(result.contains("Relationships:"));
+        assertTrue(result.contains("public void myMethod()"));
+
+    }
+
+    @Test
+    void testProjectRepresentation() {
+        Set<Relationship<PackageNode>> projectRelationships = new HashSet<>();
+        List<ClassRepresentation> classes = Arrays.asList(classRepresentation);
+
+        ProjectRepresentation projectRepresentation = new ProjectRepresentation(
+                "MyProject",
+                classes,
+                projectRelationships
+        );
+
+        assertEquals("MyProject", projectRepresentation.getProjectName());
+        assertEquals(1, projectRepresentation.getClasses().size());
+        assertEquals(classRepresentation, projectRepresentation.getClasses().get(0));
+        assertTrue(projectRepresentation.getRelationships().isEmpty());
     }
 }
