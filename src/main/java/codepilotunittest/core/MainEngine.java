@@ -27,11 +27,11 @@ public class MainEngine {
     private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
     private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
 
-    public MainEngine(String sourcePackagePathStr) {
+    public MainEngine(Path sourcePackagePath) {
         this.parserWrapper = new ParserWrapper();
 
         // Parse the provided source package path
-        Path sourcePackagePath = Paths.get(sourcePackagePathStr);
+
         this.packageNodes = parserWrapper.parseSourcePackage(sourcePackagePath);
 
         // Create relationships between leaf nodes (e.g., classes and methods)
@@ -82,7 +82,7 @@ public class MainEngine {
     }
 
     // Main method for execution
-    public static void main(String[] args) {
+    public static void main(Path[] args) {
         // Ensure a source package path is provided as an argument
 
 

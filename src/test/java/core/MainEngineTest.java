@@ -33,7 +33,7 @@ class MainEngineTest {
         // Create dummy package nodes and relationships
 
         // Create the main engine instance
-        mainEngine = new MainEngine(LatexEditor.SRC.path.toString());
+        mainEngine = new MainEngine(ParserTesting.SRC.path);
         packageNodes = mainEngine.getPackageNodes();
         leafNodeRelationships = mainEngine.getLeafNodeRelationships();
         packageNodeRelationships = mainEngine.getPackageNodeRelationships();
