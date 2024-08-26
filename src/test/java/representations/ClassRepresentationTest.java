@@ -67,8 +67,8 @@ class ClassRepresentationTest {
         methodRepresentation = new MethodRepresentation(
                 "myMethod",
                 "void",
-                Arrays.asList(), // parameters
-                Arrays.asList("public"), // modifiers
+                Map.of(), // parameters
+                Arrays.asList(ModifierType.get("public")), // modifiers
                 methodRelationships,
                 Arrays.asList() // testAnnotations
         );

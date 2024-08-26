@@ -42,11 +42,28 @@ public record LeafNode(Path 		  path,
             .collect(Collectors.toCollection(ArrayList::new));
     }
 
+	public  List<LeafNode> getInnerClasses() {
+		 return innerClasses;
+	}
 
-    public record Method(String 	  		 methodName,
+
+	public record Method(String 	  		 methodName,
                          String 	  		 returnType,
                          ModifierType 		 modifierType,
-                         Map<String, String> parameters) {}
+                         Map<String, String> parameters) {
+		public String getMethodName() {
+			return methodName;
+		}
+		public String getMethodReturnType() {
+			return returnType;
+		}
+		public ModifierType getMethodModifierType() {
+			return modifierType;
+		}
+		public Map<String, String> getParameters() {
+			return parameters;
+		}
+	}
 
     public record Field(String 		 fieldNames,
                         String 		 fieldType,

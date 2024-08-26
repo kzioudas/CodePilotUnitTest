@@ -31,7 +31,7 @@ class ParserWrapperTest {
 
     @Test
     void testParseSourcePackage() {
-        Path path = Path.of("src/main/java/codepilotunittest");
+        Path path = Path.of("src/test/resources/ParserTesting");
         // Assuming projectParser is properly implemented, parseSourcePackage will return a map.
         Map<Path, PackageNode> expectedMap = projectParser.parseSourcePackage(path);  // Use real parsing
 

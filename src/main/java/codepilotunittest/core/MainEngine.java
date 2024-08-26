@@ -1,5 +1,6 @@
 package codepilotunittest.core;
 
+import codepilotunittest.parser.tree.ModifierType;
 import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
@@ -22,15 +23,13 @@ import java.util.stream.Collectors;
 public class MainEngine {
     private static final Logger logger = LogManager.getLogger(MainEngine.class);
 
-    private ParserWrapper parserWrapper;
+    private ParserWrapper parserWrapper = new ParserWrapper();
     private Map<Path, PackageNode> packageNodes;
     private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
     private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
 
     public MainEngine(Path sourcePackagePath) {
-        this.parserWrapper = new ParserWrapper();
 
-        // Parse the provided source package path
 
         this.packageNodes = parserWrapper.parseSourcePackage(sourcePackagePath);
 
@@ -41,7 +40,7 @@ public class MainEngine {
         this.packageNodeRelationships = parserWrapper.identifyPackageNodeRelationships(leafNodeRelationships);
 
         // Build a representation of the entire project
-        ProjectRepresentation projectRepresentation = buildProjectRepresentation("MyProject", packageNodes, packageNodeRelationships, leafNodeRelationships, parserWrapper);
+        ProjectRepresentation projectRepresentation = buildProjectRepresentation("MyProject", packageNodes, packageNodeRelationships, leafNodeRelationships);
 
         // Print the project structure and relationships
         System.out.println(projectRepresentation);
@@ -97,10 +96,9 @@ public class MainEngine {
      * @param packageNodes               The parsed package nodes.
      * @param packageNodeRelationships   The relationships between package nodes.
      * @param leafNodeRelationships      The relationships between leaf nodes.
-     * @param parserWrapper              The parser wrapper to extract additional information.
      * @return                           A ProjectRepresentation object.
      */
-    public static ProjectRepresentation buildProjectRepresentation(String projectName, Map<Path, PackageNode> packageNodes, Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships, ParserWrapper parserWrapper) {
+    public static ProjectRepresentation buildProjectRepresentation(String projectName, Map<Path, PackageNode> packageNodes, Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships) {
         List<ClassRepresentation> classRepresentations = new ArrayList<>();
 
         // Iterate through each package node to gather class and method information
@@ -108,7 +106,7 @@ public class MainEngine {
             // Build class representation for each leaf node
             for (Map.Entry<String, LeafNode> entry : packageNode.getLeafNodes().entrySet()) {
                 LeafNode leafNode = entry.getValue();
-                classRepresentations.add(buildClassRepresentation(leafNode, leafNodeRelationships, parserWrapper));
+                classRepresentations.add(buildClassRepresentation(leafNode, leafNodeRelationships));
             }
         }
 
@@ -124,10 +122,9 @@ public class MainEngine {
      *
      * @param leafNode              The leaf node representing the class.
      * @param leafNodeRelationships The relationships between leaf nodes.
-     * @param parserWrapper         The parser wrapper to extract additional information.
      * @return                      A ClassRepresentation object.
      */
-    public static ClassRepresentation buildClassRepresentation(LeafNode leafNode, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships, ParserWrapper parserWrapper) {
+    public static ClassRepresentation buildClassRepresentation(LeafNode leafNode, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships) {
         List<MethodRepresentation> methodRepresentations = new ArrayList<>();
 
         // Create MethodRepresentation objects for each method in the class
@@ -140,7 +137,7 @@ public class MainEngine {
         List<String> classModifiers = List.of(leafNode.nodeType().toString());
         List<String> interfaces = leafNode.implementedInterfaces();
         Set<Relationship<LeafNode>> classRelationships = leafNodeRelationships.getOrDefault(leafNode, Set.of());
-        List<String> classTestAnnotations = parserWrapper.getClassTestAnnotations(leafNode);
+        List<String> classTestAnnotations = new ArrayList<>();
 
         // Create and return a ClassRepresentation object
         return new ClassRepresentation(
@@ -162,8 +159,9 @@ public class MainEngine {
      * @return                  A MethodRepresentation object.
      */
     public static MethodRepresentation buildMethodRepresentation(Method method, Set<Relationship<LeafNode>> relationships, List<String> testAnnotations) {
-        List<String> parameters = new ArrayList<>(method.parameters().values());
-        List<String> modifiers = List.of(method.modifierType().toString());
+        Map<String, String> parameters = method.getParameters();
+        List<ModifierType> modifiers = new ArrayList<>();
+        modifiers.add(method.getMethodModifierType());
 
         return new MethodRepresentation(
                 method.methodName(),
