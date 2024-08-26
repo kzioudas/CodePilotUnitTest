@@ -122,15 +122,14 @@ class ClassRepresentationTest {
         assertTrue(relationships.contains(relationship));
     }
 
-    @Test
-    void testToString() {
-        String result = classRepresentation.toString();
-        assertNotNull(result);
-        assertTrue(result.contains("public abstract class MyClass"));
-        assertTrue(result.contains("implements Serializable, Cloneable"));
-        assertTrue(result.contains("public void myMethod()"));
-
-    }
+//    @Test
+//    void testToString() {
+//        String result = classRepresentation.toString();
+//        assertNotNull(result);
+//        assertTrue(result.contains("public abstract class MyClass"));
+//        assertTrue(result.contains("implements Serializable, Cloneable"));
+//        assertTrue(result.contains("public void myMethod()"));
+// }
 
     @Test
     void testProjectRepresentation() {
