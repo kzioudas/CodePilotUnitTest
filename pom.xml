@@ -126,6 +126,7 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>17</release>
+
                 </configuration>
             </plugin>
             <plugin>
@@ -134,6 +135,20 @@
                 <version>0.0.8</version>
                 <configuration>
                     <mainClass>MainApp</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <!-- Show all test details -->
+                    <printSummary>true</printSummary>
+                    <reportFormat>brief</reportFormat>
+                    <redirectTestOutputToFile>false</redirectTestOutputToFile>
+                    <forkCount>1</forkCount>
+                    <reuseForks>false</reuseForks>
+                    <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,5 +1,6 @@
 package parser;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import codepilotunittest.parser.factory.Parser;
 import codepilotunittest.parser.factory.ParserType;
@@ -22,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static codepilotunittest.parser.tree.NodeType.CLASS;
 import static codepilotunittest.parser.tree.NodeType.INTERFACE;
-
+@DisplayName("File Visitor Test")
 public class FileVisitorTest
 {
 
@@ -30,6 +31,7 @@ public class FileVisitorTest
 
 
     @Test
+    @DisplayName("Method Return Types Test")
     void methodReturnTypesTest()
     {
         Parser parser = ProjectParserFactory.createProjectParser(parserType);
@@ -51,6 +53,7 @@ public class FileVisitorTest
 
 
     @Test
+    @DisplayName("Method Parameter Types Test")
     void methodParameterTypesTest()
     {
         Parser parser = ProjectParserFactory.createProjectParser(parserType);
@@ -72,6 +75,7 @@ public class FileVisitorTest
 
 
     @Test
+    @DisplayName("Field Types Test")
     void fieldTypesTest()
     {
         Parser parser = ProjectParserFactory.createProjectParser(parserType);
@@ -96,6 +100,7 @@ public class FileVisitorTest
 
 
     @Test
+    @DisplayName("Variable Types Test")
     void variableTypesTest()
     {
         Parser parser = ProjectParserFactory.createProjectParser(parserType);
@@ -117,6 +122,7 @@ public class FileVisitorTest
 
 
     @Test
+    @DisplayName("Object Creation Test")
     void objectCreationTest()
     {
         Parser parser = ProjectParserFactory.createProjectParser(parserType);
@@ -141,6 +147,7 @@ public class FileVisitorTest
 
 
     @Test
+    @DisplayName("LeafNode Types Test")
     void leafNodeTypesTest()
     {
         Parser parser = ProjectParserFactory.createProjectParser(parserType);

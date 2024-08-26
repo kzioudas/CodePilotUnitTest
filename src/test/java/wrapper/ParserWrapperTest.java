@@ -1,6 +1,6 @@
 package wrapper;
 
-import codepilotunittest.annotations.AnnotationExtractor;
+
 import codepilotunittest.parser.ProjectParser;
 import codepilotunittest.parser.tree.LeafNode;
 import codepilotunittest.parser.tree.NodeType;
@@ -11,13 +11,14 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@DisplayName("Parser Wrapper Tests")
 class ParserWrapperTest {
 
     private ProjectParser projectParser;
@@ -30,8 +31,9 @@ class ParserWrapperTest {
     }
 
     @Test
+    @DisplayName("Parse Source Package Test")
     void testParseSourcePackage() {
-        Path path = Path.of("src/main/java/codepilotunittest");
+        Path path = Path.of("src/test/resources/ParserTesting");
         // Assuming projectParser is properly implemented, parseSourcePackage will return a map.
         Map<Path, PackageNode> expectedMap = projectParser.parseSourcePackage(path);  // Use real parsing
 
@@ -40,6 +42,7 @@ class ParserWrapperTest {
     }
 
     @Test
+    @DisplayName("Create Relationships Test")
     void testCreateRelationships() {
         // Setting up the input data
         Map<Path, PackageNode> packageNodes = new HashMap<>();
@@ -52,6 +55,7 @@ class ParserWrapperTest {
     }
 
     @Test
+    @DisplayName("Identify PackageNode Relationships Test")
     void testIdentifyPackageNodeRelationships() {
         // Setting up the input data
         Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships = new HashMap<>();
