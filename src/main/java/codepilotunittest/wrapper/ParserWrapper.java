@@ -1,6 +1,6 @@
 package codepilotunittest.wrapper;
 
-import codepilotunittest.annotations.AnnotationExtractor;
+
 import codepilotunittest.parser.ProjectParser;
 import codepilotunittest.parser.tree.LeafNode;
 import codepilotunittest.parser.tree.PackageNode;
@@ -58,15 +58,15 @@ public class ParserWrapper {
      * @param leafNode The leaf node.
      * @return A list of lists containing test annotations for each method.
      */
-    public List<List<String>> getMethodTestAnnotations(LeafNode leafNode) {
-        return leafNode.methods().stream()
-                .map(method -> {
-                    CompilationUnit cu = AnnotationExtractor.parse(method.toString());
-                    MethodDeclaration methodDeclaration = cu.findFirst(MethodDeclaration.class).get();
-                    return AnnotationExtractor.extractMethodAnnotations(methodDeclaration);
-                })
-                .collect(Collectors.toList());
-    }
+//    public List<List<String>> getMethodTestAnnotations(LeafNode leafNode) {
+//        return leafNode.methods().stream()
+//                .map(method -> {
+//                    CompilationUnit cu = AnnotationExtractor.parse(method.toString());
+//                    MethodDeclaration methodDeclaration = cu.findFirst(MethodDeclaration.class).get();
+//                    return AnnotationExtractor.extractMethodAnnotations(methodDeclaration);
+//                })
+//                .collect(Collectors.toList());
+//    }
 
     /**
      * Extracts test annotations for a class in a leaf node.
@@ -74,9 +74,9 @@ public class ParserWrapper {
      * @param leafNode The leaf node.
      * @return A list containing test annotations for the class.
      */
-    public List<String> getClassTestAnnotations(LeafNode leafNode) {
-        CompilationUnit cu = AnnotationExtractor.parse(leafNode.toString());
-        ClassOrInterfaceDeclaration classDeclaration = cu.findFirst(ClassOrInterfaceDeclaration.class).get();
-        return AnnotationExtractor.extractClassAnnotations(classDeclaration);
-    }
+//    public List<String> getClassTestAnnotations(LeafNode leafNode) {
+//        CompilationUnit cu = AnnotationExtractor.parse(leafNode.toString());
+//        ClassOrInterfaceDeclaration classDeclaration = cu.findFirst(ClassOrInterfaceDeclaration.class).get();
+//        return AnnotationExtractor.extractClassAnnotations(classDeclaration);
+//    }
 }

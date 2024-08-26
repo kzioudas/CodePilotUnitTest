@@ -1,13 +1,10 @@
 package codepilotunittest.core;
 
-import codepilotunittest.parser.tree.ModifierType;
+import codepilotunittest.parser.tree.*;
 import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
 import codepilotunittest.wrapper.ParserWrapper;
-import codepilotunittest.parser.tree.LeafNode;
-import codepilotunittest.parser.tree.PackageNode;
-import codepilotunittest.parser.tree.Relationship;
 import codepilotunittest.parser.tree.LeafNode.Method;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -80,14 +77,7 @@ public class MainEngine {
         this.packageNodeRelationships = packageNodeRelationships;
     }
 
-    // Main method for execution
-    public static void main(Path[] args) {
-        // Ensure a source package path is provided as an argument
 
-
-        // Create an instance of MainEngine, passing the source package path to the constructor
-        new MainEngine(args[0]);
-    }
 
     /**
      * Builds a representation of the project, including classes and their methods with their relationships.
@@ -134,7 +124,8 @@ public class MainEngine {
             methodRepresentations.add(buildMethodRepresentation(method, methodRelationships, testAnnotations));
         }
 
-        List<String> classModifiers = List.of(leafNode.nodeType().toString());
+        List<NodeType> classModifiers = new ArrayList<>();
+                classModifiers.add(leafNode.nodeType());
         List<String> interfaces = leafNode.implementedInterfaces();
         Set<Relationship<LeafNode>> classRelationships = leafNodeRelationships.getOrDefault(leafNode, Set.of());
         List<String> classTestAnnotations = new ArrayList<>();

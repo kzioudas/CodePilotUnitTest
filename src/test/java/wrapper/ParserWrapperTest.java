@@ -1,6 +1,6 @@
 package wrapper;
 
-import codepilotunittest.annotations.AnnotationExtractor;
+
 import codepilotunittest.parser.ProjectParser;
 import codepilotunittest.parser.tree.LeafNode;
 import codepilotunittest.parser.tree.NodeType;
