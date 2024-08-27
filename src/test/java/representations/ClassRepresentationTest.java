@@ -5,13 +5,14 @@ import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@DisplayName("Representations Tests")
 class ClassRepresentationTest {
 
     private ClassRepresentation classRepresentation;
@@ -88,6 +89,7 @@ class ClassRepresentationTest {
     }
 
     @Test
+    @DisplayName("ClassRepresentation: Get Class Name")
     void testGetClassName() {
         assertEquals("MyClass", classRepresentation.getClassName());
     }
@@ -101,6 +103,7 @@ class ClassRepresentationTest {
 //    }
 
     @Test
+    @DisplayName("ClassRepresentation: Get Class Interfaces")
     void testGetInterfaces() {
         List<String> interfaces = classRepresentation.getInterfaces();
         assertEquals(2, interfaces.size());
@@ -109,6 +112,7 @@ class ClassRepresentationTest {
     }
 
     @Test
+    @DisplayName("ClassRepresentation: Get Class Methods")
     void testGetMethods() {
         List<MethodRepresentation> methods = classRepresentation.getMethods();
         assertEquals(1, methods.size());
@@ -116,6 +120,7 @@ class ClassRepresentationTest {
     }
 
     @Test
+    @DisplayName("ClassRepresentation: Get Class Relationships")
     void testGetRelationships() {
         Set<Relationship<LeafNode>> relationships = classRepresentation.getRelationships();
         assertEquals(1, relationships.size());
@@ -132,6 +137,7 @@ class ClassRepresentationTest {
 // }
 
     @Test
+    @DisplayName("ProjectRepresentation: Get Project Name")
     void testProjectRepresentation() {
         Set<Relationship<PackageNode>> projectRelationships = new HashSet<>();
         List<ClassRepresentation> classes = Arrays.asList(classRepresentation);

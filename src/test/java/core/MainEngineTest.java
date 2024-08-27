@@ -10,6 +10,7 @@ import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
 import codepilotunittest.wrapper.ParserWrapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -18,7 +19,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@DisplayName("Main Engine Tests")
 class MainEngineTest {
 
     private MainEngine mainEngine;
@@ -37,6 +38,7 @@ class MainEngineTest {
     }
 
     @Test
+    @DisplayName("Build Project Representation")
     void testBuildProjectRepresentation() {
         // When
         ProjectRepresentation projectRepresentation = MainEngine.buildProjectRepresentation(
@@ -57,6 +59,7 @@ class MainEngineTest {
     }
 
     @Test
+    @DisplayName("Build Class Representation")
     void testBuildClassRepresentation() {
         // Test with a simple class
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("InnerClassSample");
@@ -71,6 +74,7 @@ class MainEngineTest {
     }
 
     @Test
+    @DisplayName("Build Interface Representation")
     void testBuildInterfaceRepresentation() {
         // Test with an interface
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("TestingInterface");
@@ -86,6 +90,7 @@ class MainEngineTest {
     }
 
     @Test
+    @DisplayName("Build Enum Representation")
     void testBuildEnumRepresentation() {
         // Test with an enum
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("EnumSample");
@@ -101,6 +106,7 @@ class MainEngineTest {
     }
 
     @Test
+    @DisplayName("Build Method Representation")
     void testBuildMethodRepresentation() {
         // Test with a method having no parameters
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ObjectCreationSample");
@@ -119,6 +125,7 @@ class MainEngineTest {
     }
 
     @Test
+    @DisplayName("Build Method Representation With Parameters")
     void testBuildMethodWithParameters() {
         // Test with a method having parameters
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ObjectCreationSample");
@@ -158,6 +165,7 @@ class MainEngineTest {
 //    }
 
     @Test
+    @DisplayName("Multiple Package Structure Test")
     void testMultiplePackageStructure() {
         // Test handling of multiple packages
         Path path = Path.of("src/test/resources/LatexEditor");
@@ -172,6 +180,7 @@ class MainEngineTest {
     }
 
     @Test
+    @DisplayName("Empty Package Test")
     void testEmptyPackage() {
         // Test handling of an empty package
         Path path = Path.of("src/test/resources/EmptyPackage");
@@ -200,6 +209,7 @@ class MainEngineTest {
 //    }
 
     @Test
+    @DisplayName("Multiple Inheritance Test")
     void testMultipleInheritance() {
         // Test handling of multiple inheritance (interfaces)
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ImplementingClass");
