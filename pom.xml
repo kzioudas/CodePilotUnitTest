@@ -126,6 +126,7 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>17</release>
+
                 </configuration>
             </plugin>
             <plugin>
@@ -136,8 +137,6 @@
                     <mainClass>MainApp</mainClass>
                 </configuration>
             </plugin>
-        </plugins>
-        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
