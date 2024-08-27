@@ -39,8 +39,7 @@ public class MainEngine {
         // Build a representation of the entire project
         ProjectRepresentation projectRepresentation = buildProjectRepresentation("MyProject", packageNodes, packageNodeRelationships, leafNodeRelationships);
 
-        // Print the project structure and relationships
-        System.out.println(projectRepresentation);
+
     }
 
     // Getters and Setters
