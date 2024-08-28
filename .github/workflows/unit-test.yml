@@ -11,11 +11,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK 19
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '19.0.1'
-          distribution: 'temurin'
+          java-version: '17.0.12'
+          distribution: 'correto'
 
       - name: Cache Maven packages
         uses: actions/cache@v3
