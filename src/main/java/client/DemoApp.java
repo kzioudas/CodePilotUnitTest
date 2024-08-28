@@ -22,7 +22,7 @@ public class DemoApp {
 
     public void setUp(){
         ParserWrapper parserWrapper = new ParserWrapper();
-        sourcePackagePath = Path.of("src");
+        sourcePackagePath = Path.of("src/test/resources/LatexEditor");
         packageNodes = parserWrapper.parseSourcePackage(sourcePackagePath);
         leafNodeRelationships = parserWrapper.createRelationships(packageNodes);
         packageNodeRelationships = parserWrapper.identifyPackageNodeRelationships(leafNodeRelationships);

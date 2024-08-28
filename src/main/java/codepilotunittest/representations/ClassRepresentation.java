@@ -58,7 +58,7 @@ public class ClassRepresentation implements SrcElement {
         sb.append(" {\n");
 
         for (MethodRepresentation method : methods) {
-            sb.append("  ").append(method).append("\n");
+            sb.append("  ").append(method.toString()).append("\n");
         }
 
 
