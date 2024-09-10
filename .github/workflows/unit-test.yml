@@ -15,7 +15,6 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17.0.12'
-          distribution: 'correto'
 
       - name: Cache Maven packages
         uses: actions/cache@v3
