@@ -1,0 +1,2 @@
+"test1"|"rainyday"|"ClassToTest"|testMethod|"directives" {dir1, dir2, dir3}
+"test2"|"happypath"|"ClassToTest2"|anotherTestMethod|"directives" {dirA, dirB}

@@ -287,7 +287,20 @@ public class PathTemplate
         }
 
     }
-
+    public enum TestCases
+    {
+        FILE(Paths.get(String.format("%s%s%s",
+                PathConstructor.getCurrentPath(),
+                File.separator,
+                PathConstructor.constructPath("src",
+                        "test",
+                        "resources",
+                        "testcases.txt"))));
+        public final Path path;
+        TestCases(Path path) {
+            this.path = path;
+        }
+    }
     public enum ParserTesting
     {
         SRC(Paths.get(String.format("%s%s%s",
