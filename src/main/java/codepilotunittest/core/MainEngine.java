@@ -1,10 +1,12 @@
 package codepilotunittest.core;
 
+import codepilotunittest.parser.factory.Parser;
+import codepilotunittest.parser.factory.ParserType;
+import codepilotunittest.parser.factory.ProjectParserFactory;
 import codepilotunittest.parser.tree.*;
 import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
-import codepilotunittest.wrapper.ParserWrapper;
 import codepilotunittest.parser.tree.LeafNode.Method;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,8 +21,9 @@ import java.util.stream.Collectors;
 
 public class MainEngine {
     private static final Logger logger = LogManager.getLogger(MainEngine.class);
-
-    private ParserWrapper parserWrapper = new ParserWrapper();
+    ParserType parserType = ParserType.JAVAPARSER;
+    //private ProjectParserFactory parserFactoryactory = new ProjectParserFactory();
+    private Parser parser = ProjectParserFactory.createProjectParser(parserType);
     private Map<Path, PackageNode> packageNodes;
     private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
     private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
@@ -28,13 +31,13 @@ public class MainEngine {
     public MainEngine(Path sourcePackagePath) {
 
 
-        this.packageNodes = parserWrapper.parseSourcePackage(sourcePackagePath);
+        this.packageNodes = parser.parseSourcePackage(sourcePackagePath);
 
         // Create relationships between leaf nodes (e.g., classes and methods)
-        this.leafNodeRelationships = parserWrapper.createRelationships(packageNodes);
+        this.leafNodeRelationships = parser.createRelationships(packageNodes);
 
         // Identify relationships between package nodes
-        this.packageNodeRelationships = parserWrapper.identifyPackageNodeRelationships(leafNodeRelationships);
+        this.packageNodeRelationships = parser.identifyPackageNodeRelationships(leafNodeRelationships);
 
         // Build a representation of the entire project
         ProjectRepresentation projectRepresentation = buildProjectRepresentation("MyProject", packageNodes, packageNodeRelationships, leafNodeRelationships);
@@ -42,15 +45,6 @@ public class MainEngine {
 
     }
 
-    // Getters and Setters
-
-    public ParserWrapper getParserWrapper() {
-        return parserWrapper;
-    }
-
-    public void setParserWrapper(ParserWrapper parserWrapper) {
-        this.parserWrapper = parserWrapper;
-    }
 
     public Map<Path, PackageNode> getPackageNodes() {
         return packageNodes;

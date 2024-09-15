@@ -1,11 +1,13 @@
 package client;
 
 import codepilotunittest.core.MainEngine;
+import codepilotunittest.parser.factory.Parser;
+import codepilotunittest.parser.factory.ParserType;
+import codepilotunittest.parser.factory.ProjectParserFactory;
 import codepilotunittest.parser.tree.LeafNode;
 import codepilotunittest.parser.tree.PackageNode;
 import codepilotunittest.parser.tree.Relationship;
 import codepilotunittest.representations.ProjectRepresentation;
-import codepilotunittest.wrapper.ParserWrapper;
 
 import java.nio.file.Path;
 import java.util.Map;
@@ -16,16 +18,17 @@ public class DemoApp {
     private Map<Path, PackageNode> packageNodes;
     private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
     private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
-    private ParserWrapper parserWrapper;
+
     private ProjectRepresentation projectRepresentation;
     private Path sourcePackagePath;
 
     public void setUp(){
-        ParserWrapper parserWrapper = new ParserWrapper();
+        ParserType parserType = ParserType.JAVAPARSER;;
+       Parser parser = ProjectParserFactory.createProjectParser(parserType);
         sourcePackagePath = Path.of("src/test/resources/LatexEditor");
-        packageNodes = parserWrapper.parseSourcePackage(sourcePackagePath);
-        leafNodeRelationships = parserWrapper.createRelationships(packageNodes);
-        packageNodeRelationships = parserWrapper.identifyPackageNodeRelationships(leafNodeRelationships);
+        packageNodes = parser.parseSourcePackage(sourcePackagePath);
+        leafNodeRelationships = parser.createRelationships(packageNodes);
+        packageNodeRelationships = parser.identifyPackageNodeRelationships(leafNodeRelationships);
         projectRepresentation = mainEngine.buildProjectRepresentation("MyProject", packageNodes, packageNodeRelationships, leafNodeRelationships);
 
     }
