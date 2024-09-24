@@ -1,0 +1,560 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "codepilotunittest.core.MainEngine#MainEngine(Path,String)",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "codepilotunittest.core.MainEngine",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_3059615 { 
+   	label=core
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1991418173 { 
+   	label=MainEngine
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   MainEngine1935620972XXXMainEngine889901590[
+	label="+ MainEngine()"
+	style=filled
+	fillcolor=white
+	tooltip="MainEngine
+
+null"
+	penwidth=4
+	fontcolor=darkgreen
+];
+
+MainEngine1935620972XXXbuildClassRepresentation47417436[
+	label="+ buildClassRepresentation()"
+	style=filled
+	fillcolor=white
+	tooltip="MainEngine
+
+&#10;  Builds a representation of a class, including its methods and their relationships.&#10; &#10;  @param leafNode The leaf node representing the class.&#10;  @param leafNodeRelationships The relationships between leaf nodes.&#10;  @return A ClassRepresentation object.&#10; "
+	fontcolor=darkgreen
+];
+
+MainEngine1935620972XXXbuildMethodRepresentation1194934616[
+	label="+ buildMethodRepresentation()"
+	style=filled
+	fillcolor=white
+	tooltip="MainEngine
+
+&#10;  Builds a representation of a method, including its relationships and test annotations.&#10; &#10;  @param methodThe method record representing the method.&#10;  @param relationships The relationships of the method.&#10;  @param testAnnotations The test annotations of the method.&#10;  @return A MethodRepresentation object.&#10; "
+	fontcolor=darkgreen
+];
+
+MainEngine1935620972XXXbuildProjectRepresentation1540638424[
+	label="+ buildProjectRepresentation()"
+	style=filled
+	fillcolor=white
+	tooltip="MainEngine
+
+&#10;  Builds a representation of the project, including classes and their methods with their relationships.&#10; &#10;  @param projectNameThe name of the project.&#10;  @param packageNodes The parsed package nodes.&#10;  @param packageNodeRelationships The relationships between package nodes.&#10;  @param leafNodeRelationships The relationships between leaf nodes.&#10;  @return A ProjectRepresentation object.&#10; "
+	fontcolor=darkgreen
+];
+} 
+} 
+
+subgraph cluster_995410913 { 
+   	label=parser
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1014544624 { 
+   	label=FileVisitor
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   FileVisitor770181292XXXcreateAST0[
+	label="+ createAST()"
+	style=filled
+	fillcolor=white
+	tooltip="FileVisitor
+
+&#10;  This method is responsible for the creation of the AST.&#10; "
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_144649229 { 
+   	label=tree
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_1117771290 { 
+   	label=Relationship
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Relationship303902624XXXendingNode0[
+	label="+ endingNode()"
+	style=filled
+	fillcolor=white
+	tooltip="Relationship
+
+null"
+	fontcolor=darkgreen
+];
+
+Relationship303902624XXXstartingNode0[
+	label="+ startingNode()"
+	style=filled
+	fillcolor=white
+	tooltip="Relationship
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_762420526 { 
+   	label=LeafNode
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   LeafNode303902624XXXbaseClass0[
+	label="+ baseClass()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXcreatedObjects0[
+	label="+ createdObjects()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXfields0[
+	label="+ fields()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXimplementedInterfaces0[
+	label="+ implementedInterfaces()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXimports0[
+	label="+ imports()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXinnerClasses0[
+	label="+ innerClasses()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXmethods0[
+	label="+ methods()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXnodeName0[
+	label="+ nodeName()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXnodeType0[
+	label="+ nodeType()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXparentNode0[
+	label="+ parentNode()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXvariables0[
+	label="+ variables()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_895900301 { 
+   	label=LeafNodeBuilder
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   LeafNodeBuilder303902624XXXbuild0[
+	label="+ build()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetBaseClass1808118735[
+	label="+ setBaseClass()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetCreatedObjects1839184593[
+	label="+ setCreatedObjects()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetFields164956318[
+	label="+ setFields()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetImplementedInterface1839184593[
+	label="+ setImplementedInterface()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetImports1839184593[
+	label="+ setImports()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetInnerClasses852762592[
+	label="+ setInnerClasses()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetInnerEnums1839184593[
+	label="+ setInnerEnums()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetMethods998108767[
+	label="+ setMethods()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetNodeName1808118735[
+	label="+ setNodeName()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetNodeType1187726460[
+	label="+ setNodeType()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetRecords1839184593[
+	label="+ setRecords()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNodeBuilder303902624XXXsetVariables128514728[
+	label="+ setVariables()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNodeBuilder
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+
+subgraph cluster_1693959331 { 
+   	label=RelationshipIdentifier
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   RelationshipIdentifier770181292XXXcreateLeafNodesRelationships1215116433[
+	label="+ createLeafNodesRelationships()"
+	style=filled
+	fillcolor=white
+	tooltip="RelationshipIdentifier
+
+&#10;  This method is responsible for creating the relationships of the package and leaf nodes.&#10; &#10;  @param packageNodes The collection of package nodes that have been parsed.&#10;  @return The collection of relationships that were created.&#10; "
+	fontcolor=darkgreen
+];
+
+RelationshipIdentifier770181292XXXidentifyPackageNodeRelationships904117576[
+	label="+ identifyPackageNodeRelationships()"
+	style=filled
+	fillcolor=white
+	tooltip="RelationshipIdentifier
+
+&#10;  This method identifies the package node relationships by parsing the created leaf node relationships.&#10; &#10;  @param leafNodeRelationships The relationships that were created by {@link Parser#createRelationships(Map)}.&#10;  @return The package node relationships that were created by parsing the leaf node relationships.&#10; "
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1704383158 { 
+   	label=ProjectParser
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   ProjectParser770181292XXXcreateRelationships1215116433[
+	label="+ createRelationships()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectParser
+
+&#10;  This method creates the relationships among the nodes of the tree&#10; &#10;  @param packageNodes The collection of package nodes that have been parsed.&#10;  @return The collection of relationships that were created.&#10; "
+	fontcolor=darkgreen
+];
+
+ProjectParser770181292XXXidentifyPackageNodeRelationships904117576[
+	label="+ identifyPackageNodeRelationships()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectParser
+
+&#10;  This method identifies the package node relationships by parsing the created leaf node relationships.&#10; &#10;  @param leafNodeRelationships The relationships that were created by {@link Parser#createRelationships(Map)}.&#10;  @return The package node relationships that were created by parsing the leaf node relationships.&#10; "
+	fontcolor=darkgreen
+];
+
+ProjectParser770181292XXXparseSourcePackage2480197[
+	label="+ parseSourcePackage()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectParser
+
+&#10;  This method creates the root of the tree, from the path of the source package, calls the parseFolder method,&#10;  that's responsible for the parsing of the source's folder and creates an object of the RelationshipIdentifier&#10;  class with the created nodes in order to create the Relationships.&#10; &#10;  @param sourcePackagePath the path of the project's source folder&#10; "
+	fontcolor=darkgreen
+];
+} 
+} 
+
+'edges    
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXbuild0;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetBaseClass1808118735;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetCreatedObjects1839184593;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetFields164956318;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetImplementedInterface1839184593;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetImports1839184593;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetInnerClasses852762592;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetInnerEnums1839184593;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetMethods998108767;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetNodeName1808118735;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetNodeType1187726460;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetRecords1839184593;
+FileVisitor770181292XXXcreateAST0 -> LeafNodeBuilder303902624XXXsetVariables128514728;
+MainEngine1935620972XXXMainEngine889901590 -> MainEngine1935620972XXXbuildProjectRepresentation1540638424;
+MainEngine1935620972XXXMainEngine889901590 -> ProjectParser770181292XXXcreateRelationships1215116433;
+MainEngine1935620972XXXMainEngine889901590 -> ProjectParser770181292XXXidentifyPackageNodeRelationships904117576;
+MainEngine1935620972XXXMainEngine889901590 -> ProjectParser770181292XXXparseSourcePackage2480197;
+MainEngine1935620972XXXbuildClassRepresentation47417436 -> LeafNode303902624XXXimplementedInterfaces0;
+MainEngine1935620972XXXbuildClassRepresentation47417436 -> LeafNode303902624XXXmethods0;
+MainEngine1935620972XXXbuildClassRepresentation47417436 -> LeafNode303902624XXXnodeName0;
+MainEngine1935620972XXXbuildClassRepresentation47417436 -> LeafNode303902624XXXnodeType0;
+MainEngine1935620972XXXbuildClassRepresentation47417436 -> MainEngine1935620972XXXbuildMethodRepresentation1194934616;
+MainEngine1935620972XXXbuildProjectRepresentation1540638424 -> MainEngine1935620972XXXbuildClassRepresentation47417436;
+ProjectParser770181292XXXcreateRelationships1215116433 -> RelationshipIdentifier770181292XXXcreateLeafNodesRelationships1215116433;
+ProjectParser770181292XXXidentifyPackageNodeRelationships904117576 -> RelationshipIdentifier770181292XXXidentifyPackageNodeRelationships904117576;
+ProjectParser770181292XXXparseSourcePackage2480197 -> FileVisitor770181292XXXcreateAST0;
+ProjectParser770181292XXXparseSourcePackage2480197 -> LeafNode303902624XXXnodeName0;
+RelationshipIdentifier770181292XXXcreateLeafNodesRelationships1215116433 -> LeafNode303902624XXXbaseClass0;
+RelationshipIdentifier770181292XXXcreateLeafNodesRelationships1215116433 -> LeafNode303902624XXXcreatedObjects0;
+RelationshipIdentifier770181292XXXcreateLeafNodesRelationships1215116433 -> LeafNode303902624XXXfields0;
+RelationshipIdentifier770181292XXXcreateLeafNodesRelationships1215116433 -> LeafNode303902624XXXimplementedInterfaces0;
+RelationshipIdentifier770181292XXXcreateLeafNodesRelationships1215116433 -> LeafNode303902624XXXimports0;
+RelationshipIdentifier770181292XXXcreateLeafNodesRelationships1215116433 -> LeafNode303902624XXXinnerClasses0;
+RelationshipIdentifier770181292XXXcreateLeafNodesRelationships1215116433 -> LeafNode303902624XXXnodeName0;
+RelationshipIdentifier770181292XXXcreateLeafNodesRelationships1215116433 -> LeafNode303902624XXXparentNode0;
+RelationshipIdentifier770181292XXXcreateLeafNodesRelationships1215116433 -> LeafNode303902624XXXvariables0;
+RelationshipIdentifier770181292XXXidentifyPackageNodeRelationships904117576 -> LeafNode303902624XXXparentNode0;
+RelationshipIdentifier770181292XXXidentifyPackageNodeRelationships904117576 -> Relationship303902624XXXendingNode0;
+RelationshipIdentifier770181292XXXidentifyPackageNodeRelationships904117576 -> Relationship303902624XXXstartingNode0;
+    
+}
+@enduml

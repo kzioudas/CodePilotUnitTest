@@ -1,0 +1,231 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "codepilotunittest.core.MainEngine#buildClassRepresentation(LeafNode,Map\u003cLeafNode, Set\u003cRelationship\u003cLeafNode\u003e\u003e\u003e)",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "codepilotunittest.core.MainEngine",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_3059615 { 
+   	label=core
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1991418173 { 
+   	label=MainEngine
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   MainEngine1935620972XXXbuildClassRepresentation47417436[
+	label="+ buildClassRepresentation()"
+	style=filled
+	fillcolor=white
+	tooltip="MainEngine
+
+&#10;  Builds a representation of a class, including its methods and their relationships.&#10; &#10;  @param leafNode The leaf node representing the class.&#10;  @param leafNodeRelationships The relationships between leaf nodes.&#10;  @return A ClassRepresentation object.&#10; "
+	penwidth=4
+	fontcolor=darkgreen
+];
+
+MainEngine1935620972XXXbuildMethodRepresentation1194934616[
+	label="+ buildMethodRepresentation()"
+	style=filled
+	fillcolor=white
+	tooltip="MainEngine
+
+&#10;  Builds a representation of a method, including its relationships and test annotations.&#10; &#10;  @param methodThe method record representing the method.&#10;  @param relationships The relationships of the method.&#10;  @param testAnnotations The test annotations of the method.&#10;  @return A MethodRepresentation object.&#10; "
+	fontcolor=darkgreen
+];
+
+MainEngine1935620972XXXbuildProjectRepresentation1540638424[
+	label="+ buildProjectRepresentation()"
+	style=filled
+	fillcolor=white
+	tooltip="MainEngine
+
+&#10;  Builds a representation of the project, including classes and their methods with their relationships.&#10; &#10;  @param projectNameThe name of the project.&#10;  @param packageNodes The parsed package nodes.&#10;  @param packageNodeRelationships The relationships between package nodes.&#10;  @param leafNodeRelationships The relationships between leaf nodes.&#10;  @return A ProjectRepresentation object.&#10; "
+	fontcolor=darkgreen
+];
+} 
+} 
+
+subgraph cluster_995410913 { 
+   	label=parser
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_144649229 { 
+   	label=tree
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_762420526 { 
+   	label=LeafNode
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   LeafNode303902624XXXimplementedInterfaces0[
+	label="+ implementedInterfaces()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXmethods0[
+	label="+ methods()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXnodeName0[
+	label="+ nodeName()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+
+LeafNode303902624XXXnodeType0[
+	label="+ nodeType()"
+	style=filled
+	fillcolor=white
+	tooltip="LeafNode
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_822921791 { 
+   	label=Method
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Method762420526XXXmethodName0[
+	label="+ methodName()"
+	style=filled
+	fillcolor=white
+	tooltip="Method
+
+null"
+	fontcolor=darkgreen
+];
+
+Method762420526XXXreturnType0[
+	label="+ returnType()"
+	style=filled
+	fillcolor=white
+	tooltip="Method
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+} 
+
+'edges    
+MainEngine1935620972XXXbuildClassRepresentation47417436 -> LeafNode303902624XXXimplementedInterfaces0;
+MainEngine1935620972XXXbuildClassRepresentation47417436 -> LeafNode303902624XXXmethods0;
+MainEngine1935620972XXXbuildClassRepresentation47417436 -> LeafNode303902624XXXnodeName0;
+MainEngine1935620972XXXbuildClassRepresentation47417436 -> LeafNode303902624XXXnodeType0;
+MainEngine1935620972XXXbuildClassRepresentation47417436 -> MainEngine1935620972XXXbuildMethodRepresentation1194934616;
+MainEngine1935620972XXXbuildMethodRepresentation1194934616 -> Method762420526XXXmethodName0;
+MainEngine1935620972XXXbuildMethodRepresentation1194934616 -> Method762420526XXXreturnType0;
+MainEngine1935620972XXXbuildProjectRepresentation1540638424 -> MainEngine1935620972XXXbuildClassRepresentation47417436;
+    
+}
+@enduml

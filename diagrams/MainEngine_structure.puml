@@ -1,0 +1,662 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "codepilotunittest.core.MainEngine",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1357712437 { 
+   	label=client
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   DemoApp1357712437[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DemoApp</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   leafNodeRelationships: Map&lt;LeafNode, Set&lt;Relationship&lt;LeafNode&gt;&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mainEngine: MainEngine [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   packageNodeRelationships: Map&lt;PackageNode, Set&lt;Relationship&lt;PackageNode&gt;&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   packageNodes: Map&lt;Path, PackageNode&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   projectRepresentation: ProjectRepresentation [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   sourcePackagePath: Path [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_3059615 { 
+   	label=core
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   MainEngine1935620972[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainEngine</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   leafNodeRelationships: Map&lt;LeafNode, Set&lt;Relationship&lt;LeafNode&gt;&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   packageNodeRelationships: Map&lt;PackageNode, Set&lt;Relationship&lt;PackageNode&gt;&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   packageNodes: Map&lt;Path, PackageNode&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   parser: Parser [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   parserType: ParserType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   projectRepresentation: ProjectRepresentation [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ buildClassRepresentation(leafNode: LeafNode, leafNodeRelationships: Map&lt;LeafNode, Set&lt;Relationship&lt;LeafNode&gt;&gt;&gt;): ClassRepresentation</TD></TR>
+<TR><TD ALIGN="LEFT" >+ buildMethodRepresentation(method: Method, relationships: Set&lt;Relationship&lt;LeafNode&gt;&gt;, testAnnotations: List&lt;String&gt;): MethodRepresentation</TD></TR>
+<TR><TD ALIGN="LEFT" >+ buildProjectRepresentation(projectName: String, packageNodes: Map&lt;Path, PackageNode&gt;, packageNodeRelationships: Map&lt;PackageNode, Set&lt;Relationship&lt;PackageNode&gt;&gt;&gt;, leafNodeRelationships: Map&lt;LeafNode, Set&lt;Relationship&lt;LeafNode&gt;&gt;&gt;): ProjectRepresentation</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_671793478 { 
+   	label=representations
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   ClassRepresentation1961280345[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ClassRepresentation</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   className: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   interfaces: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   methods: List&lt;MethodRepresentation&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifiers: List&lt;NodeType&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   relationships: Set&lt;Relationship&lt;LeafNode&gt;&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ findMethod(methodName: String): MethodRepresentation</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MethodRepresentation1961280345[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MethodRepresentation</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   methodName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifiers: List&lt;ModifierType&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   parameters: Map&lt;String, String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   relationships: Set&lt;Relationship&lt;LeafNode&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   returnType: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ProjectRepresentation1961280345[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ProjectRepresentation</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   classes: List&lt;ClassRepresentation&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   projectName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   relationships: Set&lt;Relationship&lt;PackageNode&gt;&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ findClass(className: String): ClassRepresentation</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_995410913 { 
+   	label=parser
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   FileVisitor770181292[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)FileVisitor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   baseClass: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   constructorVisitor: ConstructorVisitor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   createdObjects: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enumVisitor: EnumVisitor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enums: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fieldNameVisitor: FieldVisitor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fields: List&lt;Field&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   implementedInterfaces: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   importVisitor: ImportVisitor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   imports: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   inheritanceVisitor: InheritanceVisitor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   innerClasses: List&lt;LeafNode&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isClassOrInterface: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   leafNodeBuilder: LeafNodeBuilder [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   memberVisitor: MemberVisitor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   methodNameVisitor: MethodVisitor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   methods: List&lt;Method&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nodeName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nodeType: NodeType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   objectCreationVisitor: ObjectCreationVisitor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   objectTypes: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   path: Path [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   records: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   unassignedObjects: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   variableVisitor: VariableVisitor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   variablesMap: Map&lt;String, String&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createAST(): LeafNode</TD></TR>
+<TR><TD ALIGN="LEFT" >- filterAssignedCreatedObjects(assignedObjects: List&lt;String&gt;, createdObjects: List&lt;String&gt;): List&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >- getType(type: String): String</TD></TR>
+<TR><TD ALIGN="LEFT" >- populateCreatedObjects(): List&lt;String&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ProjectParser770181292[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ProjectParser</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   packageNodes: Map&lt;Path, PackageNode&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createRelationships(packageNodes: Map&lt;Path, PackageNode&gt;): Map&lt;LeafNode, Set&lt;Relationship&lt;LeafNode&gt;&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ identifyPackageNodeRelationships(leafNodeRelationships: Map&lt;LeafNode, Set&lt;Relationship&lt;LeafNode&gt;&gt;&gt;): Map&lt;PackageNode, Set&lt;Relationship&lt;PackageNode&gt;&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >- isJavaSourceFile(filePath: Path): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- parseFolder(currentNode: PackageNode)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ parseSourcePackage(sourcePackagePath: Path): Map&lt;Path, PackageNode&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+RelationshipIdentifier770181292[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)RelationshipIdentifier</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   leafNodeRelationships: Map&lt;LeafNode, Set&lt;Relationship&lt;LeafNode&gt;&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   leafNodes: List&lt;LeafNode&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- checkRelationship(i: int, j: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createLeafNodesRelationships(packageNodes: Map&lt;Path, PackageNode&gt;): Map&lt;LeafNode, Set&lt;Relationship&lt;LeafNode&gt;&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >- createRelationship(i: int, j: int, relationshipType: RelationshipType)</TD></TR>
+<TR><TD ALIGN="LEFT" >- doesFieldBelongToClass(leafNodesType: String, leafNodesName: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- doesRelationshipExist(leafNodesTypes: List&lt;String&gt;, leafNodesName: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- getLeafNode(i: int): LeafNode</TD></TR>
+<TR><TD ALIGN="LEFT" >+ identifyPackageNodeRelationships(leafNodeRelationships: Map&lt;LeafNode, Set&lt;Relationship&lt;LeafNode&gt;&gt;&gt;): Map&lt;PackageNode, Set&lt;Relationship&lt;PackageNode&gt;&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >- isAggregation(i: int, j: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- isAssociation(i: int, j: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- isDependency(i: int, j: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- isExtension(i: int, j: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- isFieldOfTypeCollection(s: String, leafNodesName: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- isImplementation(i: int, j: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- isRelationshipAggregation(leafNodesTypes: List&lt;String&gt;, leafNodesName: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- isSubNode(i: int, j: int): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+subgraph cluster_144649229 { 
+   	label=tree
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Field762420526[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Field</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   fieldNames: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fieldType: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifierType: ModifierType [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ fieldNames(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fieldType(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ modifierType(): ModifierType</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LeafNode303902624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LeafNode</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   baseClass: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   createdObjects: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fields: List&lt;Field&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   implementedInterfaces: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   imports: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   innerClasses: List&lt;LeafNode&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   innerEnums: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   methods: List&lt;Method&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nodeName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nodeType: NodeType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   parentNode: PackageNode [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   path: Path [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   records: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   variables: Map&lt;String, String&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ baseClass(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createdObjects(): List&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fields(): List&lt;Field&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ implementedInterfaces(): List&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ imports(): List&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ innerClasses(): List&lt;LeafNode&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ innerEnums(): List&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ methods(): List&lt;Method&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ nodeName(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ nodeType(): NodeType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ parentNode(): PackageNode</TD></TR>
+<TR><TD ALIGN="LEFT" >+ path(): Path</TD></TR>
+<TR><TD ALIGN="LEFT" >+ records(): List&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ variables(): Map&lt;String, String&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LeafNodeBuilder303902624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LeafNodeBuilder</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   baseClass: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   createdObjects: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fields: List&lt;Field&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   implementedInterfaces: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   imports: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   innerClasses: List&lt;LeafNode&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   innerEnums: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   methods: List&lt;Method&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nodeName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nodeType: NodeType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   parentNode: PackageNode [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   path: Path [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   records: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   variables: Map&lt;String, String&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ build(): LeafNode</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setBaseClass(baseClass: String): LeafNodeBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setCreatedObjects(createdObjects: List&lt;String&gt;): LeafNodeBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setFields(fields: List&lt;Field&gt;): LeafNodeBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setImplementedInterface(interfaces: List&lt;String&gt;): LeafNodeBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setImports(imprts: List&lt;String&gt;): LeafNodeBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setInnerClasses(innerClasses: List&lt;LeafNode&gt;): LeafNodeBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setInnerEnums(enums: List&lt;String&gt;): LeafNodeBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMethods(methods: List&lt;Method&gt;): LeafNodeBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setNodeName(nodeName: String): LeafNodeBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setNodeType(nodeType: NodeType): LeafNodeBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setRecords(records: List&lt;String&gt;): LeafNodeBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setVariables(variables: Map&lt;String, String&gt;): LeafNodeBuilder</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Method762420526[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Method</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   methodName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   modifierType: ModifierType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   parameters: Map&lt;String, String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   returnType: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ methodName(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ modifierType(): ModifierType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ parameters(): Map&lt;String, String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ returnType(): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PackageNode303902624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PackageNode</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   isValid: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   leafNodes: Map&lt;String, LeafNode&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   parentNode: PackageNode [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   path: Path [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   subNodes: Map&lt;Path, PackageNode&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- doesParentNodeExist(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- getPath(parentNode: PackageNode, path: Path): Path</TD></TR>
+<TR><TD ALIGN="LEFT" >- isValid(path: Path): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Relationship303902624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Relationship&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   endingNode: T [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   relationshipType: RelationshipType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   startingNode: T [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ endingNode(): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ relationshipType(): RelationshipType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startingNode(): T</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_98785251 { 
+   	label=FileVisitor
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   ConstructorVisitor1014544624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConstructorVisitor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ visit(constructorDeclaration: ConstructorDeclaration, arg: Void)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+EnumVisitor1014544624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)EnumVisitor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ visit(enumDeclaration: EnumDeclaration, arg: Void)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+FieldVisitor1014544624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)FieldVisitor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ visit(fieldDeclaration: FieldDeclaration, arg: Void)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ImportVisitor1014544624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ImportVisitor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ visit(importDeclaration: ImportDeclaration, arg: Void)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+InheritanceVisitor1014544624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)InheritanceVisitor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ visit(classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, arg: Void)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MemberVisitor1014544624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MemberVisitor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ visit(enumDeclaration: EnumDeclaration, arg: Void)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ visit(n: RecordDeclaration, arg: Void)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MethodVisitor1014544624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MethodVisitor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ visit(methodDeclaration: MethodDeclaration, arg: Void)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ObjectCreationVisitor1014544624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ObjectCreationVisitor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ visit(objectCreationExpr: ObjectCreationExpr, arg: Void)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+VariableVisitor1014544624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)VariableVisitor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ visit(variableDeclarationExpr: VariableDeclarationExpr, arg: Void)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+ClassRepresentation1961280345 -> LeafNode303902624[label="relationships
+[0..*]"];
+ClassRepresentation1961280345 -> MethodRepresentation1961280345[label="methods
+[0..*]"];
+ClassRepresentation1961280345 -> Relationship303902624[label="relationships
+[0..*]"];
+ConstructorVisitor1014544624 -> FileVisitor770181292[label="visit() -> getType()"];
+DemoApp1357712437 -> MainEngine1935620972[label="mainEngine
+[0..1]"];
+FieldVisitor1014544624 -> FileVisitor770181292[label="visit() -> getType()"];
+FileVisitor770181292 -> ConstructorVisitor1014544624[label="constructorVisitor
+[0..1]"];
+FileVisitor770181292 -> EnumVisitor1014544624[label="enumVisitor
+[0..1]"];
+FileVisitor770181292 -> Field762420526[label="fields
+[0..*]"];
+FileVisitor770181292 -> FieldVisitor1014544624[label="fieldNameVisitor
+[0..1]"];
+FileVisitor770181292 -> ImportVisitor1014544624[label="importVisitor
+[0..1]"];
+FileVisitor770181292 -> InheritanceVisitor1014544624[label="inheritanceVisitor
+[0..1]"];
+FileVisitor770181292 -> LeafNode303902624[label="innerClasses
+[0..*]"];
+FileVisitor770181292 -> LeafNodeBuilder303902624[label="leafNodeBuilder
+[0..1]"];
+FileVisitor770181292 -> MemberVisitor1014544624[label="memberVisitor
+[0..1]"];
+FileVisitor770181292 -> Method762420526[label="methods
+[0..*]"];
+FileVisitor770181292 -> MethodVisitor1014544624[label="methodNameVisitor
+[0..1]"];
+FileVisitor770181292 -> ObjectCreationVisitor1014544624[label="objectCreationVisitor
+[0..1]"];
+FileVisitor770181292 -> VariableVisitor1014544624[label="variableVisitor
+[0..1]"];
+LeafNode303902624 -> Field762420526[label="fields
+[0..*]"];
+LeafNode303902624 -> Method762420526[label="methods
+[0..*]"];
+LeafNode303902624 -> PackageNode303902624[label="parentNode
+[0..1]"];
+LeafNodeBuilder303902624 -> Field762420526[label="fields
+[0..*]"];
+LeafNodeBuilder303902624 -> LeafNode303902624[label="innerClasses
+[0..*]"];
+LeafNodeBuilder303902624 -> Method762420526[label="methods
+[0..*]"];
+LeafNodeBuilder303902624 -> PackageNode303902624[label="parentNode
+[0..1]"];
+MainEngine1935620972 -> LeafNode303902624[label="leafNodeRelationships
+[0..*]"];
+MainEngine1935620972 -> PackageNode303902624[label="packageNodeRelationships
+[0..*]"];
+MainEngine1935620972 -> PackageNode303902624[label="packageNodes
+[0..*]"];
+MainEngine1935620972 -> ProjectParser770181292[arrowhead=none];
+MainEngine1935620972 -> ProjectRepresentation1961280345[label="projectRepresentation
+[0..1]"];
+MainEngine1935620972 -> Relationship303902624[label="leafNodeRelationships
+[0..*]"];
+MainEngine1935620972 -> Relationship303902624[label="packageNodeRelationships
+[0..*]"];
+MethodRepresentation1961280345 -> LeafNode303902624[label="relationships
+[0..*]"];
+MethodRepresentation1961280345 -> Relationship303902624[label="relationships
+[0..*]"];
+ObjectCreationVisitor1014544624 -> FileVisitor770181292[label="visit() -> getType()"];
+PackageNode303902624 -> LeafNode303902624[label="leafNodes
+[0..*]"];
+ProjectParser770181292 -> FileVisitor770181292[label="parseFolder() -> createAST()"];
+ProjectParser770181292 -> LeafNode303902624[label="parseFolder() -> nodeName()"];
+ProjectParser770181292 -> PackageNode303902624[label="packageNodes
+[0..*]"];
+ProjectParser770181292 -> RelationshipIdentifier770181292[arrowhead=none];
+ProjectRepresentation1961280345 -> ClassRepresentation1961280345[arrowhead=none];
+ProjectRepresentation1961280345 -> MethodRepresentation1961280345[arrowhead=none];
+ProjectRepresentation1961280345 -> PackageNode303902624[label="relationships
+[0..*]"];
+ProjectRepresentation1961280345 -> Relationship303902624[label="relationships
+[0..*]"];
+RelationshipIdentifier770181292 -> LeafNode303902624[label="leafNodeRelationships
+[0..*]"];
+RelationshipIdentifier770181292 -> LeafNode303902624[label="leafNodes
+[0..*]"];
+RelationshipIdentifier770181292 -> Relationship303902624[label="leafNodeRelationships
+[0..*]"];
+VariableVisitor1014544624 -> FileVisitor770181292[label="visit() -> getType()"];
+    
+}
+@enduml

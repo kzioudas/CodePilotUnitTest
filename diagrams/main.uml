@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/verpc/Desktop/AutoGenerationOfTests-n-Defenses-20240204T171219Z-001/new/CodePilotUnitTest/src/main</OriginalElement>
+  <nodes>
+    <node x="-42.0" y="1170.5">codepilotunittest.representations.SrcElement</node>
+    <node x="1005.0" y="2486.5">codepilotunittest.parser.FileVisitor.ImportVisitor</node>
+    <node x="-185.5" y="547.0">codepilotunittest.testcases.RainyDayTestCase</node>
+    <node x="580.5" y="902.5">codepilotunittest.parser.ProjectParser</node>
+    <node x="864.5" y="2355.5">codepilotunittest.parser.FileVisitor.MemberVisitor</node>
+    <node x="189.5" y="847.0">codepilotunittest.testcases.HappyPathTestCase</node>
+    <node x="245.5" y="2170.5">codepilotunittest.directives.Directive</node>
+    <node x="760.5" y="1304.5">codepilotunittest.representations.ClassRepresentation</node>
+    <node x="-103.5" y="314.0">codepilotunittest.testcases.TestCase</node>
+    <node x="-307.0" y="2113.5">codepilotunittest.parser.FileVisitor</node>
+    <node x="485.5" y="635.5">client.DemoApp</node>
+    <node x="410.0" y="1655.5">codepilotunittest.core.MainEngine</node>
+    <node x="285.0" y="1415.5">codepilotunittest.parser.factory.ParserType</node>
+    <node x="961.0" y="1655.5">codepilotunittest.representations.MethodRepresentation</node>
+    <node x="721.5" y="2486.5">codepilotunittest.parser.FileVisitor.ObjectCreationVisitor</node>
+    <node x="540.0" y="2366.5">codepilotunittest.parser.FileVisitor.InheritanceVisitor</node>
+    <node x="120.5" y="1778.0">codepilotunittest.representations.MethodNotFoundException</node>
+    <node x="608.5" y="2124.5">codepilotunittest.testcases.TestCaseParser</node>
+    <node x="-319.5" y="-127.5">codepilotunittest.parser.RelationshipIdentifier</node>
+    <node x="-318.0" y="946.5">codepilotunittest.directives.DirectiveParser</node>
+    <node x="916.5" y="2135.5">codepilotunittest.parser.PackageNodeCleaner</node>
+    <node x="-166.0" y="1348.5">codepilotunittest.representations.ProjectRepresentation</node>
+    <node x="580.5" y="336.0">codepilotunittest.parser.factory.Parser</node>
+    <node x="402.0" y="2486.5">codepilotunittest.parser.FileVisitor.MethodVisitor</node>
+    <node x="321.5" y="2006.5">codepilotunittest.testcases.TestCaseFactory</node>
+    <node x="270.5" y="2366.5">codepilotunittest.parser.FileVisitor.FieldVisitor</node>
+    <node x="91.5" y="2486.5">codepilotunittest.parser.FileVisitor.ConstructorVisitor</node>
+    <node x="-69.5" y="2366.5">codepilotunittest.parser.FileVisitor.VariableVisitor</node>
+    <node x="-319.5" y="-293.0">codepilotunittest.parser.IRelationshipIdentifier</node>
+    <node x="-307.5" y="1766.5">codepilotunittest.directives.DirectiveFactory</node>
+    <node x="775.0" y="2006.5">codepilotunittest.parser.factory.ProjectParserFactory</node>
+    <node x="-212.5" y="2486.5">codepilotunittest.parser.FileVisitor.EnumVisitor</node>
+    <node x="-2.0" y="2030.5">codepilotunittest.parser.tree</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="codepilotunittest.parser.RelationshipIdentifier" target="codepilotunittest.parser.IRelationshipIdentifier" relationship="REALIZATION">
+      <point x="0.0" y="-192.5" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="codepilotunittest.representations.ClassRepresentation" target="codepilotunittest.representations.SrcElement" relationship="REALIZATION">
+      <point x="0.0" y="-160.5" />
+      <point x="940.0" y="1265.0" />
+      <point x="20.0" y="1265.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="codepilotunittest.parser.FileVisitor.ImportVisitor" target="codepilotunittest.parser.FileVisitor" relationship="INNER_CLASS">
+      <point x="0.0" y="-38.5" />
+      <point x="1120.0" y="2325.0" />
+      <point x="-100.0" y="2325.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="codepilotunittest.representations.MethodRepresentation" target="codepilotunittest.representations.SrcElement" relationship="REALIZATION">
+      <point x="0.0" y="-149.5" />
+      <point x="1140.0" y="1265.0" />
+      <point x="20.0" y="1265.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="codepilotunittest.parser.FileVisitor.MemberVisitor" target="codepilotunittest.parser.FileVisitor" relationship="INNER_CLASS">
+      <point x="0.0" y="-49.5" />
+      <point x="980.0" y="2325.0" />
+      <point x="-100.0" y="2325.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="codepilotunittest.parser.ProjectParser" target="codepilotunittest.parser.factory.Parser" relationship="REALIZATION">
+      <point x="0.0" y="-82.5" />
+      <point x="0.0" y="49.0" />
+    </edge>
+    <edge source="codepilotunittest.parser.FileVisitor.VariableVisitor" target="codepilotunittest.parser.FileVisitor" relationship="INNER_CLASS">
+      <point x="0.0" y="-38.5" />
+      <point x="60.0" y="2325.0" />
+      <point x="-100.0" y="2325.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="codepilotunittest.testcases.HappyPathTestCase" target="codepilotunittest.testcases.TestCase" relationship="REALIZATION">
+      <point x="0.0" y="-138.0" />
+      <point x="360.0" y="525.0" />
+      <point x="-20.0" y="525.0" />
+      <point x="0.0" y="71.0" />
+    </edge>
+    <edge source="codepilotunittest.representations.ProjectRepresentation" target="codepilotunittest.representations.SrcElement" relationship="REALIZATION">
+      <point x="0.0" y="-116.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="codepilotunittest.parser.FileVisitor.InheritanceVisitor" target="codepilotunittest.parser.FileVisitor" relationship="INNER_CLASS">
+      <point x="0.0" y="-38.5" />
+      <point x="680.0" y="2325.0" />
+      <point x="-100.0" y="2325.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="codepilotunittest.parser.FileVisitor.ObjectCreationVisitor" target="codepilotunittest.parser.FileVisitor" relationship="INNER_CLASS">
+      <point x="0.0" y="-38.5" />
+      <point x="840.0" y="2325.0" />
+      <point x="-100.0" y="2325.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="codepilotunittest.testcases.RainyDayTestCase" target="codepilotunittest.testcases.TestCase" relationship="REALIZATION">
+      <point x="0.0" y="-138.0" />
+      <point x="0.0" y="71.0" />
+    </edge>
+    <edge source="codepilotunittest.parser.FileVisitor.EnumVisitor" target="codepilotunittest.parser.FileVisitor" relationship="INNER_CLASS">
+      <point x="0.0" y="-38.5" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="codepilotunittest.parser.FileVisitor.FieldVisitor" target="codepilotunittest.parser.FileVisitor" relationship="INNER_CLASS">
+      <point x="0.0" y="-38.5" />
+      <point x="380.0" y="2325.0" />
+      <point x="-100.0" y="2325.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="codepilotunittest.parser.FileVisitor.MethodVisitor" target="codepilotunittest.parser.FileVisitor" relationship="INNER_CLASS">
+      <point x="0.0" y="-38.5" />
+      <point x="520.0" y="2325.0" />
+      <point x="-100.0" y="2325.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="codepilotunittest.parser.FileVisitor.ConstructorVisitor" target="codepilotunittest.parser.FileVisitor" relationship="INNER_CLASS">
+      <point x="0.0" y="-38.5" />
+      <point x="220.0" y="2325.0" />
+      <point x="-100.0" y="2325.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.21086490350250178" showDependencies="false" x="542.0" y="1135.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
