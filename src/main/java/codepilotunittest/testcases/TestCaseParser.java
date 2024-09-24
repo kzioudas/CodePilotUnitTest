@@ -49,6 +49,7 @@ public class TestCaseParser {
         // Trimming spaces around each directive
         List<String> directives = new ArrayList<>();
         for (String directive : directivesArray) {
+
             directives.add(directive.trim());
         }
 

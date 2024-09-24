@@ -1,7 +1,6 @@
 package codepilotunittest.representations;
 
 
-import codepilotunittest.interfaces.SrcElement;
 import codepilotunittest.parser.tree.PackageNode;
 import codepilotunittest.parser.tree.Relationship;
 
@@ -29,6 +28,15 @@ public class ProjectRepresentation implements SrcElement {
 
     public Set<Relationship<PackageNode>> getRelationships() {
         return relationships;
+    }
+
+    public ClassRepresentation findClass(String className) throws ClassNotFoundException {
+        for (ClassRepresentation classRepresentation : classes) {
+            if (classRepresentation.getClassName().equals(className)) {
+                return classRepresentation;
+            }
+        }
+        throw new ClassNotFoundException("Class with name " + className + " not found.");
     }
 
     @Override

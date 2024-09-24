@@ -23,13 +23,11 @@ public class DemoApp {
     private Path sourcePackagePath;
 
     public void setUp(){
-        ParserType parserType = ParserType.JAVAPARSER;;
-       Parser parser = ProjectParserFactory.createProjectParser(parserType);
         sourcePackagePath = Path.of("src/test/resources/LatexEditor");
-        packageNodes = parser.parseSourcePackage(sourcePackagePath);
-        leafNodeRelationships = parser.createRelationships(packageNodes);
-        packageNodeRelationships = parser.identifyPackageNodeRelationships(leafNodeRelationships);
-        projectRepresentation = mainEngine.buildProjectRepresentation("MyProject", packageNodes, packageNodeRelationships, leafNodeRelationships);
+        mainEngine = new MainEngine(sourcePackagePath,"LatexEditor");
+
+
+        projectRepresentation = mainEngine.getProjectRepresentation();
 
     }
 

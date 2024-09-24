@@ -1,7 +1,6 @@
 package codepilotunittest.representations;
 
 
-import codepilotunittest.interfaces.SrcElement;
 import codepilotunittest.parser.tree.LeafNode;
 import codepilotunittest.parser.tree.ModifierType;
 import codepilotunittest.parser.tree.Relationship;

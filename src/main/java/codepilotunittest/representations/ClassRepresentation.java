@@ -2,7 +2,6 @@ package codepilotunittest.representations;
 
 
 
-import codepilotunittest.interfaces.SrcElement;
 import codepilotunittest.parser.tree.LeafNode;
 import codepilotunittest.parser.tree.NodeType;
 import codepilotunittest.parser.tree.Relationship;
@@ -45,6 +44,14 @@ public class ClassRepresentation implements SrcElement {
         return relationships;
     }
 
+    public MethodRepresentation findMethod(String methodName) throws MethodNotFoundException {
+        for (MethodRepresentation method : methods) {
+            if (method.getMethodName().equals(methodName)) {
+                return method;
+            }
+        }
+        throw new MethodNotFoundException("Method with name " + methodName + " not found.");
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

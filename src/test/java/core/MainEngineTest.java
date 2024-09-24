@@ -26,23 +26,19 @@ class MainEngineTest {
     private Map<Path, PackageNode> packageNodes;
     private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
     private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
+    private ProjectRepresentation projectRepresentation;
 
-    @BeforeEach
-    void setUp() {
-        // Initialize the main engine and load the test data
-        Path path = Path.of("src/test/resources/ParserTesting");
-        mainEngine = new MainEngine(path);
-        packageNodes = mainEngine.getPackageNodes();
-        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
-        packageNodeRelationships = mainEngine.getPackageNodeRelationships();
-    }
 
     @Test
     @DisplayName("Build Project Representation")
     void testBuildProjectRepresentation() {
         // When
-        ProjectRepresentation projectRepresentation = MainEngine.buildProjectRepresentation(
-                "ParserTesting", packageNodes, packageNodeRelationships, leafNodeRelationships);
+        Path path = Path.of("src/test/resources/ParserTesting");
+        mainEngine = new MainEngine(path,"ParserTesting");
+        packageNodes = mainEngine.getPackageNodes();
+        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
+        packageNodeRelationships = mainEngine.getPackageNodeRelationships();
+        projectRepresentation = mainEngine.getProjectRepresentation();
 
         // Then
         assertNotNull(projectRepresentation);
@@ -61,6 +57,11 @@ class MainEngineTest {
     @Test
     @DisplayName("Build Class Representation")
     void testBuildClassRepresentation() {
+        Path path = Path.of("src/test/resources/ParserTesting");
+        mainEngine = new MainEngine(path,"ParserTesting");
+        packageNodes = mainEngine.getPackageNodes();
+        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
+
         // Test with a simple class
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("InnerClassSample");
 
@@ -76,6 +77,11 @@ class MainEngineTest {
     @Test
     @DisplayName("Build Interface Representation")
     void testBuildInterfaceRepresentation() {
+        Path path = Path.of("src/test/resources/ParserTesting");
+        mainEngine = new MainEngine(path,"ParserTesting");
+        packageNodes = mainEngine.getPackageNodes();
+        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
+
         // Test with an interface
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("TestingInterface");
 
@@ -92,6 +98,11 @@ class MainEngineTest {
     @Test
     @DisplayName("Build Enum Representation")
     void testBuildEnumRepresentation() {
+        Path path = Path.of("src/test/resources/ParserTesting");
+        mainEngine = new MainEngine(path,"ParserTesting");
+        packageNodes = mainEngine.getPackageNodes();
+        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
+
         // Test with an enum
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("EnumSample");
 
@@ -108,6 +119,12 @@ class MainEngineTest {
     @Test
     @DisplayName("Build Method Representation")
     void testBuildMethodRepresentation() {
+        Path path = Path.of("src/test/resources/ParserTesting");
+        mainEngine = new MainEngine(path,"ParserTesting");
+        packageNodes = mainEngine.getPackageNodes();
+        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
+        packageNodeRelationships = mainEngine.getPackageNodeRelationships();
+        projectRepresentation = mainEngine.getProjectRepresentation();
         // Test with a method having no parameters
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ObjectCreationSample");
         LeafNode.Method method = leafNode.methods().get(0);
@@ -127,6 +144,12 @@ class MainEngineTest {
     @Test
     @DisplayName("Build Method Representation With Parameters")
     void testBuildMethodWithParameters() {
+        Path path = Path.of("src/test/resources/ParserTesting");
+        mainEngine = new MainEngine(path,"ParserTesting");
+        packageNodes = mainEngine.getPackageNodes();
+        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
+        packageNodeRelationships = mainEngine.getPackageNodeRelationships();
+        projectRepresentation = mainEngine.getProjectRepresentation();
         // Test with a method having parameters
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ObjectCreationSample");
         LeafNode.Method method = leafNode.methods().get(2);
@@ -169,10 +192,13 @@ class MainEngineTest {
     void testMultiplePackageStructure() {
         // Test handling of multiple packages
         Path path = Path.of("src/test/resources/LatexEditor");
-        mainEngine = new MainEngine(path);
+        mainEngine = new MainEngine(path,"LatexEditor");
+        packageNodes = mainEngine.getPackageNodes();
+        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
+        packageNodeRelationships = mainEngine.getPackageNodeRelationships();
+        projectRepresentation = mainEngine.getProjectRepresentation();
 
-        ProjectRepresentation projectRepresentation = MainEngine.buildProjectRepresentation(
-                "LatexEditor", mainEngine.getPackageNodes(), mainEngine.getPackageNodeRelationships(), mainEngine.getLeafNodeRelationships());
+
 
         assertNotNull(projectRepresentation);
         assertEquals("LatexEditor", projectRepresentation.getProjectName());
@@ -184,10 +210,8 @@ class MainEngineTest {
     void testEmptyPackage() {
         // Test handling of an empty package
         Path path = Path.of("src/test/resources/EmptyPackage");
-        mainEngine = new MainEngine(path);
-
-        ProjectRepresentation projectRepresentation = MainEngine.buildProjectRepresentation(
-                "EmptyPackage", mainEngine.getPackageNodes(), mainEngine.getPackageNodeRelationships(), mainEngine.getLeafNodeRelationships());
+        mainEngine = new MainEngine(path,"EmptyPackage");
+        projectRepresentation = mainEngine.getProjectRepresentation();
 
         assertNotNull(projectRepresentation);
         assertEquals("EmptyPackage", projectRepresentation.getProjectName());
@@ -211,11 +235,17 @@ class MainEngineTest {
     @Test
     @DisplayName("Multiple Inheritance Test")
     void testMultipleInheritance() {
+        Path path = Path.of("src/test/resources/ParserTesting");
+        mainEngine = new MainEngine(path,"ParserTesting");
+        packageNodes = mainEngine.getPackageNodes();
+        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
+        packageNodeRelationships = mainEngine.getPackageNodeRelationships();
+        projectRepresentation = mainEngine.getProjectRepresentation();
         // Test handling of multiple inheritance (interfaces)
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ImplementingClass");
 
         // When
-        ClassRepresentation classRepresentation = MainEngine.buildClassRepresentation(leafNode, leafNodeRelationships);
+        ClassRepresentation classRepresentation = mainEngine.buildClassRepresentation(leafNode, leafNodeRelationships);
 
         // Then
         assertNotNull(classRepresentation);

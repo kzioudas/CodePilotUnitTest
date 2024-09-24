@@ -1,4 +1,4 @@
-package directives;
+package testcases;
 
 import codepilotunittest.testcases.HappyPathTestCase;
 import codepilotunittest.testcases.RainyDayTestCase;
@@ -7,12 +7,6 @@ import codepilotunittest.testcases.TestCase;
 import org.junit.jupiter.api.Test;
 import utils.PathTemplate;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -27,8 +27,8 @@ public class MainEngine {
     private Map<Path, PackageNode> packageNodes;
     private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
     private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
-
-    public MainEngine(Path sourcePackagePath) {
+    private ProjectRepresentation projectRepresentation;
+    public MainEngine(Path sourcePackagePath,String projectName) {
 
 
         this.packageNodes = parser.parseSourcePackage(sourcePackagePath);
@@ -40,37 +40,24 @@ public class MainEngine {
         this.packageNodeRelationships = parser.identifyPackageNodeRelationships(leafNodeRelationships);
 
         // Build a representation of the entire project
-        ProjectRepresentation projectRepresentation = buildProjectRepresentation("MyProject", packageNodes, packageNodeRelationships, leafNodeRelationships);
+        this.projectRepresentation = buildProjectRepresentation( projectName, packageNodes, packageNodeRelationships, leafNodeRelationships);
 
 
     }
 
+    public ProjectRepresentation getProjectRepresentation(){return projectRepresentation;}
 
     public Map<Path, PackageNode> getPackageNodes() {
         return packageNodes;
-    }
-
-    public void setPackageNodes(Map<Path, PackageNode> packageNodes) {
-        this.packageNodes = packageNodes;
     }
 
     public Map<LeafNode, Set<Relationship<LeafNode>>> getLeafNodeRelationships() {
         return leafNodeRelationships;
     }
 
-    public void setLeafNodeRelationships(Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships) {
-        this.leafNodeRelationships = leafNodeRelationships;
-    }
-
     public Map<PackageNode, Set<Relationship<PackageNode>>> getPackageNodeRelationships() {
         return packageNodeRelationships;
     }
-
-    public void setPackageNodeRelationships(Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships) {
-        this.packageNodeRelationships = packageNodeRelationships;
-    }
-
-
 
     /**
      * Builds a representation of the project, including classes and their methods with their relationships.
