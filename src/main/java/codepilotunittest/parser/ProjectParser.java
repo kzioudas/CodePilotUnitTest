@@ -71,7 +71,7 @@ public class ProjectParser implements Parser
                 {
                     FileVisitor fileVisitor = new FileVisitor(currentNode, path);
                     LeafNode    leafNode    = fileVisitor.createAST();
-                    currentNode.getLeafNodes().put(leafNode.nodeName(), leafNode);
+                    currentNode.getLeafNodes().put(leafNode.getNodeName(), leafNode);
                 }
             }
         }

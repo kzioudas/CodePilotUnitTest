@@ -76,8 +76,8 @@ public class ProjectParserTest
 
         for (LeafNode l : controllerPackage.getLeafNodes().values())
         {
-            testingLeafNodes.add(l.path());
-            assertEquals(l.parentNode().getPath(), LatexEditor.CONTROLLER.path);
+            testingLeafNodes.add(l.getPath());
+            assertEquals(l.getParentNode().getPath(), LatexEditor.CONTROLLER.path);
         }
         Collections.sort(testingLeafNodes);
         Collections.sort(CONTROLLERS_LEAF_NODES);
@@ -97,8 +97,8 @@ public class ProjectParserTest
         assertEquals(0, subNodes.size());
         for (LeafNode l : commandsPackage.getLeafNodes().values())
         {
-            testingLeafNodes.add(l.path());
-            assertEquals(l.parentNode().getPath(), LatexEditor.COMMANDS.path);
+            testingLeafNodes.add(l.getPath());
+            assertEquals(l.getParentNode().getPath(), LatexEditor.COMMANDS.path);
         }
         Collections.sort(testingLeafNodes);
         Collections.sort(COMMANDS_LEAF_NODES);
@@ -120,8 +120,8 @@ public class ProjectParserTest
 
         for (LeafNode l : modelPackage.getLeafNodes().values())
         {
-            assertEquals(l.parentNode().getPath(), LatexEditor.MODEL.path);
-            testingLeafNodes.add(l.path());
+            assertEquals(l.getParentNode().getPath(), LatexEditor.MODEL.path);
+            testingLeafNodes.add(l.getPath());
         }
         Collections.sort(testingLeafNodes);
         Collections.sort(MODELS_LEAF_NODES);
@@ -140,8 +140,8 @@ public class ProjectParserTest
         assertEquals(0, subNodes.size());
         for (LeafNode l : strategiesPackage.getLeafNodes().values())
         {
-            assertEquals(l.parentNode().getPath(), LatexEditor.STRATEGIES.path);
-            testingLeafNodes.add(l.path());
+            assertEquals(l.getParentNode().getPath(), LatexEditor.STRATEGIES.path);
+            testingLeafNodes.add(l.getPath());
         }
         Collections.sort(testingLeafNodes);
         Collections.sort(STRATEGIES_LEAF_NODES);
@@ -160,8 +160,8 @@ public class ProjectParserTest
         assertEquals(0, subNodes.size());
         for (LeafNode l : viewPackage.getLeafNodes().values())
         {
-            assertEquals(l.parentNode().getPath(), LatexEditor.VIEW.path);
-            testingLeafNodes.add(l.path());
+            assertEquals(l.getParentNode().getPath(), LatexEditor.VIEW.path);
+            testingLeafNodes.add(l.getPath());
         }
 
         Collections.sort(testingLeafNodes);

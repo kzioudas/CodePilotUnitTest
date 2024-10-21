@@ -127,7 +127,7 @@ class MainEngineTest {
         projectRepresentation = mainEngine.getProjectRepresentation();
         // Test with a method having no parameters
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ObjectCreationSample");
-        LeafNode.Method method = leafNode.methods().get(0);
+        LeafNode.Method method = leafNode.getMethods().get(0);
         Set<Relationship<LeafNode>> relationships = leafNodeRelationships.get(leafNode);
 
         // When
@@ -152,7 +152,7 @@ class MainEngineTest {
         projectRepresentation = mainEngine.getProjectRepresentation();
         // Test with a method having parameters
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ObjectCreationSample");
-        LeafNode.Method method = leafNode.methods().get(2);
+        LeafNode.Method method = leafNode.getMethods().get(2);
         Set<Relationship<LeafNode>> relationships = leafNodeRelationships.get(leafNode);
 
         // When

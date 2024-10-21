@@ -85,9 +85,9 @@ public class FileVisitorTest
         LeafNode     addLatexCommand = commandPackage.getLeafNodes().get("AddLatexCommand");
         List<String> fieldTypes      = new ArrayList<>(List.of("VersionsManager"));
         List<String> fieldTypesTest = addLatexCommand
-                .fields()
+                .getFields()
                 .stream()
-                .map(LeafNode.Field::fieldType)
+                .map(LeafNode.Field::getFieldType)
                 .sorted()
                 .collect(Collectors.toCollection(ArrayList::new));
 
@@ -110,7 +110,7 @@ public class FileVisitorTest
 
         LeafNode     latexEditorController = commandPackage.getLeafNodes().get("LatexEditorController");
         List<String> variablesTypes        = new ArrayList<>(List.of("CommandFactory"));
-        List<String> variablesTypesTest    = new ArrayList<>(latexEditorController.variables().values());
+        List<String> variablesTypesTest    = new ArrayList<>(latexEditorController.getVariables().values());
 
         Collections.sort(variablesTypesTest);
         Collections.sort(variablesTypes);
@@ -135,7 +135,7 @@ public class FileVisitorTest
                 "ImplementingClass",
                 "ExtensionClass",
                 "HashMap[String,TestingInterface]"));
-        List<String> objectsCreatedActual = objectCreationSample.createdObjects();
+        List<String> objectsCreatedActual = objectCreationSample.getCreatedObjects();
 
         Collections.sort(objectsCreatedActual);
         Collections.sort(objectsCreatedExpected);
@@ -164,21 +164,21 @@ public class FileVisitorTest
         interfaceLeafs.add(inheritancePackage.getLeafNodes().get("TestingInterface2"));
 
         long classCount = classLeafs.stream()
-                .filter(it -> it.nodeType().equals(CLASS))
+                .filter(it -> it.getNodeType().equals(CLASS))
                 .count();
         assertEquals(classCount, classLeafs.size());
 
         long interfaceCount = interfaceLeafs.stream()
-                .filter(it -> it.nodeType().equals(INTERFACE))
+                .filter(it -> it.getNodeType().equals(INTERFACE))
                 .count();
         assertEquals(interfaceCount, interfaceLeafs.size());
 
         PackageNode sourcePackage = packages.get(ParserTesting.SRC.path);
         LeafNode enumTest = sourcePackage.getLeafNodes().get("EnumSample");
-        assertEquals(NodeType.ENUM, enumTest.nodeType());
+        assertEquals(NodeType.ENUM, enumTest.getNodeType());
 
         LeafNode objectCreationTest = sourcePackage.getLeafNodes().get("ObjectCreationSample");
-        assertEquals(CLASS, objectCreationTest.nodeType());
+        assertEquals(CLASS, objectCreationTest.getNodeType());
     }
 
     @Test
@@ -190,11 +190,11 @@ public class FileVisitorTest
         PackageNode inheritancePackage  = packages.get(ParserTesting.SRC.path);
 
         LeafNode implementingClass = inheritancePackage.getLeafNodes().get("ImplementingClass");
-        assertEquals(2, implementingClass.implementedInterfaces().size());
-        assertTrue(implementingClass.implementedInterfaces().contains("TestingInterface"));
-        assertTrue(implementingClass.implementedInterfaces().contains("TestingInterface2"));
+        assertEquals(2, implementingClass.getImplementedInterfaces().size());
+        assertTrue(implementingClass.getImplementedInterfaces().contains("TestingInterface"));
+        assertTrue(implementingClass.getImplementedInterfaces().contains("TestingInterface2"));
 
-        assertEquals("ExtensionClass", implementingClass.baseClass());
+        assertEquals("ExtensionClass", implementingClass.getBaseClass());
     }
 
 
@@ -208,11 +208,11 @@ public class FileVisitorTest
 
         LeafNode innerClassSample = sourcePackage.getLeafNodes().get("InnerClassSample");
 
-        assertEquals(innerClassSample.innerClasses().size(), 1);
-        assertEquals("InnerClass", innerClassSample.innerClasses().get(0).nodeName());
+        assertEquals(innerClassSample.getInnerClasses().size(), 1);
+        assertEquals("InnerClass", innerClassSample.getInnerClasses().get(0).getNodeName());
 
-        assertEquals(innerClassSample.records().size(), 1);
-        assertEquals("RecordSample", innerClassSample.records().get(0));
+        assertEquals(innerClassSample.getRecords().size(), 1);
+        assertEquals("RecordSample", innerClassSample.getRecords().get(0));
     }
 
 
@@ -230,7 +230,7 @@ public class FileVisitorTest
         Map<Path, PackageNode> packages = parser.parseSourcePackage(LatexEditor.SRC.path);
         PackageNode commandPackage = packages.get(LatexEditor.MODEL.path);
         LeafNode     versionsManager = commandPackage.getLeafNodes().get("VersionsManager");
-        List<String> imports         = versionsManager.imports();
+        List<String> imports         = versionsManager.getImports();
         assertEquals(expectedImports, imports);
     }
 }

@@ -98,21 +98,21 @@ public class MainEngine {
         List<MethodRepresentation> methodRepresentations = new ArrayList<>();
 
         // Create MethodRepresentation objects for each method in the class
-        for (Method method : leafNode.methods()) {
+        for (Method method : leafNode.getMethods()) {
             Set<Relationship<LeafNode>> methodRelationships = leafNodeRelationships.getOrDefault(leafNode, Set.of());
             List<String> testAnnotations = new ArrayList<>();//parserWrapper.getMethodTestAnnotations(leafNode).get(leafNode.methods().indexOf(method));
             methodRepresentations.add(buildMethodRepresentation(method, methodRelationships, testAnnotations));
         }
 
         List<NodeType> classModifiers = new ArrayList<>();
-                classModifiers.add(leafNode.nodeType());
-        List<String> interfaces = leafNode.implementedInterfaces();
+                classModifiers.add(leafNode.getNodeType());
+        List<String> interfaces = leafNode.getImplementedInterfaces();
         Set<Relationship<LeafNode>> classRelationships = leafNodeRelationships.getOrDefault(leafNode, Set.of());
         List<String> classTestAnnotations = new ArrayList<>();
 
         // Create and return a ClassRepresentation object
         return new ClassRepresentation(
-                leafNode.nodeName(),
+                leafNode.getNodeName(),
                 classModifiers,
                 interfaces,
                 methodRepresentations,
@@ -135,8 +135,8 @@ public class MainEngine {
         modifiers.add(method.getMethodModifierType());
 
         return new MethodRepresentation(
-                method.methodName(),
-                method.returnType(),
+                method.getMethodName(),
+                method.getMethodReturnType(),
                 parameters,
                 modifiers,
                 relationships,
