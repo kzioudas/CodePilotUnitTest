@@ -6,7 +6,7 @@
     <node x="-42.0" y="1170.5">codepilotunittest.representations.SrcElement</node>
     <node x="1005.0" y="2486.5">codepilotunittest.parser.FileVisitor.ImportVisitor</node>
     <node x="-185.5" y="547.0">codepilotunittest.testcases.RainyDayTestCase</node>
-    <node x="580.5" y="902.5">codepilotunittest.parser.ProjectParser</node>
+    <node x="580.5" y="902.5">codepilotunittest.parser.factory.ProjectParser</node>
     <node x="864.5" y="2355.5">codepilotunittest.parser.FileVisitor.MemberVisitor</node>
     <node x="189.5" y="847.0">codepilotunittest.testcases.HappyPathTestCase</node>
     <node x="245.5" y="2170.5">codepilotunittest.directives.Directive</node>
@@ -67,7 +67,7 @@
       <point x="-100.0" y="2325.0" />
       <point x="0.0" y="71.5" />
     </edge>
-    <edge source="codepilotunittest.parser.ProjectParser" target="codepilotunittest.parser.factory.Parser" relationship="REALIZATION">
+    <edge source="codepilotunittest.parser.factory.ProjectParser" target="codepilotunittest.parser.factory.Parser" relationship="REALIZATION">
       <point x="0.0" y="-82.5" />
       <point x="0.0" y="49.0" />
     </edge>

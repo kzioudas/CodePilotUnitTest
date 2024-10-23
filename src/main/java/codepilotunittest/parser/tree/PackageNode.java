@@ -69,12 +69,12 @@ public final class PackageNode
     }
 
 
-    private static Path getPath(PackageNode parentNode, Path path)
-    {
-        return Paths.get(String.format("%s/%s",
-                                       parentNode.getPath().normalize(),
-                                       path.toFile().getName()));
-    }
+//    private static Path getPath(PackageNode parentNode, Path path)
+//    {
+//        return Paths.get(String.format("%s/%s",
+//                                       parentNode.getPath().normalize(),
+//                                       path.toFile().getName()));
+//    }
 
 
     public boolean isValid()

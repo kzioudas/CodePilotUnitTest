@@ -1,8 +1,5 @@
 package codepilotunittest.parser.factory;
 
-import codepilotunittest.parser.ProjectParser;
-import codepilotunittest.parser.factory.ParserType;
-
 public class ProjectParserFactory
 {
 

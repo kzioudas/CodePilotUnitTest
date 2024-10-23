@@ -1,9 +1,11 @@
-package codepilotunittest.parser;
+package codepilotunittest.parser.factory;
 
-import codepilotunittest.parser.factory.Parser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import codepilotunittest.parser.ProjectParser;
+
+import codepilotunittest.parser.FileVisitor;
+import codepilotunittest.parser.RelationshipIdentifier;
+import codepilotunittest.parser.factory.ProjectParser;
 import codepilotunittest.parser.tree.LeafNode;
 import codepilotunittest.parser.tree.PackageNode;
 import codepilotunittest.parser.tree.Relationship;

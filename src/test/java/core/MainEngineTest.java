@@ -9,12 +9,11 @@ import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
 
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,7 +24,8 @@ class MainEngineTest {
     private MainEngine mainEngine;
     private Map<Path, PackageNode> packageNodes;
     private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
-    private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
+    @SuppressWarnings("unused")
+	private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
     private ProjectRepresentation projectRepresentation;
 
 
@@ -245,7 +245,7 @@ class MainEngineTest {
         LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ImplementingClass");
 
         // When
-        ClassRepresentation classRepresentation = mainEngine.buildClassRepresentation(leafNode, leafNodeRelationships);
+        ClassRepresentation classRepresentation = MainEngine.buildClassRepresentation(leafNode, leafNodeRelationships);
 
         // Then
         assertNotNull(classRepresentation);

@@ -1,6 +1,11 @@
 package codepilotunittest.representations;
 
 public class MethodNotFoundException extends Throwable {
-    public MethodNotFoundException(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7821897121382988079L;
+
+	public MethodNotFoundException(String s) {
     }
 }

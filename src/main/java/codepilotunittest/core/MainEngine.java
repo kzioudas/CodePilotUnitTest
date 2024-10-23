@@ -8,11 +8,10 @@ import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
 import codepilotunittest.parser.tree.LeafNode.Method;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MainEngine {
-    private static final Logger logger = LogManager.getLogger(MainEngine.class);
+	//COMMENTED OUT SINCE IT'S NOT USED
+	//private static final Logger logger = LogManager.getLogger(MainEngine.class);
     ParserType parserType = ParserType.JAVAPARSER;
     //private ProjectParserFactory parserFactoryactory = new ProjectParserFactory();
     private Parser parser = ProjectParserFactory.createProjectParser(parserType);
