@@ -1,5 +1,7 @@
 package codepilotunittest.testcases;
 
+import codepilotunittest.directives.Directive;
+
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public interface TestCase {
      *
      * @return the type of the test case
      */
-    String getTestType();
+    TestType getTestType();
 
     /**
      * Gets the fully qualified name of the class that will be tested.
@@ -43,5 +45,5 @@ public interface TestCase {
      *
      * @return a list of directives for the test case
      */
-    List<String> getDirectives();
+    List<Directive> getDirectives();
 }

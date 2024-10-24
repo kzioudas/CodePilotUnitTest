@@ -1,0 +1,3 @@
+test_name,test_type,class_to_test,method_to_test,directives
+test1,rainyday,ClassToTest,testMethod,"param1: not null; param2: range(1-10); param3: notInRange(20-30);"
+test2,happypath,ClassToTest2,anotherTestMethod,"paramA: null; paramB:range(3-7);"

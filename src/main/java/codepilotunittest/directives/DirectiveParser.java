@@ -1,37 +1,38 @@
 package codepilotunittest.directives;
 
-//import java.util.List;
-//import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * A parser for directive strings in the format "param: condition".
+ */
 public class DirectiveParser {
-    private String directiveString;
 
-    public DirectiveParser(String directiveString) {
-        this.directiveString = directiveString;
-    }
+    /**
+     * Parses the directive string from the CSV into a list of Directive objects.
+     *
+     * @param directiveString the string containing the directives
+     * @return a list of parsed directives
+     */
+    public List<Directive> parse(String directiveString) {
+        List<Directive> directives = new ArrayList<>();
 
-    public Map<String, String> parse() {
-        Map<String, String> parsedDirectives = new HashMap<>();
+        // Split by semicolon to get individual directives
+        String[] directiveParts = directiveString.split(";");
 
-        // Split the directives by commas
-        String[] directives = directiveString.split(",");
+        for (String part : directiveParts) {
+            // Remove extra spaces around paramName and condition
+            String cleanedPart = part.replaceAll("\\s*:\\s*", ":").trim(); // Clean spaces around ':'
 
-        for (String directive : directives) {
-            // Split each directive by the colon ":"
-            if (directive.contains(":")) {
-                String[] parts = directive.split(":", 2);
-                String directiveType = parts[0].trim();
-                String directiveValue = parts[1].trim();
-
-                // Add the directive type and value to the map
-                parsedDirectives.put(directiveType, directiveValue);
+            // Split each directive by ':'
+            String[] directiveElements = cleanedPart.split(":");
+            if (directiveElements.length == 2) {
+                String paramName = directiveElements[0].trim();
+                String condition = directiveElements[1].trim();
+                directives.add(DirectiveFactory.createDirective(paramName, condition));
             }
         }
 
-        return parsedDirectives;
+        return directives;
     }
 }
-
-

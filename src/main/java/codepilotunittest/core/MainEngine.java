@@ -8,9 +8,12 @@ import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
 import codepilotunittest.parser.tree.LeafNode.Method;
+import codepilotunittest.testcases.TestCase;
+import codepilotunittest.testcases.TestCaseParser;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +31,9 @@ public class MainEngine {
     private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
     private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
     private ProjectRepresentation projectRepresentation;
+    private TestCaseParser testCaseParser = new TestCaseParser();
+    private List<TestCase> testCases;
     public MainEngine(Path sourcePackagePath,String projectName) {
-
 
         this.packageNodes = parser.parseSourcePackage(sourcePackagePath);
 
@@ -42,7 +46,22 @@ public class MainEngine {
         // Build a representation of the entire project
         this.projectRepresentation = buildProjectRepresentation( projectName, packageNodes, packageNodeRelationships, leafNodeRelationships);
 
+    }
 
+    public MainEngine(Path sourcePackagePath,String projectName,Path testCasesPath) throws IOException {
+
+        this.packageNodes = parser.parseSourcePackage(sourcePackagePath);
+
+        // Create relationships between leaf nodes (e.g., classes and methods)
+        this.leafNodeRelationships = parser.createRelationships(packageNodes);
+
+        // Identify relationships between package nodes
+        this.packageNodeRelationships = parser.identifyPackageNodeRelationships(leafNodeRelationships);
+
+        // Build a representation of the entire project
+        this.projectRepresentation = buildProjectRepresentation( projectName, packageNodes, packageNodeRelationships, leafNodeRelationships);
+
+        this.testCases = testCaseParser.parseTestCases(testCasesPath);
     }
 
     public ProjectRepresentation getProjectRepresentation(){return projectRepresentation;}

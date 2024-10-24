@@ -1,10 +1,12 @@
 package codepilotunittest.testcases;
 
+import codepilotunittest.directives.Directive;
+
 import java.util.List;
 
 public class TestCaseFactory {
 
-    public static TestCase createTestCase(String testName, String testType, String classToTest, String methodToTest, List<String> directives) {
+    public static TestCase createTestCase(String testName, String testType, String classToTest, String methodToTest, List<Directive> directives) {
         switch (testType.toLowerCase()) {
             case "rainyday":
                 return new RainyDayTestCase(testName, classToTest, methodToTest, directives);

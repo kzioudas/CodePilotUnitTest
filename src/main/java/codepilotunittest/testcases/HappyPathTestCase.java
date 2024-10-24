@@ -1,16 +1,18 @@
 package codepilotunittest.testcases;
+import codepilotunittest.directives.Directive;
+
 import java.util.List;
 
 public class HappyPathTestCase implements TestCase {
     private String testName;
-    private String testType;
+    private TestType testType;
     private String classToTest;
     private String methodToTest;
-    private List<String> directives;
+    private List<Directive> directives;
 
-    public HappyPathTestCase(String testName, String classToTest, String methodToTest, List<String> directives) {
+    public HappyPathTestCase(String testName, String classToTest, String methodToTest, List<Directive> directives) {
         this.testName = testName;
-        this.testType = "happypath"; // Setting test type as "happypath"
+        this.testType = TestType.HAPPY_PATH; // Setting test type as "happypath"
         this.classToTest = classToTest;
         this.methodToTest = methodToTest;
         this.directives = directives;
@@ -22,7 +24,7 @@ public class HappyPathTestCase implements TestCase {
     }
 
     @Override
-    public String getTestType() {
+    public TestType getTestType() {
         return testType;
     }
 
@@ -37,7 +39,7 @@ public class HappyPathTestCase implements TestCase {
     }
 
     @Override
-    public List<String> getDirectives() {
+    public List<Directive> getDirectives() {
         return directives;
     }
 
