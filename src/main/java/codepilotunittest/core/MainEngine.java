@@ -31,7 +31,7 @@ public class MainEngine {
     private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
     private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
     private ProjectRepresentation projectRepresentation;
-    private TestCaseParser testCaseParser = new TestCaseParser();
+    private TestCaseParser testCaseParser;
     private List<TestCase> testCases;
     public MainEngine(Path sourcePackagePath,String projectName) {
 
@@ -60,6 +60,8 @@ public class MainEngine {
 
         // Build a representation of the entire project
         this.projectRepresentation = buildProjectRepresentation( projectName, packageNodes, packageNodeRelationships, leafNodeRelationships);
+
+        this.testCaseParser = new TestCaseParser(projectRepresentation);
 
         this.testCases = testCaseParser.parseTestCases(testCasesPath);
     }

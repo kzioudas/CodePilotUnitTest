@@ -1,11 +1,19 @@
 package testcases;
 
+import codepilotunittest.core.MainEngine;
 import codepilotunittest.directives.Directive;
 import codepilotunittest.directives.NotNullDirective;
 import codepilotunittest.directives.RangeDirective;
+import codepilotunittest.directives.SimpleValueDirective;
+import codepilotunittest.representations.ClassRepresentation;
+import codepilotunittest.representations.MethodNotFoundException;
+import codepilotunittest.representations.MethodRepresentation;
+import codepilotunittest.representations.ProjectRepresentation;
 import codepilotunittest.testcases.*;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,31 +23,61 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for the TestCaseFactory class.
  */
 public class TestCaseFactoryTest {
+    private MainEngine mainEngine;
+    private ProjectRepresentation projectRepresentation;
+    private Path sourcePackagePath;
+    private ClassRepresentation classRepresentation;
+    private MethodRepresentation methodRepresentation;
+    public void setUp() throws IOException {
+        sourcePackagePath = Path.of("src/test/resources/LatexEditor");
+        mainEngine = new MainEngine(sourcePackagePath,"LatexEditor");
+        projectRepresentation = mainEngine.getProjectRepresentation();
+
+    }
 
     /**
      * Tests the creation of a RainyDayTestCase.
      */
     @Test
-    public void testCreateRainyDayTestCase() {
+    public void testCreateHappyPathTestCase() {
         // Arrange
-        String testName = "rainyTest";
-        String testType = "rainyday";
-        String classToTest = "com.package.ClassToTest";
-        String methodToTest = "testMethod";
+        try {
+            setUp();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String testName = "VersionsManager";
+        String testType = "happypath";
+        String classToTest = "VersionsManager";
+        String methodToTest = "setStrategy";
         List<Directive> directives = Arrays.asList(
-                new NotNullDirective("param1"),
-                new RangeDirective("param2", 0, 10)
+                new NotNullDirective("strategy"),
+                new SimpleValueDirective("strategy","strategy")
         );
+        try {
+            classRepresentation = projectRepresentation.findClass(classToTest);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        methodRepresentation = classRepresentation.findMethod(methodToTest);
 
         // Act
-        TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classToTest, methodToTest, directives);
+        TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classRepresentation, methodRepresentation, directives);
 
         // Assert
-        assertTrue(testCase instanceof RainyDayTestCase);
-        assertEquals("rainyTest", testCase.getTestName());
-        assertEquals(TestType.RAINY_DAY, testCase.getTestType());
-        assertEquals("com.package.ClassToTest", testCase.getClassToTest());
-        assertEquals("testMethod", testCase.getMethodToTest());
+        assertTrue(testCase instanceof HappyPathTestCase);
+        assertEquals("VersionsManager", testCase.getTestName());
+        assertEquals(TestType.HAPPY_PATH, testCase.getTestType());
+        try {
+            assertEquals(projectRepresentation.findClass("VersionsManager"), testCase.getClassToTest());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            assertEquals(projectRepresentation.findClass("VersionsManager").findMethod("setStrategy"), testCase.getMethodToTest());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(directives, testCase.getDirectives());
     }
 
@@ -47,26 +85,46 @@ public class TestCaseFactoryTest {
      * Tests the creation of a HappyPathTestCase.
      */
     @Test
-    public void testCreateHappyPathTestCase() {
+    public void testCreateRainyDayTestCase() {
+        try {
+            setUp();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         // Arrange
-        String testName = "happyTest";
-        String testType = "happypath";
-        String classToTest = "com.package.ClassToTest";
-        String methodToTest = "testMethod";
+        String testName = "testInitializeEditor";
+        String testType = "rainyday";
+        String classToTest = "LatexEditorController";
+        String methodToTest = "LatexEditorController";
         List<Directive> directives = Arrays.asList(
-                new NotNullDirective("param1"),
-                new RangeDirective("param2", 1, 5)
+                new NotNullDirective("strategy"),
+                new SimpleValueDirective("strategy", "strategy")
         );
 
+        try {
+            classRepresentation = projectRepresentation.findClass(classToTest);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        methodRepresentation = classRepresentation.findMethod(methodToTest);
+
         // Act
-        TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classToTest, methodToTest, directives);
+        TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classRepresentation, methodRepresentation, directives);
 
         // Assert
-        assertTrue(testCase instanceof HappyPathTestCase);
-        assertEquals("happyTest", testCase.getTestName());
-        assertEquals(TestType.HAPPY_PATH, testCase.getTestType());
-        assertEquals("com.package.ClassToTest", testCase.getClassToTest());
-        assertEquals("testMethod", testCase.getMethodToTest());
+        assertTrue(testCase instanceof RainyDayTestCase);
+        assertEquals("testInitializeEditor", testCase.getTestName());
+        assertEquals(TestType.RAINY_DAY, testCase.getTestType());
+        try {
+            assertEquals(projectRepresentation.findClass("LatexEditorController"), testCase.getClassToTest());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            assertEquals(projectRepresentation.findClass("LatexEditorController").findMethod("LatexEditorController"), testCase.getMethodToTest());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(directives, testCase.getDirectives());
     }
 
@@ -75,6 +133,11 @@ public class TestCaseFactoryTest {
      */
     @Test
     public void testUnknownTestTypeThrowsException() {
+        try {
+            setUp();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         // Arrange
         String testName = "unknownTest";
         String testType = "unknown";
@@ -85,10 +148,10 @@ public class TestCaseFactoryTest {
         );
 
         // Act & Assert
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            TestCaseFactory.createTestCase(testName, testType, classToTest, methodToTest, directives);
+        Exception exception = assertThrows(ClassNotFoundException.class, () -> {
+            TestCaseFactory.createTestCase(testName, testType, projectRepresentation.findClass(classToTest), methodRepresentation = classRepresentation.findMethod(methodToTest), directives);
         });
 
-        assertEquals("Unknown test type: unknown", exception.getMessage());
+        assertEquals("Class with name com.package.ClassToTest not found.", exception.getMessage());
     }
 }

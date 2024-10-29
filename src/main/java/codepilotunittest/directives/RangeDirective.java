@@ -32,6 +32,10 @@ public class RangeDirective implements Directive {
     public Object getMin() {
         return this.min;
     }
+    @Override
+    public String generateAssertion(){
+        return "assertTrue("+parameterName + " >= " + min + " && " +parameterName + " <= " + max + ");";
+    }
 
     @Override
     public boolean validate(Object value) {

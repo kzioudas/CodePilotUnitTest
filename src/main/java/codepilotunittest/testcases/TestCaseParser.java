@@ -2,6 +2,10 @@ package codepilotunittest.testcases;
 
 import codepilotunittest.directives.Directive;
 import codepilotunittest.directives.DirectiveParser;
+import codepilotunittest.representations.ClassRepresentation;
+import codepilotunittest.representations.MethodNotFoundException;
+import codepilotunittest.representations.MethodRepresentation;
+import codepilotunittest.representations.ProjectRepresentation;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,9 +20,14 @@ import java.util.List;
 public class TestCaseParser {
 
     private final DirectiveParser directiveParser;
+    private final ProjectRepresentation project;
+    private  ClassRepresentation classRepresentation;
+    private  MethodRepresentation methodRepresentation;
 
-    public TestCaseParser() {
+
+    public TestCaseParser(ProjectRepresentation project) {
         this.directiveParser = new DirectiveParser();
+        this.project = project;
     }
 
     /**
@@ -30,6 +39,7 @@ public class TestCaseParser {
      */
     public List<TestCase> parseTestCases(Path filePath) throws IOException {
         List<TestCase> testCases = new ArrayList<>();
+
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line;
@@ -48,13 +58,15 @@ public class TestCaseParser {
 
                 // Parse the directives using DirectiveParser
                 List<Directive> directives = directiveParser.parse(directivePart);
-
+                classRepresentation = project.findClass(classToTest);
+                methodRepresentation = classRepresentation.findMethod(methodToTest);
                 // Create and add the TestCase object
-                TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classToTest, methodToTest, directives);
+                TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classRepresentation, methodRepresentation, directives);
                 testCases.add(testCase);
             }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-
         return testCases;
     }
 }

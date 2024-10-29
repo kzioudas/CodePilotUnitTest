@@ -1,6 +1,8 @@
 package codepilotunittest.testcases;
 
 import codepilotunittest.directives.Directive;
+import codepilotunittest.representations.ClassRepresentation;
+import codepilotunittest.representations.MethodRepresentation;
 
 import java.util.List;
 
@@ -30,14 +32,14 @@ public interface TestCase {
      *
      * @return the class to be tested
      */
-    String getClassToTest();
+    ClassRepresentation getClassToTest();
 
     /**
      * Gets the method in the class that will be tested.
      *
      * @return the method to be tested
      */
-    String getMethodToTest();
+    MethodRepresentation getMethodToTest();
 
     /**
      * Gets the list of directives that guide how the test should be performed.

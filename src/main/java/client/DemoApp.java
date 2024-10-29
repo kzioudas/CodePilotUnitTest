@@ -6,6 +6,7 @@ import codepilotunittest.core.MainEngine;
 //import codepilotunittest.parser.tree.Relationship;
 import codepilotunittest.representations.ProjectRepresentation;
 
+import java.io.IOException;
 import java.nio.file.Path;
 //import java.util.Map;
 //import java.util.Set;
@@ -19,16 +20,15 @@ public class DemoApp {
     private ProjectRepresentation projectRepresentation;
     private Path sourcePackagePath;
 
-    public void setUp(){
+    public void setUp() throws IOException {
         sourcePackagePath = Path.of("src/test/resources/LatexEditor");
-        mainEngine = new MainEngine(sourcePackagePath,"LatexEditor");
-
-
+        Path sourcePackageTestPath = Path.of("src/test/resources/LatexEditor/testcases.csv");
+        mainEngine = new MainEngine(sourcePackagePath,"LatexEditor",sourcePackageTestPath);
         projectRepresentation = mainEngine.getProjectRepresentation();
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // Create an instance of DemoApp
         DemoApp app = new DemoApp();
 

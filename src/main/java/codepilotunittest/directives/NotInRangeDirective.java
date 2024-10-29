@@ -31,11 +31,14 @@ public class NotInRangeDirective implements Directive {
         return this.max;
     }
 
-
     public Object getMin() {
         return this.min;
     }
 
+    @Override
+    public String generateAssertion(){
+        return "assertFalse("+parameterName + " >= " + min + " && " +parameterName + " <= " + max + ");";
+    }
     @Override
     public boolean validate(Object value) {
         if (value instanceof Integer) {

@@ -47,9 +47,6 @@ public class ProjectRepresentation implements SrcElement {
         for (ClassRepresentation classRepresentation : classes) {
             sb.append(classRepresentation.toString()).append("\n\n");
         }
-
-
-
         return sb.toString();
     }
 }

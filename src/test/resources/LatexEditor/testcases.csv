@@ -1,0 +1,3 @@
+test_name,test_type,class_name,method_name,parameters,expected_output
+testInitializeEditor,rainyday,LatexEditorController,LatexEditorController,versionsManager,"versionsManager:void"
+VersionsManager,happypath,VersionsManager,setStrategy,strategy,"strategy:strategy"

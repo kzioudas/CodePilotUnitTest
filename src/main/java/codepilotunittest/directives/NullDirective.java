@@ -22,6 +22,10 @@ public class NullDirective implements Directive {
     }
 
     @Override
+    public String generateAssertion(){
+        return "assertNull(" + this.parameterName +")";
+    }
+    @Override
     public boolean validate(Object value) {
         return value == "null";
     }

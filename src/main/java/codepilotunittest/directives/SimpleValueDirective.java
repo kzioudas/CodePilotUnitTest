@@ -24,6 +24,15 @@ public class SimpleValueDirective implements Directive {
         return "value";
     }
 
+    //todo fix that
+    /**
+     * @return
+     */
+    @Override
+    public String generateAssertion() {
+        return "assertTrue(" + parameterName + ".equals(" + parameterValue + ");";
+    }
+
     public Object getParameterValue() {
         return parameterValue;
     }
