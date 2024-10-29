@@ -45,4 +45,15 @@ public class HappyPathTestCase implements TestCase {
         return directives;
     }
 
+    @Override
+    public String toString() {
+        return "HappyPathTestCase{" +
+                "testName='" + testName + '\'' +
+                ", testType=" + testType +
+                ", classToTest=" + classToTest.getClassName() +
+                ", methodToTest=" + methodToTest.getMethodName() +
+                ", directives=" + directives +
+                '}';
+    }
+
 }

@@ -37,5 +37,6 @@ public class DemoApp {
 
         // Now you can access projectRepresentation through the app instance
         System.out.println(app.projectRepresentation);
+        System.out.println(app.mainEngine.getTestCases().toString());
     }
 }

@@ -80,6 +80,10 @@ public class MainEngine {
         return packageNodeRelationships;
     }
 
+    public List<TestCase> getTestCases() {
+        return testCases;
+    }
+
     /**
      * Builds a representation of the project, including classes and their methods with their relationships.
      *

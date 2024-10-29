@@ -48,4 +48,6 @@ public interface TestCase {
      * @return a list of directives for the test case
      */
     List<Directive> getDirectives();
+
+    String toString();
 }
