@@ -3,7 +3,6 @@ package testcases;
 import codepilotunittest.core.MainEngine;
 import codepilotunittest.directives.Directive;
 import codepilotunittest.directives.NotNullDirective;
-import codepilotunittest.directives.RangeDirective;
 import codepilotunittest.directives.SimpleValueDirective;
 import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodNotFoundException;
@@ -39,7 +38,7 @@ public class TestCaseFactoryTest {
      * Tests the creation of a RainyDayTestCase.
      */
     @Test
-    public void testCreateHappyPathTestCase() {
+    public void testCreateHappyPathTestCase() throws MethodNotFoundException {
         // Arrange
         try {
             setUp();
@@ -59,7 +58,11 @@ public class TestCaseFactoryTest {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        methodRepresentation = classRepresentation.findMethod(methodToTest);
+        try {
+            methodRepresentation = classRepresentation.findMethod(methodToTest);
+        } catch (MethodNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Act
         TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classRepresentation, methodRepresentation, directives);
@@ -106,7 +109,11 @@ public class TestCaseFactoryTest {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        methodRepresentation = classRepresentation.findMethod(methodToTest);
+        try {
+            methodRepresentation = classRepresentation.findMethod(methodToTest);
+        } catch (MethodNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Act
         TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classRepresentation, methodRepresentation, directives);
@@ -122,6 +129,8 @@ public class TestCaseFactoryTest {
         }
         try {
             assertEquals(projectRepresentation.findClass("LatexEditorController").findMethod("LatexEditorController"), testCase.getMethodToTest());
+        } catch (MethodNotFoundException e) {
+            throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

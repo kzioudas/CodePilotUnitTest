@@ -12,7 +12,7 @@ public class DirectiveFactory {
      * @param directiveString the string representation of the directive (e.g., "null", "range(0,7)", etc.)
      * @return a Directive object representing the directive
      */
-    public static Directive createDirective(String parameterName, String directiveString) {
+    public static Directive createDirective(String parameterName, String directiveString, String expected) {
         if (directiveString.equalsIgnoreCase("null")) {
             return new NullDirective(parameterName);
         } else if (directiveString.equalsIgnoreCase("not null")) {

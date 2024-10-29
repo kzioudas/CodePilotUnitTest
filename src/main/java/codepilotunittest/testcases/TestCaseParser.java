@@ -12,7 +12,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A parser for reading test cases from a CSV file.
@@ -37,16 +39,15 @@ public class TestCaseParser {
      * @return a list of parsed TestCase objects
      * @throws IOException if an I/O error occurs while reading the file
      */
-    public List<TestCase> parseTestCases(Path filePath) throws IOException {
-        List<TestCase> testCases = new ArrayList<>();
-
+    public Map<String, List<TestCase>> parseTestCases(Path filePath) throws IOException {
+        Map<String, List<TestCase>> testCasesByClass = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line;
             // Skip the header row
             br.readLine();
 
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null ) {
                 String[] parts = line.split(",");
 
                 // Extract columns from CSV line
@@ -58,15 +59,22 @@ public class TestCaseParser {
 
                 // Parse the directives using DirectiveParser
                 List<Directive> directives = directiveParser.parse(directivePart);
-                classRepresentation = project.findClass(classToTest);
-                methodRepresentation = classRepresentation.findMethod(methodToTest);
-                // Create and add the TestCase object
+                ClassRepresentation classRepresentation = project.findClass(classToTest);
+                MethodRepresentation methodRepresentation = classRepresentation.findMethod(methodToTest);
+
+                // Create the TestCase object
                 TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classRepresentation, methodRepresentation, directives);
-                testCases.add(testCase);
+
+                // Add the TestCase to the appropriate list in the map
+                testCasesByClass.computeIfAbsent(classToTest, k -> new ArrayList<>()).add(testCase);
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
+        } catch (MethodNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return testCases;
+
+        return testCasesByClass;
     }
+
 }

@@ -4,6 +4,7 @@ package codepilotunittest.representations;
 import codepilotunittest.parser.tree.LeafNode;
 import codepilotunittest.parser.tree.ModifierType;
 import codepilotunittest.parser.tree.Relationship;
+import codepilotunittest.testgeneration.ParameterGenerator;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ public class MethodRepresentation implements SrcElement {
     private Map<String, String> parameters;
     private List<ModifierType> modifiers;
     private Set<Relationship<LeafNode>> relationships;
+    private ParameterGenerator parameterGenerator = new ParameterGenerator();
 
     public MethodRepresentation(String methodName, String returnType, Map<String, String> parameters, List<ModifierType> modifiers, Set<Relationship<LeafNode>> relationships, List<String> testAnnotations) {
         this.methodName = methodName;
@@ -42,6 +44,10 @@ public class MethodRepresentation implements SrcElement {
 
     public Set<Relationship<LeafNode>> getRelationships() {
         return relationships;
+    }
+
+    public String generateParameter(String parameterName, String parameterValue) {
+       return parameterGenerator.generateParameter(parameters.get(parameterName), parameterName, parameterValue);
     }
 
     @Override

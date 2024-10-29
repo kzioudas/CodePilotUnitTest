@@ -13,7 +13,7 @@ public class DirectiveFactoryTest {
         String directiveString = "null";
 
         // Act
-        Directive directive = DirectiveFactory.createDirective(paramName, directiveString);
+        Directive directive = DirectiveFactory.createDirective(paramName, directiveString,"0");
 
         // Assert
         assertTrue(directive instanceof NullDirective);
@@ -27,7 +27,7 @@ public class DirectiveFactoryTest {
         String directiveString = "not null";
 
         // Act
-        Directive directive = DirectiveFactory.createDirective(paramName, directiveString);
+        Directive directive = DirectiveFactory.createDirective(paramName, directiveString,"0");
 
         // Assert
         assertTrue(directive instanceof NotNullDirective);
@@ -41,7 +41,7 @@ public class DirectiveFactoryTest {
         String directiveString = "range(1-10)";
 
         // Act
-        Directive directive = DirectiveFactory.createDirective(paramName, directiveString);
+        Directive directive = DirectiveFactory.createDirective(paramName, directiveString,"0");
 
         // Assert
         assertTrue(directive instanceof RangeDirective);
@@ -58,7 +58,7 @@ public class DirectiveFactoryTest {
         String directiveString = "notInRange(5-20)";
 
         // Act
-        Directive directive = DirectiveFactory.createDirective(paramName, directiveString);
+        Directive directive = DirectiveFactory.createDirective(paramName, directiveString,"0");
 
         // Assert
         assertTrue(directive instanceof NotInRangeDirective);
@@ -75,7 +75,7 @@ public class DirectiveFactoryTest {
         String directiveString = "5";
 
         // Act
-        Directive directive = DirectiveFactory.createDirective(paramName, directiveString);
+        Directive directive = DirectiveFactory.createDirective(paramName, directiveString,"0");
 
         // Assert
         assertTrue(directive instanceof SimpleValueDirective);

@@ -28,6 +28,7 @@ public class SimpleValueDirective implements Directive {
     /**
      * @return
      */
+    //ToDo for other types (String,int etc)
     @Override
     public String generateAssertion() {
         return "assertTrue(" + parameterName + ".equals(" + parameterValue + ");";
@@ -37,6 +38,10 @@ public class SimpleValueDirective implements Directive {
         return parameterValue;
     }
 
+
+    public String toString(){
+        return "SimpleValueDirective [parameterName=" + parameterName + ", parameterValue=" + parameterValue + "]" + generateAssertion();
+    }
     @Override
     public boolean validate(Object value) {
         return value.equals(parameterValue);

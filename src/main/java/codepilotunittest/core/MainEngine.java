@@ -25,14 +25,13 @@ public class MainEngine {
 	//COMMENTED OUT SINCE IT'S NOT USED
 	//private static final Logger logger = LogManager.getLogger(MainEngine.class);
     ParserType parserType = ParserType.JAVAPARSER;
-    //private ProjectParserFactory parserFactoryactory = new ProjectParserFactory();
     private Parser parser = ProjectParserFactory.createProjectParser(parserType);
     private Map<Path, PackageNode> packageNodes;
     private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
     private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
     private ProjectRepresentation projectRepresentation;
     private TestCaseParser testCaseParser;
-    private List<TestCase> testCases;
+    private Map<String, List<TestCase>> testCases;
     public MainEngine(Path sourcePackagePath,String projectName) {
 
         this.packageNodes = parser.parseSourcePackage(sourcePackagePath);
@@ -80,7 +79,7 @@ public class MainEngine {
         return packageNodeRelationships;
     }
 
-    public List<TestCase> getTestCases() {
+    public Map<String, List<TestCase>> getTestCases() {
         return testCases;
     }
 

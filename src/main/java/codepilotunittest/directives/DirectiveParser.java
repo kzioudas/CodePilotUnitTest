@@ -22,14 +22,19 @@ public class DirectiveParser {
 
         for (String part : directiveParts) {
             // Remove extra spaces around paramName and condition
-            String cleanedPart = part.replaceAll("\\s*:\\s*", ":").trim(); // Clean spaces around ':'
+            String cleanedPart = part.replaceAll("\\s*:\\s*:\\s*", ":").trim(); // Clean spaces around ':'
 
             // Split each directive by ':'
             String[] directiveElements = cleanedPart.split(":");
-            if (directiveElements.length == 2) {
+            if (directiveElements.length == 3) {
                 String paramName = directiveElements[0].trim();
                 String condition = directiveElements[1].trim();
-                directives.add(DirectiveFactory.createDirective(paramName, condition));
+                String expected = directiveElements[2].trim();
+                directives.add(DirectiveFactory.createDirective(paramName, condition, expected));
+            }else if (directiveElements.length == 2) {
+                String paramName = directiveElements[0].trim();
+                String condition = directiveElements[1].trim();
+                directives.add(DirectiveFactory.createDirective(paramName, condition, null));
             }
         }
 

@@ -44,12 +44,13 @@ public class ClassRepresentation implements SrcElement {
         return relationships;
     }
 
-    public MethodRepresentation findMethod(String methodName) {
+    public MethodRepresentation findMethod(String methodName) throws MethodNotFoundException {
         for (MethodRepresentation method : methods) {
             if (method.getMethodName().equals(methodName)) {
-                return method;}
+                return method;
+            }
         }
-        return null;
+        throw new MethodNotFoundException("Method with name " + methodName + " not found.");
     }
     @Override
     public String toString() {
