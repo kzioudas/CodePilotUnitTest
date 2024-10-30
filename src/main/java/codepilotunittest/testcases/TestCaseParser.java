@@ -23,9 +23,6 @@ public class TestCaseParser {
 
     private final DirectiveParser directiveParser;
     private final ProjectRepresentation project;
-    private  ClassRepresentation classRepresentation;
-    private  MethodRepresentation methodRepresentation;
-
 
     public TestCaseParser(ProjectRepresentation project) {
         this.directiveParser = new DirectiveParser();

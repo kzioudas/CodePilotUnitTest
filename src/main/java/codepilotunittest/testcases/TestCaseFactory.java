@@ -8,7 +8,9 @@ import java.util.List;
 
 public class TestCaseFactory {
 
-    public static TestCase createTestCase(String testName, String testType, ClassRepresentation classToTest, MethodRepresentation methodToTest, List<Directive> directives) {
+    public static TestCase createTestCase(String testName, String testType, ClassRepresentation classToTest, 
+    		MethodRepresentation methodToTest, List<Directive> directives) 
+    				throws IllegalArgumentException{
         switch (testType.toLowerCase()) {
             case "rainyday":
                 return new RainyDayTestCase(testName, classToTest, methodToTest, directives);
