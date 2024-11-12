@@ -6,12 +6,17 @@ package codepilotunittest.directives;
  */
 public class SimpleValueDirective implements Directive {
 
-    private final String parameterName;
-    private final Object parameterValue;
 
-    public SimpleValueDirective(String parameterName, Object parameterValue) {
+    private final String parameterName;
+    private final String inputValue;
+    private final String responceExpected;
+    private final String expected;
+
+    public SimpleValueDirective(String parameterName, String inputValue, String responceExpected, String expected) {
         this.parameterName = parameterName;
-        this.parameterValue = parameterValue;
+        this.inputValue = inputValue;
+        this.responceExpected = responceExpected;
+        this.expected = expected;
     }
 
     @Override
@@ -31,20 +36,20 @@ public class SimpleValueDirective implements Directive {
     //ToDo for other types (String,int etc)
     @Override
     public String generateAssertion() {
-        return "assertTrue(" + parameterName + ".equals(" + parameterValue + ");";
+        return "assertTrue(" + parameterName + ".equals(" + inputValue + ");";
     }
 
-    public Object getParameterValue() {
-        return parameterValue;
+    public String getParameterValue() {
+        return inputValue;
     }
 
 
     public String toString(){
-        return "SimpleValueDirective [parameterName=" + parameterName + ", parameterValue=" + parameterValue + "]" + generateAssertion();
+        return "SimpleValueDirective [parameterName=" + parameterName + ", parameterValue=" + inputValue + "]" + generateAssertion();
     }
     @Override
     public boolean validate(Object value) {
-        return value.equals(parameterValue);
+        return value.equals(inputValue);
     }
 }
 

@@ -12,8 +12,8 @@ public class HappyPathTestCase implements TestCase {
     private MethodRepresentation methodToTest;
     private List<Directive> directives;
 
-    public HappyPathTestCase(String testName, ClassRepresentation classToTest, MethodRepresentation methodToTest, List<Directive> directives) {
-        this.testName = testName;
+    public HappyPathTestCase(ClassRepresentation classToTest, MethodRepresentation methodToTest, List<Directive> directives) {
+        //this.testName = testName; make it with method name
         this.testType = TestType.HAPPY_PATH; // Setting test type as "happypath"
         this.classToTest = classToTest;
         this.methodToTest = methodToTest;

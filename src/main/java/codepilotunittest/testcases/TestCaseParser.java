@@ -45,14 +45,13 @@ public class TestCaseParser {
             br.readLine();
 
             while ((line = br.readLine()) != null ) {
-                String[] parts = line.split(",");
+                String[] parts = line.split("\\|");
 
                 // Extract columns from CSV line
-                String testName = parts[0].trim();
-                String testType = parts[1].trim();
-                String classToTest = parts[2].trim();
-                String methodToTest = parts[3].trim();
-                String directivePart = parts[4].trim();
+                String testType = parts[0].trim();
+                String classToTest = parts[1].trim();
+                String methodToTest = parts[2].trim();
+                String directivePart = parts[3].trim();
 
                 // Parse the directives using DirectiveParser
                 List<Directive> directives = directiveParser.parse(directivePart);
@@ -60,7 +59,7 @@ public class TestCaseParser {
                 MethodRepresentation methodRepresentation = classRepresentation.findMethod(methodToTest);
 
                 // Create the TestCase object
-                TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classRepresentation, methodRepresentation, directives);
+                TestCase testCase = TestCaseFactory.createTestCase(testType, classRepresentation, methodRepresentation, directives);
 
                 // Add the TestCase to the appropriate list in the map
                 testCasesByClass.computeIfAbsent(classToTest, k -> new ArrayList<>()).add(testCase);

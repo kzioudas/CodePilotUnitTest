@@ -6,9 +6,15 @@ package codepilotunittest.directives;
 public class NullDirective implements Directive {
 
     private final String parameterName;
+    private final String inputValue;
+    private final String responceExpected;
+    private final String expected;
 
-    public NullDirective(String parameterName) {
+    public NullDirective(String parameterName, String inputValue, String responceExpected, String expected) {
         this.parameterName = parameterName;
+        this.inputValue = inputValue;
+        this.responceExpected = responceExpected;
+        this.expected = expected;
     }
 
     @Override

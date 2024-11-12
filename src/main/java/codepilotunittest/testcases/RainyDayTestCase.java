@@ -12,8 +12,8 @@ public class RainyDayTestCase implements TestCase {
     private MethodRepresentation methodToTest;
     private List<Directive> directives;
 
-    public RainyDayTestCase(String testName, ClassRepresentation classToTest, MethodRepresentation methodToTest, List<Directive> directives) {
-        this.testName = testName;
+    public RainyDayTestCase(ClassRepresentation classToTest, MethodRepresentation methodToTest, List<Directive> directives) {
+        //this.testName = testName; make it with method name
         this.testType = TestType.RAINY_DAY; // Setting test type as "rainyday"
         this.classToTest = classToTest;
         this.methodToTest = methodToTest;

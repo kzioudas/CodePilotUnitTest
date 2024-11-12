@@ -51,7 +51,7 @@ public class TestCaseFactoryTest {
         String methodToTest = "setStrategy";
         List<Directive> directives = Arrays.asList(
                 new NotNullDirective("strategy"),
-                new SimpleValueDirective("strategy","strategy")
+                new SimpleValueDirective("strategy","strategy","strategy","True")
         );
         try {
             classRepresentation = projectRepresentation.findClass(classToTest);
@@ -65,11 +65,11 @@ public class TestCaseFactoryTest {
         }
 
         // Act
-        TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classRepresentation, methodRepresentation, directives);
+        TestCase testCase = TestCaseFactory.createTestCase(testType, classRepresentation, methodRepresentation, directives);
 
         // Assert
         assertTrue(testCase instanceof HappyPathTestCase);
-        assertEquals("VersionsManager", testCase.getTestName());
+        //assertEquals("VersionsManager", testCase.getTestName());
         assertEquals(TestType.HAPPY_PATH, testCase.getTestType());
         try {
             assertEquals(projectRepresentation.findClass("VersionsManager"), testCase.getClassToTest());
@@ -101,7 +101,7 @@ public class TestCaseFactoryTest {
         String methodToTest = "LatexEditorController";
         List<Directive> directives = Arrays.asList(
                 new NotNullDirective("strategy"),
-                new SimpleValueDirective("strategy", "strategy")
+                new SimpleValueDirective("strategy","strategy","strategy","True")
         );
 
         try {
@@ -116,11 +116,11 @@ public class TestCaseFactoryTest {
         }
 
         // Act
-        TestCase testCase = TestCaseFactory.createTestCase(testName, testType, classRepresentation, methodRepresentation, directives);
+        TestCase testCase = TestCaseFactory.createTestCase(testType, classRepresentation, methodRepresentation, directives);
 
         // Assert
         assertTrue(testCase instanceof RainyDayTestCase);
-        assertEquals("testInitializeEditor", testCase.getTestName());
+        //assertEquals("testInitializeEditor", testCase.getTestName());
         assertEquals(TestType.RAINY_DAY, testCase.getTestType());
         try {
             assertEquals(projectRepresentation.findClass("LatexEditorController"), testCase.getClassToTest());
@@ -158,7 +158,7 @@ public class TestCaseFactoryTest {
 
         // Act & Assert
         Exception exception = assertThrows(ClassNotFoundException.class, () -> {
-            TestCaseFactory.createTestCase(testName, testType, projectRepresentation.findClass(classToTest), methodRepresentation = classRepresentation.findMethod(methodToTest), directives);
+            TestCaseFactory.createTestCase(testType, projectRepresentation.findClass(classToTest), methodRepresentation = classRepresentation.findMethod(methodToTest), directives);
         });
 
         assertEquals("Class with name com.package.ClassToTest not found.", exception.getMessage());

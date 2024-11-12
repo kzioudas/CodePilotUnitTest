@@ -1,4 +1,9 @@
-test_name,test_type,class_name,method_name,parameters
-testInitializeEditor,rainyday,LatexEditorController,LatexEditorController,"versionsManager:void"
-VersionsManager,happypath,VersionsManager,setStrategy,"strategy:strategy"
-Document,happypath,DocumentManager,createDocument,"type:Word:Word"
+test_type|class_name|method_name|directives
+happypath|VersionsManager|setStrategy|strategy:"strategy":"strategy":True
+rainyday|VersionsManager|setStrategy|strategy:"strategy1":"strategy2":False
+happypath|VersionsManager|setStrategy|strategy:NULL:NULL:True
+rainyday|VersionsManager|setStrategy|strategy:NULL:NOTNULL:False
+happypath|DocumentManager|createDocument|type:Word:"type instance of Word":True
+rainyday|DocumentManager|createDocument|type:Word:"type instance of Words":False
+happypath|CommandFactory|createCommand|type::"addLatex":"type instance of AddLatexCommand":True
+rainyday|CommandFactory|createCommand|type:"addLatex":"type instance of AddLatexCommand":False
