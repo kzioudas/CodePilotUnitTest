@@ -1,4 +1,4 @@
-package directives;
+package codepilotunittest.directives;
 
 import codepilotunittest.directives.*;
 import org.junit.jupiter.api.Test;

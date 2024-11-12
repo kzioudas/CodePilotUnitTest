@@ -43,7 +43,7 @@ public class MainEngine {
         this.packageNodeRelationships = parser.identifyPackageNodeRelationships(leafNodeRelationships);
 
         // Build a representation of the entire project
-        this.projectRepresentation = buildProjectRepresentation( projectName, packageNodes, packageNodeRelationships, leafNodeRelationships);
+        this.projectRepresentation = buildProjectRepresentation(projectName, packageNodes, packageNodeRelationships, leafNodeRelationships);
 
     }
 
@@ -92,7 +92,7 @@ public class MainEngine {
      * @param leafNodeRelationships      The relationships between leaf nodes.
      * @return                           A ProjectRepresentation object.
      */
-    public static ProjectRepresentation buildProjectRepresentation(String projectName, Map<Path, PackageNode> packageNodes, Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships) {
+    private static ProjectRepresentation buildProjectRepresentation(String projectName, Map<Path, PackageNode> packageNodes, Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships) {
         List<ClassRepresentation> classRepresentations = new ArrayList<>();
 
         // Iterate through each package node to gather class and method information
@@ -118,7 +118,7 @@ public class MainEngine {
      * @param leafNodeRelationships The relationships between leaf nodes.
      * @return                      A ClassRepresentation object.
      */
-    public static ClassRepresentation buildClassRepresentation(LeafNode leafNode, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships) {
+    private static ClassRepresentation buildClassRepresentation(LeafNode leafNode, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships) {
         List<MethodRepresentation> methodRepresentations = new ArrayList<>();
 
         // Create MethodRepresentation objects for each method in the class
@@ -153,7 +153,7 @@ public class MainEngine {
      * @param testAnnotations   The test annotations of the method.
      * @return                  A MethodRepresentation object.
      */
-    public static MethodRepresentation buildMethodRepresentation(Method method, Set<Relationship<LeafNode>> relationships, List<String> testAnnotations) {
+    private static MethodRepresentation buildMethodRepresentation(Method method, Set<Relationship<LeafNode>> relationships, List<String> testAnnotations) {
         Map<String, String> parameters = method.getParameters();
         List<ModifierType> modifiers = new ArrayList<>();
         modifiers.add(method.getMethodModifierType());

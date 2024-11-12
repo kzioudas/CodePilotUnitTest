@@ -1,4 +1,4 @@
-package representations;
+package codepilotunittest.representations;
 
 import codepilotunittest.parser.tree.*;
 import codepilotunittest.representations.ClassRepresentation;

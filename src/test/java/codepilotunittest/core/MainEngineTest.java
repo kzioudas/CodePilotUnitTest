@@ -1,11 +1,11 @@
-package core;
+package codepilotunittest.core;
 
-import codepilotunittest.core.MainEngine;
 import codepilotunittest.parser.tree.LeafNode;
 import codepilotunittest.parser.tree.ModifierType;
 import codepilotunittest.parser.tree.PackageNode;
 import codepilotunittest.parser.tree.Relationship;
 import codepilotunittest.representations.ClassRepresentation;
+import codepilotunittest.representations.MethodNotFoundException;
 import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
 
@@ -36,8 +36,6 @@ class MainEngineTest {
         Path path = Path.of("src/test/resources/ParserTesting");
         mainEngine = new MainEngine(path,"ParserTesting");
         packageNodes = mainEngine.getPackageNodes();
-        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
-        packageNodeRelationships = mainEngine.getPackageNodeRelationships();
         projectRepresentation = mainEngine.getProjectRepresentation();
 
         // Then
@@ -59,14 +57,14 @@ class MainEngineTest {
     void testBuildClassRepresentation() {
         Path path = Path.of("src/test/resources/ParserTesting");
         mainEngine = new MainEngine(path,"ParserTesting");
-        packageNodes = mainEngine.getPackageNodes();
-        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
-
-        // Test with a simple class
-        LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("InnerClassSample");
 
         // When
-        ClassRepresentation classRepresentation = MainEngine.buildClassRepresentation(leafNode, leafNodeRelationships);
+        ClassRepresentation classRepresentation = null;
+        try {
+            classRepresentation = mainEngine.getProjectRepresentation().findClass("InnerClassSample");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Then
         assertNotNull(classRepresentation);
@@ -79,14 +77,14 @@ class MainEngineTest {
     void testBuildInterfaceRepresentation() {
         Path path = Path.of("src/test/resources/ParserTesting");
         mainEngine = new MainEngine(path,"ParserTesting");
-        packageNodes = mainEngine.getPackageNodes();
-        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
-
-        // Test with an interface
-        LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("TestingInterface");
 
         // When
-        ClassRepresentation classRepresentation = MainEngine.buildClassRepresentation(leafNode, leafNodeRelationships);
+        ClassRepresentation classRepresentation = null;
+        try {
+            classRepresentation = mainEngine.getProjectRepresentation().findClass("TestingInterface");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Then
         assertNotNull(classRepresentation);
@@ -100,14 +98,14 @@ class MainEngineTest {
     void testBuildEnumRepresentation() {
         Path path = Path.of("src/test/resources/ParserTesting");
         mainEngine = new MainEngine(path,"ParserTesting");
-        packageNodes = mainEngine.getPackageNodes();
-        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
-
-        // Test with an enum
-        LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("EnumSample");
 
         // When
-        ClassRepresentation classRepresentation = MainEngine.buildClassRepresentation(leafNode, leafNodeRelationships);
+        ClassRepresentation classRepresentation = null;
+        try {
+            classRepresentation = mainEngine.getProjectRepresentation().findClass("EnumSample");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Then
         assertNotNull(classRepresentation);
@@ -121,17 +119,16 @@ class MainEngineTest {
     void testBuildMethodRepresentation() {
         Path path = Path.of("src/test/resources/ParserTesting");
         mainEngine = new MainEngine(path,"ParserTesting");
-        packageNodes = mainEngine.getPackageNodes();
-        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
-        packageNodeRelationships = mainEngine.getPackageNodeRelationships();
-        projectRepresentation = mainEngine.getProjectRepresentation();
-        // Test with a method having no parameters
-        LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ObjectCreationSample");
-        LeafNode.Method method = leafNode.getMethods().get(0);
-        Set<Relationship<LeafNode>> relationships = leafNodeRelationships.get(leafNode);
 
         // When
-        MethodRepresentation methodRepresentation = MainEngine.buildMethodRepresentation(method, relationships, null);
+        MethodRepresentation methodRepresentation = null;
+        try {
+            methodRepresentation = mainEngine.getProjectRepresentation().findClass("ObjectCreationSample").findMethod("ObjectCreationSample");
+        } catch (MethodNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Then
         assertNotNull(methodRepresentation);
@@ -146,17 +143,16 @@ class MainEngineTest {
     void testBuildMethodWithParameters() {
         Path path = Path.of("src/test/resources/ParserTesting");
         mainEngine = new MainEngine(path,"ParserTesting");
-        packageNodes = mainEngine.getPackageNodes();
-        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
-        packageNodeRelationships = mainEngine.getPackageNodeRelationships();
-        projectRepresentation = mainEngine.getProjectRepresentation();
-        // Test with a method having parameters
-        LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ObjectCreationSample");
-        LeafNode.Method method = leafNode.getMethods().get(2);
-        Set<Relationship<LeafNode>> relationships = leafNodeRelationships.get(leafNode);
 
         // When
-        MethodRepresentation methodRepresentation = MainEngine.buildMethodRepresentation(method, relationships, null);
+        MethodRepresentation methodRepresentation = null;
+        try {
+            methodRepresentation = mainEngine.getProjectRepresentation().findClass("ObjectCreationSample").findMethod("createMapWithObject");
+        } catch (MethodNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Then
         assertNotNull(methodRepresentation);
@@ -193,12 +189,7 @@ class MainEngineTest {
         // Test handling of multiple packages
         Path path = Path.of("src/test/resources/LatexEditor");
         mainEngine = new MainEngine(path,"LatexEditor");
-        packageNodes = mainEngine.getPackageNodes();
-        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
-        packageNodeRelationships = mainEngine.getPackageNodeRelationships();
         projectRepresentation = mainEngine.getProjectRepresentation();
-
-
 
         assertNotNull(projectRepresentation);
         assertEquals("LatexEditor", projectRepresentation.getProjectName());
@@ -237,15 +228,14 @@ class MainEngineTest {
     void testMultipleInheritance() {
         Path path = Path.of("src/test/resources/ParserTesting");
         mainEngine = new MainEngine(path,"ParserTesting");
-        packageNodes = mainEngine.getPackageNodes();
-        leafNodeRelationships = mainEngine.getLeafNodeRelationships();
-        packageNodeRelationships = mainEngine.getPackageNodeRelationships();
-        projectRepresentation = mainEngine.getProjectRepresentation();
-        // Test handling of multiple inheritance (interfaces)
-        LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("ImplementingClass");
 
         // When
-        ClassRepresentation classRepresentation = MainEngine.buildClassRepresentation(leafNode, leafNodeRelationships);
+        ClassRepresentation classRepresentation = null;
+        try {
+            classRepresentation = mainEngine.getProjectRepresentation().findClass("ImplementingClass");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Then
         assertNotNull(classRepresentation);

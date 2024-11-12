@@ -1,4 +1,4 @@
-package testcases;
+package codepilotunittest.testcases;
 
 import codepilotunittest.core.MainEngine;
 import codepilotunittest.representations.MethodNotFoundException;
