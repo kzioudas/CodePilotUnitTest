@@ -13,7 +13,7 @@ public class DirectiveFactory {
      * @return a Directive object representing the directive
      */
     public static Directive createDirective(String paramName, String inputValue, String responceExpected,String expected) {
-        if (expected.contains("True")||expected.contains("false")) {
+        if (expected.equalsIgnoreCase("True")||expected.equalsIgnoreCase("False")) {
             if (inputValue.equalsIgnoreCase("NULL")) {
                 return new NullDirective(paramName, inputValue, responceExpected, expected);
             } else if (inputValue.matches("range\\((\\d+)\\-(\\d+)\\)")) {

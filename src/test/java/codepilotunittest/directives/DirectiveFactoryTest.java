@@ -23,7 +23,6 @@ public class DirectiveFactoryTest {
     public void testCreateNotNullDirective() {
         // Arrange
         String paramName = "param2";
-        String directiveString = "not null";
 
         // Act
         Directive directive = DirectiveFactory.createDirective(paramName,"null","null" ,"False");
