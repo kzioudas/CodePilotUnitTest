@@ -36,8 +36,14 @@ public class SimpleValueDirective implements Directive {
     //ToDo for other types (String,int etc)
     @Override
     public String generateAssertion() {
-        return "assertTrue(" + parameterName + ".equals(" + inputValue + ");";
+        // Adjust based on the type of value expected (e.g., quotes for String)
+        String formattedValue = inputValue.matches("^\\d+(\\.\\d+)?$") ? inputValue : "\"" + inputValue + "\"";
+        return String.format(
+                "assertEquals(%s, %s, \"Expected %s to equal %s\");",
+                formattedValue, parameterName, parameterName, formattedValue
+        );
     }
+
 
     public String getParameterValue() {
         return inputValue;

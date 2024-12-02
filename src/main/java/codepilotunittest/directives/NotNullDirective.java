@@ -24,9 +24,14 @@ public class NotNullDirective implements Directive {
     /**
      * @return
      */
-    public String generateAssertion(){
-        return "assertNotNull(" + this.parameterName +")";
+    @Override
+    public String generateAssertion() {
+        return String.format(
+                "assertNotNull(%s, \"Expected %s to be not null\");",
+                parameterName, parameterName
+        );
     }
+
 
     @Override
     public boolean validate(Object value) {

@@ -36,9 +36,13 @@ public class NotInRangeDirective implements Directive {
     }
 
     @Override
-    public String generateAssertion(){
-        return "assertFalse("+parameterName + " >= " + min + " && " +parameterName + " <= " + max + ");";
+    public String generateAssertion() {
+        return String.format(
+                "assertFalse(%s >= %d && %s <= %d, \"Expected %s to be outside range [%d, %d]\");",
+                parameterName, min, parameterName, max, parameterName, min, max
+        );
     }
+
     @Override
     public boolean validate(Object value) {
         if (value instanceof Integer) {
