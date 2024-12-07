@@ -16,11 +16,11 @@ public class DirectiveFactory {
         if (expected.equalsIgnoreCase("True")||expected.equalsIgnoreCase("False")) {
             if (inputValue.equalsIgnoreCase("NULL")) {
                 return new NullDirective(paramName, inputValue, responseExpected, expected);
-            } else if (inputValue.matches("range\\((\\d+)\\-(\\d+)\\)")) {
-                String[] rangeParts = inputValue.substring(6, inputValue.length() - 1).split("-");
+            } else if (responseExpected.matches("range\\((\\d+)\\-(\\d+)\\)")) {
+                String[] rangeParts = responseExpected.substring(6, responseExpected.length() - 1).split("-");
                 int min = Integer.parseInt(rangeParts[0].trim());
                 int max = Integer.parseInt(rangeParts[1].trim());
-                return new RangeDirective(paramName, min, max, responseExpected, expected);
+                return new RangeDirective(paramName, inputValue, min, max, expected);
             } else {
                 return new SimpleValueDirective(paramName, inputValue, responseExpected, expected);
             }

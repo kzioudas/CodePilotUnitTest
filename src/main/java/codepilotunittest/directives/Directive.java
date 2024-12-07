@@ -7,6 +7,7 @@ public interface Directive {
     String getParameterName(); // Method to get the parameter name
     String getDirectiveType(); // Method to get the type of directive
     String generateAssertion();
+    String getParameterValue();
     boolean validate(Object value); // Method to validate a value against the directive
 
 }

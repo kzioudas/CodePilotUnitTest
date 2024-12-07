@@ -5,14 +5,14 @@ package codepilotunittest.directives;
  */
 public class RangeDirective implements Directive {
     private final String parameterName;
-    private final String responceExpected;
+    private final String inputValue;
     private final String expected;
     private final int min;
     private final int max;
 
-    public RangeDirective(String parameterName, int min, int max , String responceExpected, String expected) {
+    public RangeDirective(String parameterName, String inputValue, int min, int max , String expected) {
         this.parameterName = parameterName;
-        this.responceExpected = responceExpected;
+        this.inputValue = inputValue;
         this.expected = expected;
         this.min = min;
         this.max = max;
@@ -28,6 +28,8 @@ public class RangeDirective implements Directive {
         return "range(" + min + "," + max + ")";
     }
 
+
+
     public Object getMax() {
         return this.max;
     }
@@ -41,6 +43,15 @@ public class RangeDirective implements Directive {
                 "assertTrue(%s >= %d && %s <= %d, \"Expected %s to be within range [%d, %d]\");",
                 parameterName, min, parameterName, max, parameterName, min, max
         );
+    }
+
+    /**
+     * @return
+     * TODO FIX
+     */
+    @Override
+    public String getParameterValue() {
+        return inputValue;
     }
 
 

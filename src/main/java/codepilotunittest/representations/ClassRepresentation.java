@@ -6,6 +6,7 @@ import codepilotunittest.parser.tree.LeafNode;
 import codepilotunittest.parser.tree.NodeType;
 import codepilotunittest.parser.tree.Relationship;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -38,6 +39,16 @@ public class ClassRepresentation implements SrcElement {
 
     public List<MethodRepresentation> getMethods() {
         return methods;
+    }
+
+    public List<MethodRepresentation> getConstructors() {
+        List<MethodRepresentation> constructors = new ArrayList<>();
+        for (MethodRepresentation method : methods) {
+            if (method.getReturnType().equals("Constructor")) {
+                constructors.add(method);
+            }
+        }
+        return constructors;
     }
 
     public Set<Relationship<LeafNode>> getRelationships() {

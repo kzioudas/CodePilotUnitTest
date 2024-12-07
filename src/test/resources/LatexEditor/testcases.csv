@@ -1,5 +1,5 @@
 test_type|class_name|method_name|directives
-happypath|VersionsManager|setStrategy|strategy:strategy:strategy:True
-rainyday|VersionsManager|setStrategy|strategy:strategy1:strategy2:False
-happypath|VersionsManager|setStrategy|strategy:NULL:NULL:True
-rainyday|VersionsManager|setStrategy|strategy:NULL:NOTNULL:False
+happypath|VersionsManager|setStrategy|strategy:strategy:strategy:True;latexEditorView:latexEditorView:latexEditorView:True;versionsStrategy:versionsStrategy:versionsStrategy:True
+rainyday|VersionsManager|setStrategy|strategy:strategy1:strategy2:False;latexEditorView:latexEditorView:latexEditorView:True;versionsStrategy:versionsStrategy:versionsStrategy:True
+happypath|VersionsManager|setStrategy|strategy:NULL:NULL:True;latexEditorView:latexEditorView:latexEditorView:True;versionsStrategy:versionsStrategy:versionsStrategy:True
+rainyday|VersionsManager|setStrategy|strategy:NULL:NOTNULL:False;latexEditorView:latexEditorView:latexEditorView:True;versionsStrategy:versionsStrategy:versionsStrategy:True

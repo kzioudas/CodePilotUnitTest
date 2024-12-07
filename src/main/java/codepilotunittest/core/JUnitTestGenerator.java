@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
+import codepilotunittest.directives.RangeDirective;
 import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
@@ -64,16 +65,18 @@ public class JUnitTestGenerator {
                 .append("_").append(testCase.getTestType().name().toLowerCase()).append("() {\n");
 
         // Instantiate the class
-        sb.append("        ").append(classRepresentation.getClassName()).append(" instance = new ")
-                .append(classRepresentation.getClassName()).append("();\n\n");
+        sb.append("        // Instantiate the class\n");
+        sb.append(generateClassInitialization(classRepresentation, directives)).append("\n\n");
 
-        // Prepare parameters
+        // Prepare method parameters
         sb.append("        // Prepare method parameters\n");
         for (Map.Entry<String, String> param : methodRepresentation.getParameters().entrySet()) {
             String paramName = param.getKey();
             String paramType = param.getValue();
+            String paramValue = findDirectiveValue(directives, paramName);
+
             sb.append("        ").append(paramType).append(" ").append(paramName)
-                    .append(" = ").append(generateDefaultValue(paramType)).append(";\n");
+                    .append(" = ").append(paramValue).append(";\n");
         }
 
         // Call the method
@@ -94,21 +97,66 @@ public class JUnitTestGenerator {
         return sb.toString();
     }
 
-    private String generateDefaultValue(String type) {
-        switch (type) {
-            case "int":
-            case "Integer":
-                return "0";
-            case "double":
-            case "Double":
-                return "0.0";
-            case "boolean":
-            case "Boolean":
-                return "false";
-            case "String":
-                return "\"\"";
-            default:
-                return "null";
+    private String generateClassInitialization(ClassRepresentation classRepresentation, List<Directive> directives) {
+        StringBuilder sb = new StringBuilder();
+
+        // Fetch constructor details
+        MethodRepresentation constructor = classRepresentation.getConstructors().get(0); // Use the first constructor
+        Map<String, String> constructorParams = constructor.getParameters();
+
+        sb.append(classRepresentation.getClassName()).append(" instance = new ").append(classRepresentation.getClassName()).append("(");
+
+        // Prepare constructor arguments
+        int i = 0; // Index for handling commas
+        int paramCount = constructorParams.size(); // Total number of parameters
+        for (Map.Entry<String, String> param : constructorParams.entrySet()) {
+            String paramName = param.getKey();
+            String paramType = param.getValue();
+            String paramValue = findDirectiveValue(directives, paramName);
+
+            sb.append(paramValue);
+
+            if (i < paramCount - 1) { // Add a comma if not the last parameter
+                sb.append(", ");
+            }
+            i++; // Increment index
+        }
+
+        sb.append(");");
+        return sb.toString();
+    }
+
+    private String findDirectiveValue(List<Directive> directives, String paramName) {
+        for (Directive directive : directives) {
+            if (directive.getParameterName().equals(paramName)) {
+                if (directive instanceof RangeDirective) {
+                    RangeDirective rangeDirective = (RangeDirective) directive;
+                    int midValue = ((int) rangeDirective.getMin() + (int) rangeDirective.getMax()) / 2; // Use mid-range value
+                    return String.valueOf(midValue);
+                }
+                if (directive.getParameterValue() == null) {
+                    return "null";
+                }
+
+                return formatValueForType(directive.getParameterValue());
+            }
+        }
+        throw new IllegalArgumentException("No directive found for parameter: " + paramName);
+    }
+
+    /**
+     * Formats a value to be used in Java code (e.g., wraps strings in quotes).
+     *
+     * @param value The raw value from the directive.
+     * @return The formatted value for Java code.
+     */
+    private String formatValueForType(String value) {
+        if (value.matches("^-?\\d+(\\.\\d+)?$")) { // Numeric value
+            return value;
+        } else if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) { // Boolean
+            return value.toLowerCase();
+        } else { // Assume string
+            return "\"" + value + "\"";
         }
     }
 }

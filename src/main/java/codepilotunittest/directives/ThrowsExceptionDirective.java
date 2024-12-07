@@ -27,6 +27,15 @@ public class ThrowsExceptionDirective implements Directive {
         );
     }
 
+    /**
+     * @return
+     * TODO FIX
+     */
+    @Override
+    public String getParameterValue() {
+        return "";
+    }
+
     @Override
     public boolean validate(Object value) {
         return false; // Validation happens through exception checking in the test case.

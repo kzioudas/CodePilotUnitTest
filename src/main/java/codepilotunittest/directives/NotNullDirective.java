@@ -21,6 +21,7 @@ public class NotNullDirective implements Directive {
         return "not null";
     }
 
+
     /**
      * @return
      */
@@ -30,6 +31,16 @@ public class NotNullDirective implements Directive {
                 "assertNotNull(%s, \"Expected %s to be not null\");",
                 parameterName, parameterName
         );
+    }
+
+    /**
+     * @return
+     * TODO FIX
+     */
+
+    @Override
+    public String getParameterValue() {
+        return "";
     }
 
 

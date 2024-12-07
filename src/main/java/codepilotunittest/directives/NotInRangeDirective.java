@@ -43,6 +43,15 @@ public class NotInRangeDirective implements Directive {
         );
     }
 
+    /**
+     * @return
+     * TODO FIX
+     */
+    @Override
+    public String getParameterValue() {
+        return "";
+    }
+
     @Override
     public boolean validate(Object value) {
         if (value instanceof Integer) {

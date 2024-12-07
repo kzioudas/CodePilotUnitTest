@@ -27,12 +27,21 @@ public class NullDirective implements Directive {
         return "null";
     }
 
+
     @Override
     public String generateAssertion() {
         return String.format(
                 "assertNull(%s, \"Expected %s to be null\");",
                 parameterName, parameterName
         );
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getParameterValue() {
+        return null;
     }
 
     @Override
