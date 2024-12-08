@@ -10,12 +10,20 @@ public class RangeDirective implements Directive {
     private final int min;
     private final int max;
 
-    public RangeDirective(String parameterName, String inputValue, int min, int max , String expected) {
+    public RangeDirective(String parameterName, int min, int max, String inputValue,  String expected) {
         this.parameterName = parameterName;
         this.inputValue = inputValue;
         this.expected = expected;
         this.min = min;
         this.max = max;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public int getMin() {
+        return min;
     }
 
     @Override
@@ -25,18 +33,9 @@ public class RangeDirective implements Directive {
 
     @Override
     public String getDirectiveType() {
-        return "range(" + min + "," + max + ")";
+        return "range";
     }
 
-
-
-    public Object getMax() {
-        return this.max;
-    }
-    
-    public Object getMin() {
-        return this.min;
-    }
     @Override
     public String generateAssertion() {
         return String.format(
@@ -45,15 +44,10 @@ public class RangeDirective implements Directive {
         );
     }
 
-    /**
-     * @return
-     * TODO FIX
-     */
     @Override
     public String getParameterValue() {
         return inputValue;
     }
-
 
     @Override
     public boolean validate(Object value) {
@@ -64,4 +58,3 @@ public class RangeDirective implements Directive {
         return false;
     }
 }
-

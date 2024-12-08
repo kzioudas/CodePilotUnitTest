@@ -1,20 +1,25 @@
 package codepilotunittest.testcases;
+
 import codepilotunittest.directives.Directive;
 import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 
 import java.util.List;
 
+/**
+ * Represents a test case for the "happy path" scenario.
+ */
 public class HappyPathTestCase implements TestCase {
-    private String testName;
-    private TestType testType;
-    private ClassRepresentation classToTest;
-    private MethodRepresentation methodToTest;
-    private List<Directive> directives;
+
+    private final String testName;
+    private final TestType testType;
+    private final ClassRepresentation classToTest;
+    private final MethodRepresentation methodToTest;
+    private final List<Directive> directives;
 
     public HappyPathTestCase(ClassRepresentation classToTest, MethodRepresentation methodToTest, List<Directive> directives) {
-        //this.testName = testName; make it with method name
-        this.testType = TestType.HAPPY_PATH; // Setting test type as "happypath"
+        this.testName = methodToTest.getMethodName() + "_happyPath";
+        this.testType = TestType.HAPPY_PATH;
         this.classToTest = classToTest;
         this.methodToTest = methodToTest;
         this.directives = directives;
@@ -55,5 +60,4 @@ public class HappyPathTestCase implements TestCase {
                 ", directives=" + directives +
                 '}';
     }
-
 }

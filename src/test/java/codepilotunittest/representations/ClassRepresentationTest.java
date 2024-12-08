@@ -70,8 +70,7 @@ class ClassRepresentationTest {
                 "void",
                 Map.of(), // parameters
                 Arrays.asList(ModifierType.get("public")), // modifiers
-                methodRelationships,
-                Arrays.asList() // testAnnotations
+                methodRelationships
         );
 
         // Relationships for the class
@@ -83,8 +82,7 @@ class ClassRepresentationTest {
                 Arrays.asList(), // modifiers
                 Arrays.asList("Serializable", "Cloneable"), // interfaces
                 Arrays.asList(methodRepresentation), // methods
-                classRelationships,
-                Arrays.asList("NotNull") // classTestAnnotations
+                classRelationships
         );
     }
 

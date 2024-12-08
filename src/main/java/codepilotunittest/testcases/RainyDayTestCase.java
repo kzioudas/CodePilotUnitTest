@@ -1,20 +1,25 @@
 package codepilotunittest.testcases;
+
 import codepilotunittest.directives.Directive;
 import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 
 import java.util.List;
 
+/**
+ * Represents a test case for the "rainy day" or edge case scenario.
+ */
 public class RainyDayTestCase implements TestCase {
-    private String testName;
-    private TestType testType;
-    private ClassRepresentation classToTest;
-    private MethodRepresentation methodToTest;
-    private List<Directive> directives;
+
+    private final String testName;
+    private final TestType testType;
+    private final ClassRepresentation classToTest;
+    private final MethodRepresentation methodToTest;
+    private final List<Directive> directives;
 
     public RainyDayTestCase(ClassRepresentation classToTest, MethodRepresentation methodToTest, List<Directive> directives) {
-        //this.testName = testName; make it with method name
-        this.testType = TestType.RAINY_DAY; // Setting test type as "rainyday"
+        this.testName = methodToTest.getMethodName() + "_rainyDay";
+        this.testType = TestType.RAINY_DAY;
         this.classToTest = classToTest;
         this.methodToTest = methodToTest;
         this.directives = directives;
@@ -34,6 +39,7 @@ public class RainyDayTestCase implements TestCase {
     public ClassRepresentation getClassToTest() {
         return classToTest;
     }
+
     @Override
     public MethodRepresentation getMethodToTest() {
         return methodToTest;
@@ -54,6 +60,4 @@ public class RainyDayTestCase implements TestCase {
                 ", directives=" + directives +
                 '}';
     }
-
-
 }

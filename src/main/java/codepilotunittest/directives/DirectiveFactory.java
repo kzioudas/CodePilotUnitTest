@@ -1,32 +1,34 @@
 package codepilotunittest.directives;
 
-
+/**
+ * Factory class for creating directives based on input strings.
+ */
 public class DirectiveFactory {
 
     /**
-     * Factory method to create a directive based on a string.
+     * Factory method to create a directive.
      *
      * @param paramName        Name of the parameter.
      * @param inputValue       Input value provided for the directive.
-     * @param responseExpected The expected response from the method.
-     * @param expected         The expected outcome of the test case.
-     * @return a Directive object representing the directive.
+     * @param responseExpected The expected response.
+     * @param expected         The expected result.
+     * @return a Directive object.
      */
-    public static Directive createDirective(String paramName, String inputValue, String responseExpected,String expected) {
-        if (expected.equalsIgnoreCase("True")||expected.equalsIgnoreCase("False")) {
-            if (inputValue.equalsIgnoreCase("NULL")) {
+    public static Directive createDirective(String paramName, String inputValue, String responseExpected, String expected) {
+        if (expected.equalsIgnoreCase("true") || expected.equalsIgnoreCase("false")) {
+            if ("null".equalsIgnoreCase(inputValue)) {
                 return new NullDirective(paramName, inputValue, responseExpected, expected);
-            } else if (responseExpected.matches("range\\((\\d+)\\-(\\d+)\\)")) {
+            } else if (responseExpected.matches("range\\((\\d+)-(\\d+)\\)")) {
                 String[] rangeParts = responseExpected.substring(6, responseExpected.length() - 1).split("-");
                 int min = Integer.parseInt(rangeParts[0].trim());
                 int max = Integer.parseInt(rangeParts[1].trim());
-                return new RangeDirective(paramName, inputValue, min, max, expected);
+                return new RangeDirective(paramName, min, max, inputValue,  expected);
             } else {
                 return new SimpleValueDirective(paramName, inputValue, responseExpected, expected);
             }
         } else if (expected.toLowerCase().contains("exception")) {
             return new ThrowsExceptionDirective(paramName, responseExpected, expected);
         }
-        return null;
+        return null; // Handle unknown directive cases
     }
 }

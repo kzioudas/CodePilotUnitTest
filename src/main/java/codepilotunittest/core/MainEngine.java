@@ -140,8 +140,7 @@ public class MainEngine {
                 classModifiers,
                 interfaces,
                 methodRepresentations,
-                classRelationships,
-                classTestAnnotations
+                classRelationships
         );
     }
 
@@ -163,8 +162,7 @@ public class MainEngine {
                 method.getMethodReturnType(),
                 parameters,
                 modifiers,
-                relationships,
-                testAnnotations
+                relationships
         );
     }
 }
