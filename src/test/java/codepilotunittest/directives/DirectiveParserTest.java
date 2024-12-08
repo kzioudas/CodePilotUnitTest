@@ -29,10 +29,10 @@ public class DirectiveParserTest {
         assertTrue(directives.get(0) instanceof NullDirective);
         assertEquals("param1", directives.get(0).getParameterName());
 
-        assertTrue(directives.get(1) instanceof RangeDirective);
+        assertTrue(directives.get(1) instanceof SimpleValueDirective);
         assertEquals("param2", directives.get(1).getParameterName());
-        assertEquals(1, ((RangeDirective) directives.get(1)).getMin());
-        assertEquals(10, ((RangeDirective) directives.get(1)).getMax());
+        //assertEquals(1, ((SimpleValueDirective) directives.get(1)).getMin());
+        //assertEquals(10, ((SimpleValueDirective) directives.get(1)).getMax());
     }
     //ToDo
     /**

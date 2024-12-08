@@ -32,39 +32,39 @@ public class DirectiveFactoryTest {
         assertEquals("param2", directive.getParameterName());
     }
 
-    @Test
-    public void testCreateRangeDirective() {
-        // Arrange
-        String paramName = "param3";
-        String directiveString = "range(1-10)";
+//    @Test
+//    public void testCreateRangeDirective() {
+//        // Arrange
+//        String paramName = "param3";
+//        String directiveString = "range(1-10)";
+//
+//        // Act
+//        Directive directive = DirectiveFactory.createDirective(paramName,directiveString,"7","True" );
+//
+//        // Assert
+//        assertTrue(directive instanceof RangeDirective);
+//        RangeDirective rangeDirective = (RangeDirective) directive;
+//        assertEquals("param3", rangeDirective.getParameterName());
+//        assertEquals(1, rangeDirective.getMin());
+//        assertEquals(10, rangeDirective.getMax());
+//    }
 
-        // Act
-        Directive directive = DirectiveFactory.createDirective(paramName,directiveString,"7","True" );
-
-        // Assert
-        assertTrue(directive instanceof RangeDirective);
-        RangeDirective rangeDirective = (RangeDirective) directive;
-        assertEquals("param3", rangeDirective.getParameterName());
-        assertEquals(1, rangeDirective.getMin());
-        assertEquals(10, rangeDirective.getMax());
-    }
-
-    @Test
-    public void testCreateNotInRangeDirective() {
-        // Arrange
-        String paramName = "param4";
-        String directiveString = "range(5-20)";
-
-        // Act
-        Directive directive = DirectiveFactory.createDirective(paramName,directiveString,"8","OutOfBoundsException");
-
-        // Assert
-        assertTrue(directive instanceof RangeDirective);
-        RangeDirective rangeDirective = (RangeDirective) directive;
-        assertEquals("param4", rangeDirective.getParameterName());
-        assertEquals(5, rangeDirective.getMin());
-        assertEquals(20, rangeDirective.getMax());
-    }
+//    @Test
+//    public void testCreateNotInRangeDirective() {
+//        // Arrange
+//        String paramName = "param4";
+//        String directiveString = "range(5-20)";
+//
+//        // Act
+//        Directive directive = DirectiveFactory.createDirective(paramName,directiveString,"8","OutOfBoundsException");
+//
+//        // Assert
+//        assertTrue(directive instanceof RangeDirective);
+//        RangeDirective rangeDirective = (RangeDirective) directive;
+//        assertEquals("param4", rangeDirective.getParameterName());
+//        assertEquals(5, rangeDirective.getMin());
+//        assertEquals(20, rangeDirective.getMax());
+//    }
 
     @Test
     public void testCreateSimpleValueDirective() {

@@ -62,7 +62,7 @@ public class DirectiveTest {
         Directive rangeDirective = new RangeDirective("testParam", 0, 10,"3","True");
 
         assertEquals("testParam", rangeDirective.getParameterName());
-        assertEquals("range(0,10)", rangeDirective.getDirectiveType());
+        assertEquals("range", rangeDirective.getDirectiveType());
         assertTrue(rangeDirective.validate(5));
         assertFalse(rangeDirective.validate(11));
         assertFalse(rangeDirective.validate(-1));

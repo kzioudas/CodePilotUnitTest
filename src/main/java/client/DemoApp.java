@@ -18,9 +18,9 @@ public class DemoApp {
     private Path sourcePackagePath;
 
     public void setUp() throws IOException, ClassNotFoundException {
-        sourcePackagePath = Path.of("src/test/resources/LatexEditor");
-        Path sourcePackageTestPath = Path.of("src/test/resources/LatexEditor/testcases.csv");
-        mainEngine = new MainEngine(sourcePackagePath,"LatexEditor",sourcePackageTestPath);
+        sourcePackagePath = Path.of("src/test/resources/example-project");
+        Path sourcePackageTestPath = Path.of("src/test/resources/example-project/testcases.csv");
+        mainEngine = new MainEngine(sourcePackagePath,"example-project",sourcePackageTestPath);
         projectRepresentation = mainEngine.getProjectRepresentation();
         Map<String, List<TestCase>> testCases = mainEngine.getTestCases();
         JUnitTestGenerator generator = new JUnitTestGenerator(projectRepresentation);

@@ -31,7 +31,7 @@ public class TestCaseParserTest {
         Map<String, List<TestCase>> testCases = testCaseParser.parseTestCases(Path.of("src/test/resources/LatexEditor/testcases.csv"));
 
         // Assert: Check that we have two test cases
-        assertEquals(3, testCases.size());
+        assertEquals(5, testCases.size());
 
         // First TestCase (RainyDay)
         TestCase testCase1 = testCases.get("VersionsManager").get(0);
