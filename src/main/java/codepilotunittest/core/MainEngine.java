@@ -165,4 +165,10 @@ public class MainEngine {
                 relationships
         );
     }
+    
+    public void generateTests(Map<String, List<TestCase>> testCasesByClass, Path outputDir) throws IOException {
+    	JUnitTestGenerator myJunitTestGenerator = new JUnitTestGenerator(this.projectRepresentation); 
+    	myJunitTestGenerator.generateTests(testCasesByClass, outputDir);
+    }
+    
 }

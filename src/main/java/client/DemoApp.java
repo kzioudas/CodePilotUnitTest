@@ -1,6 +1,5 @@
 package client;
 
-import codepilotunittest.core.JUnitTestGenerator;
 import codepilotunittest.core.MainEngine;
 import codepilotunittest.representations.ProjectRepresentation;
 import codepilotunittest.testcases.TestCase;
@@ -23,8 +22,8 @@ public class DemoApp {
         mainEngine = new MainEngine(sourcePackagePath,"example-project",sourcePackageTestPath);
         projectRepresentation = mainEngine.getProjectRepresentation();
         Map<String, List<TestCase>> testCases = mainEngine.getTestCases();
-        JUnitTestGenerator generator = new JUnitTestGenerator(projectRepresentation);
-        generator.generateTests(testCases, sourcePackagePath);
+        //JUnitTestGenerator generator = new JUnitTestGenerator(projectRepresentation);
+        mainEngine.generateTests(testCases, sourcePackagePath);
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {

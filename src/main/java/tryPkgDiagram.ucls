@@ -3,12 +3,12 @@
   realizations="true" associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
   <package id="1" language="java" name="codepilotunittest.core" project="CodePilotUnitTest" 
     file="/CodePilotUnitTest/src/main/java/codepilotunittest/core" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="347" y="179"/>    
+    <position height="-1" width="-1" x="438" y="134"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="2" language="java" name="codepilotunittest.directives" project="CodePilotUnitTest" 
     file="/CodePilotUnitTest/src/main/java/codepilotunittest/directives" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="402" y="402"/>    
+    <position height="-1" width="-1" x="457" y="396"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="3" language="java" name="codepilotunittest.parser" project="CodePilotUnitTest" 
@@ -41,66 +41,65 @@
     <position height="-1" width="-1" x="605" y="221"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="9" language="java" name="codepilotunittest.testgeneration" project="CodePilotUnitTest" 
-    file="/CodePilotUnitTest/src/main/java/codepilotunittest/testgeneration" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="111" y="177"/>    
-    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
-  </package>  
+  <dependency id="9">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
   <dependency id="10">    
+    <bendpoint x="621" y="426"/>    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="11">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="12">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="13">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="14">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="15">    
+    <bendpoint x="221" y="229"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="16">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="17">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="18">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="19">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="20">    
     <bendpoint x="556" y="315"/>    
     <bendpoint x="562" y="404"/>    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="4"/>  
   </dependency>  
-  <dependency id="11">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <dependency id="12">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <dependency id="13">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <dependency id="14">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="4"/>  
-  </dependency>  
-  <dependency id="15">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="3"/>  
-  </dependency>  
-  <dependency id="16">    
+  <dependency id="21">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="5"/>  
   </dependency>  
-  <dependency id="17">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <dependency id="18">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="8"/>  
-  </dependency>  
-  <dependency id="19">    
-    <bendpoint x="621" y="426"/>    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="4"/>  
-  </dependency>  
-  <dependency id="20">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="4"/>  
-  </dependency>  
-  <dependency id="21">    
-    <bendpoint x="221" y="229"/>    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
   <dependency id="22">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="6"/>  
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="1"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

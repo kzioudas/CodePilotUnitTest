@@ -1,6 +1,5 @@
 package codepilotunittest.directives;
 
-import codepilotunittest.directives.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
