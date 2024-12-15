@@ -348,7 +348,7 @@ public class FileVisitor
     private List<String> populateCreatedObjects()
     {
         List<String> notAssignedCreatedObjects = filterAssignedCreatedObjects(fields.stream()
-                                                                                  .map(LeafNode.Field::fieldType)
+                                                                                  .map(LeafNode.Field::getFieldType)
                                                                                   .collect(Collectors.toCollection(ArrayList::new)),
                                                                               createdObjects);
 

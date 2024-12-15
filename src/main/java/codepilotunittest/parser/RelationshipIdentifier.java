@@ -50,13 +50,13 @@ public class RelationshipIdentifier implements IRelationshipIdentifier
 
         for (Relationship<LeafNode> relationship : relationships)
         {
-            if (relationship.startingNode().parentNode().equals(relationship.endingNode().parentNode()))
+            if (relationship.getStartingNode().getParentNode().equals(relationship.getEndingNode().getParentNode()))
             {
                 continue;
             }
-            packageNodeRelationships.computeIfAbsent(relationship.startingNode().parentNode(),
-                                                     packageNode -> new HashSet<>()).add(new Relationship<>(relationship.startingNode().parentNode(),
-                                                                                                            relationship.endingNode().parentNode(),
+            packageNodeRelationships.computeIfAbsent(relationship.getStartingNode().getParentNode(),
+                                                     packageNode -> new HashSet<>()).add(new Relationship<>(relationship.getStartingNode().getParentNode(),
+                                                                                                            relationship.getEndingNode().getParentNode(),
                                                                                                             RelationshipType.DEPENDENCY));
         }
         return packageNodeRelationships;
@@ -67,11 +67,11 @@ public class RelationshipIdentifier implements IRelationshipIdentifier
     {
         return doesRelationshipExist(leafNodes
                                          .get(i)
-                                         .fields()
+                                         .getFields()
                                          .stream()
-                                         .map(LeafNode.Field::fieldType)
+                                         .map(LeafNode.Field::getFieldType)
                                          .collect(Collectors.toCollection(ArrayList::new)),
-                                     leafNodes.get(j).nodeName());
+                                     leafNodes.get(j).getNodeName());
     }
 
 
@@ -79,11 +79,11 @@ public class RelationshipIdentifier implements IRelationshipIdentifier
     {
         return isRelationshipAggregation(leafNodes
                                              .get(i)
-                                             .fields()
+                                             .getFields()
                                              .stream()
-                                             .map(LeafNode.Field::fieldType)
+                                             .map(LeafNode.Field::getFieldType)
                                              .collect(Collectors.toCollection(ArrayList::new)),
-                                         leafNodes.get(j).nodeName());
+                                         leafNodes.get(j).getNodeName());
     }
 
 
@@ -165,14 +165,14 @@ public class RelationshipIdentifier implements IRelationshipIdentifier
 
     private void checkRelationship(int i, int j)
     {
-        List<String> imports = leafNodes.get(i).imports();
+        List<String> imports = leafNodes.get(i).getImports();
         boolean isImported = imports
             .stream()
             .anyMatch(imprt -> (String.format("%s.%s",
-                                              leafNodes.get(j).parentNode().getNodeName(),
-                                              leafNodes.get(j).nodeName())).endsWith(imprt) ||
+                                              leafNodes.get(j).getParentNode().getNodeName(),
+                                              leafNodes.get(j).getNodeName())).endsWith(imprt) ||
                                (String.format("%s.*",
-                                              leafNodes.get(j).parentNode().getNodeName())).endsWith(imprt));
+                                              leafNodes.get(j).getParentNode().getNodeName())).endsWith(imprt));
 
         if (!isImported && !isSubNode(i, j))
         {
@@ -204,10 +204,10 @@ public class RelationshipIdentifier implements IRelationshipIdentifier
 
     private boolean isSubNode(int i, int j)
     {
-        PackageNode node = leafNodes.get(j).parentNode();
+        PackageNode node = leafNodes.get(j).getParentNode();
         while (true)
         {
-            if (node.equals(leafNodes.get(i).parentNode()))
+            if (node.equals(leafNodes.get(i).getParentNode()))
             {
                 return true;
             }
@@ -224,56 +224,56 @@ public class RelationshipIdentifier implements IRelationshipIdentifier
 	private boolean isDependency(int i, int j)
     {
 		if (doesRelationshipExist(leafNodes.get(i).getMethodParameterTypes(),
-								  leafNodes.get(j).nodeName()) 				  ||
+								  leafNodes.get(j).getNodeName()) 				  ||
 			doesRelationshipExist(leafNodes.get(i).getMethodReturnTypes(),
-								  leafNodes.get(j).nodeName()) 				  ||
-			doesRelationshipExist(new ArrayList<>(getLeafNode(i).variables().values()),
-								  leafNodes.get(j).nodeName())) {
+								  leafNodes.get(j).getNodeName()) 				  ||
+			doesRelationshipExist(new ArrayList<>(getLeafNode(i).getVariables().values()),
+								  leafNodes.get(j).getNodeName())) {
 			return true;
 		}
-		return doesRelationshipExist(leafNodes.get(i).createdObjects(),
-									 leafNodes.get(j).nodeName());
+		return doesRelationshipExist(leafNodes.get(i).getCreatedObjects(),
+									 leafNodes.get(j).getNodeName());
 	}
 
 
     private boolean isExtension(int i, int j)
     {
         // First check if any of the inner classes of i extends j.
-        List<LeafNode> innerClassesI = leafNodes.get(i).innerClasses();
+        List<LeafNode> innerClassesI = leafNodes.get(i).getInnerClasses();
         boolean anyInnerClassExtendJ = innerClassesI.stream()
-            .anyMatch(leafNode -> leafNode.baseClass().equals(leafNodes.get(j).nodeName()));
+            .anyMatch(leafNode -> leafNode.getBaseClass().equals(leafNodes.get(j).getNodeName()));
         if (anyInnerClassExtendJ)
         {
             return true;
         }
 
-        if (leafNodes.get(i).baseClass().isEmpty())
+        if (leafNodes.get(i).getBaseClass().isEmpty())
         {
             return false;
         }
-        return leafNodes.get(i).baseClass().equals(leafNodes.get(j).nodeName());
+        return leafNodes.get(i).getBaseClass().equals(leafNodes.get(j).getNodeName());
     }
 
 
     private boolean isImplementation(int i, int j)
     {
         // First check if any of the inner classes of i implements j.
-        List<LeafNode> innerClassesI = leafNodes.get(i).innerClasses();
+        List<LeafNode> innerClassesI = leafNodes.get(i).getInnerClasses();
         boolean anyInnerClassImplementJ = innerClassesI.stream()
-            .anyMatch(leafNode -> leafNode.implementedInterfaces().contains(leafNodes.get(j).nodeName()));
+            .anyMatch(leafNode -> leafNode.getImplementedInterfaces().contains(leafNodes.get(j).getNodeName()));
         if (anyInnerClassImplementJ)
         {
             return true;
         }
 
-        if (leafNodes.get(i).implementedInterfaces().isEmpty())
+        if (leafNodes.get(i).getImplementedInterfaces().isEmpty())
         {
             return false;
         }
 
-        for (String implementedInterface : leafNodes.get(i).implementedInterfaces())
+        for (String implementedInterface : leafNodes.get(i).getImplementedInterfaces())
         {
-            if (implementedInterface.equals(leafNodes.get(j).nodeName()))
+            if (implementedInterface.equals(leafNodes.get(j).getNodeName()))
             {
                 return true;
             }

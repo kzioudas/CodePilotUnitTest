@@ -1,0 +1,468 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class ClassRepresentation {
+  + ClassRepresentation(String, List<NodeType>, List<String>, List<MethodRepresentation>, Set<Relationship<LeafNode>>, List<String>): 
+  - modifiers: List<NodeType>
+  - interfaces: List<String>
+  - methods: List<MethodRepresentation>
+  - className: String
+  - relationships: Set<Relationship<LeafNode>>
+  + toString(): String
+  + findMethod(String): MethodRepresentation
+   className: String
+   modifiers: List<NodeType>
+   methods: List<MethodRepresentation>
+   relationships: Set<Relationship<LeafNode>>
+   interfaces: List<String>
+}
+class ConstructorVisitor {
+  + ConstructorVisitor(): 
+  + visit(ConstructorDeclaration, Void): void
+}
+class DemoApp {
+  + DemoApp(): 
+  + setUp(): void
+  + main(String[]): void
+}
+interface Directive << interface >>
+class DirectiveFactory {
+  + DirectiveFactory(): 
+  + createDirective(String): Directive
+}
+class DirectiveParser {
+  + DirectiveParser(String): 
+  + parse(): Map<String, String>
+}
+class EnumVisitor {
+  + EnumVisitor(): 
+  + visit(EnumDeclaration, Void): void
+}
+entity Field << record >> {
+  + Field(String, String, ModifierType): 
+  + fieldType(): String
+  + fieldNames(): String
+  + modifierType(): ModifierType
+}
+class FieldVisitor {
+  + FieldVisitor(): 
+  + visit(FieldDeclaration, Void): void
+}
+class FileVisitor {
+  + FileVisitor(PackageNode, Path): 
+  - populateCreatedObjects(): List<String>
+  + createAST(): LeafNode
+  - filterAssignedCreatedObjects(List<String>, List<String>): List<String>
+  - getType(String): String
+}
+class HappyPathTestCase {
+  + HappyPathTestCase(String, String, String, List<String>): 
+  - methodToTest: String
+  - testType: String
+  - directives: List<String>
+  - testName: String
+  - classToTest: String
+   directives: List<String>
+   classToTest: String
+   methodToTest: String
+   testName: String
+   testType: String
+}
+interface IRelationshipIdentifier << interface >> {
+  + createLeafNodesRelationships(Map<Path, PackageNode>): Map<LeafNode, Set<Relationship<LeafNode>>>
+  + identifyPackageNodeRelationships(Map<LeafNode, Set<Relationship<LeafNode>>>): Map<PackageNode, Set<Relationship<PackageNode>>>
+}
+class ImportVisitor {
+  + ImportVisitor(): 
+  + visit(ImportDeclaration, Void): void
+}
+class InheritanceVisitor {
+  + InheritanceVisitor(): 
+  + visit(ClassOrInterfaceDeclaration, Void): void
+}
+entity LeafNode << record >> {
+  + LeafNode(Path, String, NodeType, String, PackageNode, List<String>, List<Method>, List<Field>, Map<String, String>, List<String>, List<String>, List<LeafNode>, List<String>, List<String>): 
+  - innerClasses: List<LeafNode>
+  + nodeType(): NodeType
+  + nodeName(): String
+  + path(): Path
+  + createdObjects(): List<String>
+  + baseClass(): String
+  + variables(): Map<String, String>
+  + fields(): List<Field>
+  + records(): List<String>
+  + imports(): List<String>
+  + parentNode(): PackageNode
+  + implementedInterfaces(): List<String>
+  + innerEnums(): List<String>
+  + methods(): List<Method>
+  + innerClasses(): List<LeafNode>
+   methodParameterTypes: List<String>
+   methodReturnTypes: List<String>
+   innerClasses: List<LeafNode>
+}
+class LeafNodeBuilder {
+  + LeafNodeBuilder(PackageNode, Path): 
+  - nodeType: NodeType
+  - createdObjects: List<String>
+  - nodeName: String
+  - imports: List<String>
+  - records: List<String>
+  - fields: List<Field>
+  - methods: List<Method>
+  - innerClasses: List<LeafNode>
+  - innerEnums: List<String>
+  - baseClass: String
+  - variables: Map<String, String>
+  + build(): LeafNode
+   innerClasses: List<LeafNode>
+   nodeName: String
+   methods: List<Method>
+   implementedInterface: List<String>
+   nodeType: NodeType
+   imports: List<String>
+   createdObjects: List<String>
+   innerEnums: List<String>
+   fields: List<Field>
+   records: List<String>
+   baseClass: String
+   variables: Map<String, String>
+}
+class MainEngine {
+  + MainEngine(Path, String): 
+  - projectRepresentation: ProjectRepresentation
+  - leafNodeRelationships: Map<LeafNode, Set<Relationship<LeafNode>>>
+  - packageNodes: Map<Path, PackageNode>
+  - packageNodeRelationships: Map<PackageNode, Set<Relationship<PackageNode>>>
+  + buildProjectRepresentation(String, Map<Path, PackageNode>, Map<PackageNode, Set<Relationship<PackageNode>>>, Map<LeafNode, Set<Relationship<LeafNode>>>): ProjectRepresentation
+  + buildClassRepresentation(LeafNode, Map<LeafNode, Set<Relationship<LeafNode>>>): ClassRepresentation
+  + buildMethodRepresentation(Method, Set<Relationship<LeafNode>>, List<String>): MethodRepresentation
+   packageNodes: Map<Path, PackageNode>
+   projectRepresentation: ProjectRepresentation
+   packageNodeRelationships: Map<PackageNode, Set<Relationship<PackageNode>>>
+   leafNodeRelationships: Map<LeafNode, Set<Relationship<LeafNode>>>
+}
+class MemberVisitor {
+  + MemberVisitor(): 
+  + visit(EnumDeclaration, Void): void
+  + visit(RecordDeclaration, Void): void
+}
+entity Method << record >> {
+  + Method(String, String, ModifierType, Map<String, String>): 
+  - methodName: String
+  - parameters: Map<String, String>
+  + methodName(): String
+  + returnType(): String
+  + parameters(): Map<String, String>
+  + modifierType(): ModifierType
+   methodReturnType: String
+   methodModifierType: ModifierType
+   parameters: Map<String, String>
+   methodName: String
+}
+class MethodNotFoundException {
+  + MethodNotFoundException(String): 
+}
+class MethodRepresentation {
+  + MethodRepresentation(String, String, Map<String, String>, List<ModifierType>, Set<Relationship<LeafNode>>, List<String>): 
+  - modifiers: List<ModifierType>
+  - returnType: String
+  - relationships: Set<Relationship<LeafNode>>
+  - methodName: String
+  - parameters: Map<String, String>
+  + toString(): String
+   parameters: Map<String, String>
+   methodName: String
+   modifiers: List<ModifierType>
+   returnType: String
+   relationships: Set<Relationship<LeafNode>>
+}
+class MethodVisitor {
+  + MethodVisitor(): 
+  + visit(MethodDeclaration, Void): void
+}
+enum ModifierType << enumeration >> {
+  + ModifierType(): 
+  + get(String): ModifierType
+  + toString(): String
+  + valueOf(String): ModifierType
+  + values(): ModifierType[]
+}
+enum NodeType << enumeration >> {
+  + NodeType(): 
+  + toString(): String
+  + valueOf(String): NodeType
+  + values(): NodeType[]
+}
+class ObjectCreationVisitor {
+  + ObjectCreationVisitor(): 
+  + visit(ObjectCreationExpr, Void): void
+}
+class PackageNode {
+  + PackageNode(PackageNode, Path): 
+  + PackageNode(Path): 
+  - subNodes: Map<Path, PackageNode>
+  - parentNode: PackageNode
+  - path: Path
+  - leafNodes: Map<String, LeafNode>
+  - isValid: boolean
+  - doesParentNodeExist(): boolean
+  - isValid(Path): boolean
+  - getPath(PackageNode, Path): Path
+   nodeName: String
+   isValid: boolean
+   leafNodes: Map<String, LeafNode>
+   nodeType: NodeType
+   parentNode: PackageNode
+   subNodes: Map<Path, PackageNode>
+   path: Path
+}
+class PackageNodeCleaner {
+  + PackageNodeCleaner(): 
+  + removeNonPackageNodes(Map<Path, PackageNode>): Map<Path, PackageNode>
+  - isPackageNodeValid(PackageNode): boolean
+}
+interface Parser << interface >> {
+  + parseSourcePackage(Path): Map<Path, PackageNode>
+  + identifyPackageNodeRelationships(Map<LeafNode, Set<Relationship<LeafNode>>>): Map<PackageNode, Set<Relationship<PackageNode>>>
+  + createRelationships(Map<Path, PackageNode>): Map<LeafNode, Set<Relationship<LeafNode>>>
+}
+enum ParserType << enumeration >> {
+  + ParserType(): 
+  + valueOf(String): ParserType
+  + values(): ParserType[]
+}
+class ProjectParser {
+  + ProjectParser(): 
+  + parseSourcePackage(Path): Map<Path, PackageNode>
+  + createRelationships(Map<Path, PackageNode>): Map<LeafNode, Set<Relationship<LeafNode>>>
+  + identifyPackageNodeRelationships(Map<LeafNode, Set<Relationship<LeafNode>>>): Map<PackageNode, Set<Relationship<PackageNode>>>
+  - isJavaSourceFile(Path): boolean
+  - parseFolder(PackageNode): void
+}
+class ProjectParserFactory {
+  + ProjectParserFactory(): 
+  + createProjectParser(ParserType): Parser
+}
+class ProjectRepresentation {
+  + ProjectRepresentation(String, List<ClassRepresentation>, Set<Relationship<PackageNode>>): 
+  - projectName: String
+  - classes: List<ClassRepresentation>
+  - relationships: Set<Relationship<PackageNode>>
+  + toString(): String
+  + findClass(String): ClassRepresentation
+   classes: List<ClassRepresentation>
+   relationships: Set<Relationship<PackageNode>>
+   projectName: String
+}
+class RainyDayTestCase {
+  + RainyDayTestCase(String, String, String, List<String>): 
+  - classToTest: String
+  - methodToTest: String
+  - directives: List<String>
+  - testType: String
+  - testName: String
+   directives: List<String>
+   classToTest: String
+   methodToTest: String
+   testName: String
+   testType: String
+}
+entity Relationship<T> << record >> {
+  + Relationship(T, T, RelationshipType): 
+  + relationshipType(): RelationshipType
+  + startingNode(): T
+  + endingNode(): T
+}
+class RelationshipIdentifier {
+  + RelationshipIdentifier(): 
+  + identifyPackageNodeRelationships(Map<LeafNode, Set<Relationship<LeafNode>>>): Map<PackageNode, Set<Relationship<PackageNode>>>
+  - isExtension(int, int): boolean
+  - isRelationshipAggregation(List<String>, String): boolean
+  - isDependency(int, int): boolean
+  - isAssociation(int, int): boolean
+  - isFieldOfTypeCollection(String, String): boolean
+  - isImplementation(int, int): boolean
+  - doesRelationshipExist(List<String>, String): boolean
+  - isSubNode(int, int): boolean
+  - getLeafNode(int): LeafNode
+  - isAggregation(int, int): boolean
+  - checkRelationship(int, int): void
+  - doesFieldBelongToClass(String, String): boolean
+  - createRelationship(int, int, RelationshipType): void
+  + createLeafNodesRelationships(Map<Path, PackageNode>): Map<LeafNode, Set<Relationship<LeafNode>>>
+}
+enum RelationshipType << enumeration >> {
+  + RelationshipType(): 
+  + toString(): String
+  + values(): RelationshipType[]
+  + valueOf(String): RelationshipType
+}
+interface SrcElement << interface >>
+interface TestCase << interface >> {
+   directives: List<String>
+   classToTest: String
+   methodToTest: String
+   testName: String
+   testType: String
+}
+class TestCaseFactory {
+  + TestCaseFactory(): 
+  + createTestCase(String, String, String, String, List<String>): TestCase
+}
+class TestCaseParser {
+  + TestCaseParser(): 
+  # getBufferedReader(Path): BufferedReader
+  - parseLineToTestCase(String): TestCase
+  + parseTestCases(Path): List<TestCase>
+}
+class VariableVisitor {
+  + VariableVisitor(): 
+  + visit(VariableDeclarationExpr, Void): void
+}
+
+ClassRepresentation      -[#595959,dashed]->  LeafNode                
+ClassRepresentation      -[#595959,dashed]->  MethodNotFoundException : "«create»"
+ClassRepresentation     "1" *-[#595959,plain]-> "methods\n*" MethodRepresentation    
+ClassRepresentation     "1" *-[#595959,plain]-> "modifiers\n*" NodeType                
+ClassRepresentation     "1" *-[#595959,plain]-> "relationships\n*" Relationship            
+ClassRepresentation      -[#008200,dashed]-^  SrcElement              
+ConstructorVisitor       +-[#820000,plain]-  FileVisitor             
+ConstructorVisitor       -[#595959,dashed]->  LeafNode                
+ConstructorVisitor       -[#595959,dashed]->  Method                  : "«create»"
+ConstructorVisitor       -[#595959,dashed]->  ModifierType            
+DemoApp                  -[#595959,dashed]->  DemoApp                 : "«create»"
+DemoApp                 "1" *-[#595959,plain]-> "leafNodeRelationships\n*" LeafNode                
+DemoApp                  -[#595959,dashed]->  MainEngine              : "«create»"
+DemoApp                 "1" *-[#595959,plain]-> "mainEngine\n1" MainEngine              
+DemoApp                 "1" *-[#595959,plain]-> "packageNodes\n*" PackageNode             
+DemoApp                 "1" *-[#595959,plain]-> "projectRepresentation\n1" ProjectRepresentation   
+DemoApp                  -[#595959,dashed]->  Relationship            
+DirectiveFactory         -[#595959,dashed]->  Directive               
+EnumVisitor              +-[#820000,plain]-  FileVisitor             
+Field                    +-[#820000,plain]-  LeafNode                
+Field                    -[#595959,dashed]->  ModifierType            
+FieldVisitor             -[#595959,dashed]->  Field                   : "«create»"
+FieldVisitor             +-[#820000,plain]-  FileVisitor             
+FieldVisitor             -[#595959,dashed]->  LeafNode                
+FieldVisitor             -[#595959,dashed]->  ModifierType            
+FileVisitor              -[#595959,dashed]->  ConstructorVisitor      : "«create»"
+FileVisitor             "1" *-[#595959,plain]-> "constructorVisitor\n1" ConstructorVisitor      
+FileVisitor             "1" *-[#595959,plain]-> "enumVisitor\n1" EnumVisitor             
+FileVisitor              -[#595959,dashed]->  EnumVisitor             : "«create»"
+FileVisitor             "1" *-[#595959,plain]-> "fields\n*" Field                   
+FileVisitor              -[#595959,dashed]->  FieldVisitor            : "«create»"
+FileVisitor             "1" *-[#595959,plain]-> "fieldNameVisitor\n1" FieldVisitor            
+FileVisitor              -[#595959,dashed]->  FileVisitor             
+FileVisitor             "1" *-[#595959,plain]-> "importVisitor\n1" ImportVisitor           
+FileVisitor              -[#595959,dashed]->  ImportVisitor           : "«create»"
+FileVisitor             "1" *-[#595959,plain]-> "inheritanceVisitor\n1" InheritanceVisitor      
+FileVisitor              -[#595959,dashed]->  InheritanceVisitor      : "«create»"
+FileVisitor             "1" *-[#595959,plain]-> "innerClasses\n*" LeafNode                
+FileVisitor             "1" *-[#595959,plain]-> "leafNodeBuilder\n1" LeafNodeBuilder         
+FileVisitor              -[#595959,dashed]->  LeafNodeBuilder         : "«create»"
+FileVisitor             "1" *-[#595959,plain]-> "memberVisitor\n1" MemberVisitor           
+FileVisitor              -[#595959,dashed]->  MemberVisitor           : "«create»"
+FileVisitor             "1" *-[#595959,plain]-> "methods\n*" Method                  
+FileVisitor              -[#595959,dashed]->  MethodVisitor           : "«create»"
+FileVisitor             "1" *-[#595959,plain]-> "methodNameVisitor\n1" MethodVisitor           
+FileVisitor             "1" *-[#595959,plain]-> "nodeType\n1" NodeType                
+FileVisitor             "1" *-[#595959,plain]-> "objectCreationVisitor\n1" ObjectCreationVisitor   
+FileVisitor              -[#595959,dashed]->  ObjectCreationVisitor   : "«create»"
+FileVisitor              -[#595959,dashed]->  PackageNode             
+FileVisitor              -[#595959,dashed]->  VariableVisitor         : "«create»"
+FileVisitor             "1" *-[#595959,plain]-> "variableVisitor\n1" VariableVisitor         
+HappyPathTestCase        -[#008200,dashed]-^  TestCase                
+IRelationshipIdentifier  -[#595959,dashed]->  LeafNode                
+IRelationshipIdentifier  -[#595959,dashed]->  PackageNode             
+IRelationshipIdentifier  -[#595959,dashed]->  Parser                  
+IRelationshipIdentifier  -[#595959,dashed]->  Relationship            
+ImportVisitor            +-[#820000,plain]-  FileVisitor             
+InheritanceVisitor       +-[#820000,plain]-  FileVisitor             
+InheritanceVisitor       -[#595959,dashed]->  LeafNode                
+InheritanceVisitor       -[#595959,dashed]->  LeafNodeBuilder         : "«create»"
+InheritanceVisitor       -[#595959,dashed]->  NodeType                
+LeafNode                 -[#595959,dashed]->  Field                   
+LeafNode                 -[#595959,dashed]->  LeafNode                
+LeafNode                 -[#595959,dashed]->  Method                  
+LeafNode                 -[#595959,dashed]->  NodeType                
+LeafNode                 -[#595959,dashed]->  PackageNode             
+LeafNodeBuilder         "1" *-[#595959,plain]-> "fields\n*" Field                   
+LeafNodeBuilder          -[#595959,dashed]->  LeafNode                : "«create»"
+LeafNodeBuilder         "1" *-[#595959,plain]-> "innerClasses\n*" LeafNode                
+LeafNodeBuilder          -[#595959,dashed]->  LeafNodeBuilder         
+LeafNodeBuilder         "1" *-[#595959,plain]-> "methods\n*" Method                  
+LeafNodeBuilder         "1" *-[#595959,plain]-> "nodeType\n1" NodeType                
+LeafNodeBuilder         "1" *-[#595959,plain]-> "parentNode\n1" PackageNode             
+MainEngine               -[#595959,dashed]->  ClassRepresentation     : "«create»"
+MainEngine              "1" *-[#595959,plain]-> "leafNodeRelationships\n*" LeafNode                
+MainEngine               -[#595959,dashed]->  MainEngine              
+MainEngine               -[#595959,dashed]->  Method                  
+MainEngine               -[#595959,dashed]->  MethodRepresentation    : "«create»"
+MainEngine               -[#595959,dashed]->  ModifierType            
+MainEngine               -[#595959,dashed]->  NodeType                
+MainEngine              "1" *-[#595959,plain]-> "packageNodes\n*" PackageNode             
+MainEngine              "1" *-[#595959,plain]-> "parser\n1" Parser                  
+MainEngine              "1" *-[#595959,plain]-> "parserType\n1" ParserType              
+MainEngine               -[#595959,dashed]->  ProjectParserFactory    
+MainEngine               -[#595959,dashed]->  ProjectRepresentation   : "«create»"
+MainEngine              "1" *-[#595959,plain]-> "projectRepresentation\n1" ProjectRepresentation   
+MainEngine               -[#595959,dashed]->  Relationship            
+MemberVisitor            +-[#820000,plain]-  FileVisitor             
+Method                   +-[#820000,plain]-  LeafNode                
+Method                   -[#595959,dashed]->  ModifierType            
+MethodRepresentation     -[#595959,dashed]->  LeafNode                
+MethodRepresentation    "1" *-[#595959,plain]-> "modifiers\n*" ModifierType            
+MethodRepresentation    "1" *-[#595959,plain]-> "relationships\n*" Relationship            
+MethodRepresentation     -[#008200,dashed]-^  SrcElement              
+MethodVisitor            +-[#820000,plain]-  FileVisitor             
+MethodVisitor            -[#595959,dashed]->  LeafNode                
+MethodVisitor            -[#595959,dashed]->  Method                  : "«create»"
+MethodVisitor            -[#595959,dashed]->  ModifierType            
+ModifierType            "1" *-[#595959,plain]-> "MODIFIER_TYPE\n*" ModifierType            
+ObjectCreationVisitor    +-[#820000,plain]-  FileVisitor             
+PackageNode             "1" *-[#595959,plain]-> "leafNodes\n*" LeafNode                
+PackageNode              -[#595959,dashed]->  NodeType                
+PackageNode             "1" *-[#595959,plain]-> "subNodes\n*" PackageNode             
+PackageNode              -[#595959,dashed]->  PackageNode             : "«create»"
+PackageNodeCleaner       -[#595959,dashed]->  PackageNode             
+PackageNodeCleaner       -[#595959,dashed]->  PackageNodeCleaner      
+Parser                   -[#595959,dashed]->  LeafNode                
+Parser                   -[#595959,dashed]->  PackageNode             
+Parser                   -[#595959,dashed]->  Parser                  
+Parser                   -[#595959,dashed]->  Relationship            
+ProjectParser            -[#595959,dashed]->  FileVisitor             : "«create»"
+ProjectParser            -[#595959,dashed]->  IRelationshipIdentifier 
+ProjectParser            -[#595959,dashed]->  LeafNode                
+ProjectParser           "1" *-[#595959,plain]-> "packageNodes\n*" PackageNode             
+ProjectParser            -[#595959,dashed]->  PackageNode             : "«create»"
+ProjectParser            -[#008200,dashed]-^  Parser                  
+ProjectParser            -[#595959,dashed]->  ProjectParser           
+ProjectParser            -[#595959,dashed]->  Relationship            
+ProjectParser            -[#595959,dashed]->  RelationshipIdentifier  : "«create»"
+ProjectParserFactory     -[#595959,dashed]->  Parser                  
+ProjectParserFactory     -[#595959,dashed]->  ParserType              
+ProjectParserFactory     -[#595959,dashed]->  ProjectParser           : "«create»"
+ProjectRepresentation   "1" *-[#595959,plain]-> "classes\n*" ClassRepresentation     
+ProjectRepresentation    -[#595959,dashed]->  PackageNode             
+ProjectRepresentation   "1" *-[#595959,plain]-> "relationships\n*" Relationship            
+ProjectRepresentation    -[#008200,dashed]-^  SrcElement              
+RainyDayTestCase         -[#008200,dashed]-^  TestCase                
+Relationship             -[#595959,dashed]->  RelationshipType        
+RelationshipIdentifier   -[#008200,dashed]-^  IRelationshipIdentifier 
+RelationshipIdentifier  "1" *-[#595959,plain]-> "leafNodeRelationships\n*" LeafNode                
+RelationshipIdentifier   -[#595959,dashed]->  PackageNode             
+RelationshipIdentifier   -[#595959,dashed]->  Relationship            : "«create»"
+RelationshipIdentifier   -[#595959,dashed]->  RelationshipIdentifier  
+RelationshipIdentifier   -[#595959,dashed]->  RelationshipType        
+TestCaseFactory          -[#595959,dashed]->  HappyPathTestCase       : "«create»"
+TestCaseFactory          -[#595959,dashed]->  RainyDayTestCase        : "«create»"
+TestCaseFactory          -[#595959,dashed]->  TestCase                
+TestCaseParser           -[#595959,dashed]->  TestCase                
+TestCaseParser           -[#595959,dashed]->  TestCaseFactory         
+TestCaseParser           -[#595959,dashed]->  TestCaseParser          
+VariableVisitor          +-[#820000,plain]-  FileVisitor             
+@enduml

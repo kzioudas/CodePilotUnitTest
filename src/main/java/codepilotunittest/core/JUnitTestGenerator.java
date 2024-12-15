@@ -1,69 +1,50 @@
 package codepilotunittest.core;
 
-import codepilotunittest.annotations.TestConfig;
-import codepilotunittest.core.TestCase;
-import codepilotunittest.core.TestCases;
+import codepilotunittest.representations.ClassRepresentation;
+import codepilotunittest.representations.ProjectRepresentation;
+import codepilotunittest.testcases.TestCase;
 
-import java.lang.reflect.Method;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * Generates JUnit tests for the given project.
+ */
 public class JUnitTestGenerator {
 
-    public static void generateJUnitTests(Class<?> clazz, TestCases testCases, List<Directive> directives) throws Exception {
-        StringBuilder testClassContent = new StringBuilder();
-        String className = clazz.getSimpleName() + "Tests";
+    private final ProjectRepresentation project;
 
-        testClassContent.append("import static org.junit.Assert.*;\n");
-        testClassContent.append("import org.junit.Test;\n\n");
-        testClassContent.append("public class " + className + " {\n");
-
-        for (TestCase testCase : testCases.getTestCaseList()) {
-            testClassContent.append(generateJUnitTestForTestCase(clazz, testCase, directives));
-        }
-
-        testClassContent.append("}\n");
-        writeToFile(className + ".java", testClassContent.toString());
+    /**
+     * Constructor to initialize the JUnitTestGenerator with a project representation.
+     *
+     * @param project The representation of the project to generate tests for.
+     */
+    public JUnitTestGenerator(ProjectRepresentation project) {
+        this.project = project;
     }
 
-    private static String generateJUnitTestForTestCase(Class<?> clazz, TestCase testCase, List<Directive> directives) {
-        StringBuilder methodContent = new StringBuilder();
-        String methodName = "test" + testCase.getMethodName().substring(0, 1).toUpperCase() + testCase.getMethodName().substring(1);
+    /**
+     * Generates JUnit test classes for all test cases grouped by class.
+     *
+     * @param testCasesByClass Map of class names to their corresponding test cases.
+     * @param outputDir        The directory to output the generated test files.
+     * @throws IOException If file writing fails.
+     */
+    public void generateTests(Map<String, List<TestCase>> testCasesByClass, Path outputDir) throws IOException {
+        for (String className : testCasesByClass.keySet()) {
+            List<TestCase> testCases = testCasesByClass.get(className);
+            ClassRepresentation classRepresentation = null;
+            try {
+                classRepresentation = project.findClass(className);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
 
-        methodContent.append("    @Test\n");
-        if (testCase.getExpectedException() != null) {
-            methodContent.append("    @Test(expected = " + testCase.getExpectedException().getSimpleName() + ".class)\n");
-        }
-        methodContent.append("    public void " + methodName + "() throws Exception {\n");
-        methodContent.append("        " + clazz.getSimpleName() + " instance = new " + clazz.getSimpleName() + "();\n");
-
-        methodContent.append("        assertEquals(");
-        methodContent.append(testCase.getExpectedResult());
-        methodContent.append(", instance." + testCase.getMethodName() + "(");
-        methodContent.append(generateParameterValues(testCase.getParameters(), directives));
-        methodContent.append("));\n");
-
-        methodContent.append("    }\n\n");
-        return methodContent.toString();
-    }
-
-    private static String generateParameterValues(List<Object> parameters, List<Directive> directives) {
-        StringBuilder params = new StringBuilder();
-        for (int i = 0; i < parameters.size(); i++) {
-            if (i > 0) params.append(", ");
-            // Here, you could enhance this to check for specific directives related to parameters
-            params.append(parameters.get(i).toString());  // Assuming toString gives a valid representation
-        }
-        return params.toString();
-    }
-
-    private static void writeToFile(String fileName, String content) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write(content);
-        } catch (IOException e) {
-            e.printStackTrace();
+            // Use TestClassGenerator to handle the generation of test classes.
+            TestClassGenerator classGenerator = new TestClassGenerator(classRepresentation, testCases, outputDir);
+            classGenerator.generate();
         }
     }
 }

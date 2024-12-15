@@ -1,18 +1,20 @@
 package codepilotunittest.core;
 
+import codepilotunittest.parser.factory.Parser;
+import codepilotunittest.parser.factory.ParserType;
+import codepilotunittest.parser.factory.ProjectParserFactory;
+import codepilotunittest.parser.tree.*;
 import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
-import codepilotunittest.wrapper.ParserWrapper;
-import codepilotunittest.parser.tree.LeafNode;
-import codepilotunittest.parser.tree.PackageNode;
-import codepilotunittest.parser.tree.Relationship;
 import codepilotunittest.parser.tree.LeafNode.Method;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import codepilotunittest.testcases.TestCase;
+import codepilotunittest.testcases.TestCaseParser;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,33 +22,65 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MainEngine {
-    private static final Logger logger = LogManager.getLogger(MainEngine.class);
+	//COMMENTED OUT SINCE IT'S NOT USED
+	//private static final Logger logger = LogManager.getLogger(MainEngine.class);
+    ParserType parserType = ParserType.JAVAPARSER;
+    private Parser parser = ProjectParserFactory.createProjectParser(parserType);
+    private Map<Path, PackageNode> packageNodes;
+    private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
+    private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
+    private ProjectRepresentation projectRepresentation;
+    private TestCaseParser testCaseParser;
+    private Map<String, List<TestCase>> testCases;
+    public MainEngine(Path sourcePackagePath,String projectName) {
 
-    public static void main(String[] args) {
-        // Ensure a source package path is provided as an argument
-        if (args.length < 1) {
-            logger.error("Please provide the path to the source package.");
-            System.exit(1);
-        }
-
-        // Parse the provided source package path
-        Path sourcePackagePath = Paths.get(args[0]);
-        ParserWrapper parserWrapper = new ParserWrapper();
-
-        // Parse the source package to obtain package nodes
-        Map<Path, PackageNode> packageNodes = parserWrapper.parseSourcePackage(sourcePackagePath);
+        this.packageNodes = parser.parseSourcePackage(sourcePackagePath);
 
         // Create relationships between leaf nodes (e.g., classes and methods)
-        Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships = parserWrapper.createRelationships(packageNodes);
+        this.leafNodeRelationships = parser.createRelationships(packageNodes);
 
         // Identify relationships between package nodes
-        Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships = parserWrapper.identifyPackageNodeRelationships(leafNodeRelationships);
+        this.packageNodeRelationships = parser.identifyPackageNodeRelationships(leafNodeRelationships);
 
         // Build a representation of the entire project
-        ProjectRepresentation projectRepresentation = buildProjectRepresentation("MyProject", packageNodes, packageNodeRelationships, leafNodeRelationships, parserWrapper);
+        this.projectRepresentation = buildProjectRepresentation(projectName, packageNodes, packageNodeRelationships, leafNodeRelationships);
 
-        // Print the project structure and relationships
-        System.out.println(projectRepresentation);
+    }
+
+    public MainEngine(Path sourcePackagePath,String projectName,Path testCasesPath) throws IOException {
+
+        this.packageNodes = parser.parseSourcePackage(sourcePackagePath);
+
+        // Create relationships between leaf nodes (e.g., classes and methods)
+        this.leafNodeRelationships = parser.createRelationships(packageNodes);
+
+        // Identify relationships between package nodes
+        this.packageNodeRelationships = parser.identifyPackageNodeRelationships(leafNodeRelationships);
+
+        // Build a representation of the entire project
+        this.projectRepresentation = buildProjectRepresentation( projectName, packageNodes, packageNodeRelationships, leafNodeRelationships);
+
+        this.testCaseParser = new TestCaseParser(projectRepresentation);
+
+        this.testCases = testCaseParser.parseTestCases(testCasesPath);
+    }
+
+    public ProjectRepresentation getProjectRepresentation(){return projectRepresentation;}
+
+    public Map<Path, PackageNode> getPackageNodes() {
+        return packageNodes;
+    }
+
+    public Map<LeafNode, Set<Relationship<LeafNode>>> getLeafNodeRelationships() {
+        return leafNodeRelationships;
+    }
+
+    public Map<PackageNode, Set<Relationship<PackageNode>>> getPackageNodeRelationships() {
+        return packageNodeRelationships;
+    }
+
+    public Map<String, List<TestCase>> getTestCases() {
+        return testCases;
     }
 
     /**
@@ -56,17 +90,18 @@ public class MainEngine {
      * @param packageNodes               The parsed package nodes.
      * @param packageNodeRelationships   The relationships between package nodes.
      * @param leafNodeRelationships      The relationships between leaf nodes.
-     * @param parserWrapper              The parser wrapper to extract additional information.
      * @return                           A ProjectRepresentation object.
      */
-    private static ProjectRepresentation buildProjectRepresentation(String projectName, Map<Path, PackageNode> packageNodes, Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships, ParserWrapper parserWrapper) {
+    private static ProjectRepresentation buildProjectRepresentation(String projectName, Map<Path, PackageNode> packageNodes, Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships) {
         List<ClassRepresentation> classRepresentations = new ArrayList<>();
 
         // Iterate through each package node to gather class and method information
         for (PackageNode packageNode : packageNodes.values()) {
             // Build class representation for each leaf node
-            //for (LeafNode leafNode : packageNode.getLeafNodes())
-                //classRepresentations.add(buildClassRepresentation(leafNode, leafNodeRelationships, parserWrapper));
+            for (Map.Entry<String, LeafNode> entry : packageNode.getLeafNodes().entrySet()) {
+                LeafNode leafNode = entry.getValue();
+                classRepresentations.add(buildClassRepresentation(leafNode, leafNodeRelationships));
+            }
         }
 
         // Collect all project-level relationships
@@ -81,32 +116,31 @@ public class MainEngine {
      *
      * @param leafNode              The leaf node representing the class.
      * @param leafNodeRelationships The relationships between leaf nodes.
-     * @param parserWrapper         The parser wrapper to extract additional information.
      * @return                      A ClassRepresentation object.
      */
-    private static ClassRepresentation buildClassRepresentation(LeafNode leafNode, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships, ParserWrapper parserWrapper) {
+    private static ClassRepresentation buildClassRepresentation(LeafNode leafNode, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships) {
         List<MethodRepresentation> methodRepresentations = new ArrayList<>();
 
         // Create MethodRepresentation objects for each method in the class
-        for (Method method : leafNode.methods()) {
+        for (Method method : leafNode.getMethods()) {
             Set<Relationship<LeafNode>> methodRelationships = leafNodeRelationships.getOrDefault(leafNode, Set.of());
-            List<String> testAnnotations = parserWrapper.getMethodTestAnnotations(leafNode).get(leafNode.methods().indexOf(method));
+            List<String> testAnnotations = new ArrayList<>();//parserWrapper.getMethodTestAnnotations(leafNode).get(leafNode.methods().indexOf(method));
             methodRepresentations.add(buildMethodRepresentation(method, methodRelationships, testAnnotations));
         }
 
-        List<String> classModifiers = List.of(leafNode.nodeType().toString());
-        List<String> interfaces = leafNode.implementedInterfaces();
+        List<NodeType> classModifiers = new ArrayList<>();
+                classModifiers.add(leafNode.getNodeType());
+        List<String> interfaces = leafNode.getImplementedInterfaces();
         Set<Relationship<LeafNode>> classRelationships = leafNodeRelationships.getOrDefault(leafNode, Set.of());
-        List<String> classTestAnnotations = parserWrapper.getClassTestAnnotations(leafNode);
+        List<String> classTestAnnotations = new ArrayList<>();
 
         // Create and return a ClassRepresentation object
         return new ClassRepresentation(
-                leafNode.nodeName(),
+                leafNode.getNodeName(),
                 classModifiers,
                 interfaces,
                 methodRepresentations,
-                classRelationships,
-                classTestAnnotations
+                classRelationships
         );
     }
 
@@ -119,16 +153,22 @@ public class MainEngine {
      * @return                  A MethodRepresentation object.
      */
     private static MethodRepresentation buildMethodRepresentation(Method method, Set<Relationship<LeafNode>> relationships, List<String> testAnnotations) {
-        List<String> parameters = new ArrayList<>(method.parameters().values());
-        List<String> modifiers = List.of(method.modifierType().toString());
+        Map<String, String> parameters = method.getParameters();
+        List<ModifierType> modifiers = new ArrayList<>();
+        modifiers.add(method.getMethodModifierType());
 
         return new MethodRepresentation(
-                method.methodName(),
-                method.returnType(),
+                method.getMethodName(),
+                method.getMethodReturnType(),
                 parameters,
                 modifiers,
-                relationships,
-                testAnnotations
+                relationships
         );
     }
+    
+    public void generateTests(Map<String, List<TestCase>> testCasesByClass, Path outputDir) throws IOException {
+    	JUnitTestGenerator myJunitTestGenerator = new JUnitTestGenerator(this.projectRepresentation); 
+    	myJunitTestGenerator.generateTests(testCasesByClass, outputDir);
+    }
+    
 }

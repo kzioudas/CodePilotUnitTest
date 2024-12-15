@@ -20,14 +20,14 @@ This package provides the core functionality of the testing framework.
     - `Parameter`: Represents a parameter with a name and type.
     - `TestCase`: Represents a single test case with parameters and expected results.
     - `TestCases`: Manages a collection of `TestCase` instances.
-    - `User`: Facilitates the provision of methods, classes, or projects and directives for testing.
+    - `User`: Facilitates the provision of methods, classes, or projects and testcases for testing.
 
 ### `com.example.codepilotunittest.interfaces`
-This package defines the interfaces used for directives and test case generation.
+This package defines the interfaces used for testcases and test case generation.
 
 - **Interfaces:**
     - `Directive`: Defines a methodRepresentation to check certain conditions.
-    - `TestCaseGenerator`: Defines a methodRepresentation to generate test cases based on input and directives.
+    - `TestCaseGenerator`: Defines a methodRepresentation to generate test cases based on input and testcases.
 
 ### `com.example.codepilotunittest.strategies`
 This package includes various testing strategies used to generate different types of test cases.
