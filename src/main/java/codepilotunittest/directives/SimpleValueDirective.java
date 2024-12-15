@@ -34,10 +34,23 @@ public class SimpleValueDirective implements Directive {
      * @return
      */
     //ToDo for other types (String,int etc)
-    @Override
     public String generateAssertion() {
-        // Adjust based on the type of value expected (e.g., quotes for String)
+        // Adjust based on the expected return type (e.g., quotes for String)
         String formattedValue = inputValue.matches("^\\d+(\\.\\d+)?$") ? inputValue : "\"" + inputValue + "\"";
+
+        // Handle boolean return type
+        if ("true".equalsIgnoreCase(responceExpected) || "false".equalsIgnoreCase(responceExpected)) {
+            boolean expectedValue = Boolean.parseBoolean(responceExpected);
+            return String.format(
+                    "assert%s(result, \"Expected %s to be %s\");",
+                    expectedValue ? "True" : "False",
+                    parameterName,
+                    parameterName,
+                    expected
+            );
+        }
+
+        // Default case for other types
         return String.format(
                 "assertEquals(%s, %s, \"Expected %s to equal %s\");",
                 formattedValue, parameterName, parameterName, formattedValue

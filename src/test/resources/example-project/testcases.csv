@@ -2,7 +2,9 @@ test_type|class_name|method_name|directives
 rainyday|Calculator|divide|a:10:10:ArithmeticException;b:0:0:ArithmeticException
 happypath|DocumentHandler|addDocument|document:"Sample Document":"Sample Document":true
 rainyday|DocumentHandler|getDocument|index:100:100:IndexOutOfBoundsException
-happypath|User|isAdult|age:25:25:true
-rainyday|User|isAdult|age:15:15:false
+happypath|User|isAdult|age:25:true:true
+happypath|Calculator|add|a:2:range(1-10):True;b:4:range(1-10):true
+happypath|Calculator|add|a:1:4:true;b:3:4:true
+rainyday|User|isAdult|age:15:false:false
 rainyday|User|updateName|name:"":"":IllegalArgumentException
 rainyday|DocumentHandler|addDocument|document:null:null:NullPointerException

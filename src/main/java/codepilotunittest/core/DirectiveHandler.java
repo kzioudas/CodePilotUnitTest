@@ -22,8 +22,8 @@ public class DirectiveHandler {
             if (directive.getParameterName().equals(paramName)) {
                 if (directive instanceof RangeDirective) {
                     RangeDirective rangeDirective = (RangeDirective) directive;
-                    int midValue = (rangeDirective.getMin() + rangeDirective.getMax()) / 2; // Midpoint
-                    return String.valueOf(midValue);
+
+                    return rangeDirective.getParameterValue();
                 }
                 if (directive.getParameterValue() == null) {
                     return "null";

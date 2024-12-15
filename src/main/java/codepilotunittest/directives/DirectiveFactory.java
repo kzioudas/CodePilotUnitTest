@@ -22,7 +22,7 @@ public class DirectiveFactory {
                 String[] rangeParts = responseExpected.substring(6, responseExpected.length() - 1).split("-");
                 int min = Integer.parseInt(rangeParts[0].trim());
                 int max = Integer.parseInt(rangeParts[1].trim());
-                return new RangeDirective(paramName, min, max, inputValue,  expected);
+                return new RangeDirective(paramName, inputValue, min, max,  expected);
             } else {
                 return new SimpleValueDirective(paramName, inputValue, responseExpected, expected);
             }

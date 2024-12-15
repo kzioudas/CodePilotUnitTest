@@ -10,7 +10,7 @@ public class RangeDirective implements Directive {
     private final int min;
     private final int max;
 
-    public RangeDirective(String parameterName, int min, int max, String inputValue,  String expected) {
+    public RangeDirective(String parameterName, String inputValue, int min, int max,   String expected) {
         this.parameterName = parameterName;
         this.inputValue = inputValue;
         this.expected = expected;
@@ -39,8 +39,8 @@ public class RangeDirective implements Directive {
     @Override
     public String generateAssertion() {
         return String.format(
-                "assertTrue(%s >= %d && %s <= %d, \"Expected %s to be within range [%d, %d]\");",
-                parameterName, min, parameterName, max, parameterName, min, max
+                "assertTrue(result >= %d && result <= %d, \"Expected result to be within range [%d, %d]\");",
+                 min, max,  min, max
         );
     }
 

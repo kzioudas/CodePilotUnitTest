@@ -1,28 +1,29 @@
 package codepilotunittest.core;
 
+import codepilotunittest.representations.ClassRepresentation;
+import codepilotunittest.structure.TestClass;
+import codepilotunittest.structure.TestMethod;
+import codepilotunittest.testcases.TestCase;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-import codepilotunittest.representations.ClassRepresentation;
-import codepilotunittest.testcases.TestCase;
-
 /**
- * Generates a JUnit test class for a specific class representation.
+ * Generates a JUnit test class for a given class and its test cases.
  */
 public class TestClassGenerator {
-
     private final ClassRepresentation classRepresentation;
     private final List<TestCase> testCases;
     private final Path outputDir;
 
     /**
-     * Constructor for TestClassGenerator.
+     * Constructor to initialize the generator.
      *
-     * @param classRepresentation The class representation to generate tests for.
-     * @param testCases The list of test cases for the class.
-     * @param outputDir The output directory for the test file.
+     * @param classRepresentation The representation of the class being tested.
+     * @param testCases           List of test cases for the class.
+     * @param outputDir           Directory where the generated test file will be written.
      */
     public TestClassGenerator(ClassRepresentation classRepresentation, List<TestCase> testCases, Path outputDir) {
         this.classRepresentation = classRepresentation;
@@ -31,32 +32,26 @@ public class TestClassGenerator {
     }
 
     /**
-     * Generates the test class and writes it to the output directory.
+     * Generates the test class and writes it to a file.
      *
-     * @throws IOException If there is an error writing the test file.
+     * @throws IOException If file writing fails.
      */
     public void generate() throws IOException {
-        StringBuilder sb = new StringBuilder();
-
-        // Package and imports
-        sb.append("import org.junit.jupiter.api.Test;\n")
-                .append("import static org.junit.jupiter.api.Assertions.*;\n\n");
-
-        // Class declaration
-        sb.append("public class ").append(classRepresentation.getClassName()).append("Test {\n\n");
-
-        // Generate test methods
+        // Create a TestClass object
+        TestClass testClass = new TestClass(classRepresentation.getClassName());
         TestMethodGenerator methodGenerator = new TestMethodGenerator(classRepresentation);
+
+        // Generate and add TestMethods to TestClass
         for (TestCase testCase : testCases) {
-            sb.append(methodGenerator.generate(testCase)).append("\n");
+            TestMethod testMethod = methodGenerator.generate(testCase);
+            if (testMethod != null) {
+                testClass.addMethod(testMethod);
+            }
         }
 
-        // End of class
-        sb.append("}\n");
-
-        // Write to file
+        // Write the TestClass to a file
         try (FileWriter writer = new FileWriter(outputDir.resolve(classRepresentation.getClassName() + "Test.java").toFile())) {
-            writer.write(sb.toString());
+            writer.write(testClass.render());
         }
     }
 }
