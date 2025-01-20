@@ -80,7 +80,7 @@ public class TestMethodGenerator {
      * Generates the method call statement for a given method and its corresponding directives.
      *
      * @param method     The {@link MethodRepresentation} representing the method to be called.
-     * @param directives A list of {@link Directive} objects containing the parameter values.
+     * @param directive A list of {@link Directive} objects containing the parameter values.
      * @return A string representing the complete method call statement.
      */
     private String generateMethodCall(MethodRepresentation method, Directive directive) {
