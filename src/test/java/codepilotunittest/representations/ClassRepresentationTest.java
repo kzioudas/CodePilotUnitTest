@@ -1,9 +1,6 @@
 package codepilotunittest.representations;
 
 import codepilotunittest.parser.tree.*;
-import codepilotunittest.representations.ClassRepresentation;
-import codepilotunittest.representations.MethodRepresentation;
-import codepilotunittest.representations.ProjectRepresentation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -70,8 +67,7 @@ class ClassRepresentationTest {
                 "void",
                 Map.of(), // parameters
                 Arrays.asList(ModifierType.get("public")), // modifiers
-                methodRelationships,
-                Arrays.asList() // testAnnotations
+                methodRelationships
         );
 
         // Relationships for the class
@@ -83,8 +79,7 @@ class ClassRepresentationTest {
                 Arrays.asList(), // modifiers
                 Arrays.asList("Serializable", "Cloneable"), // interfaces
                 Arrays.asList(methodRepresentation), // methods
-                classRelationships,
-                Arrays.asList("NotNull") // classTestAnnotations
+                classRelationships
         );
     }
 

@@ -1,5 +1,16 @@
-test_type|class_name|method_name|directives
-happypath|VersionsManager|setStrategy|strategy:strategy:strategy:True;latexEditorView:latexEditorView:latexEditorView:True;versionsStrategy:versionsStrategy:versionsStrategy:True
-rainyday|VersionsManager|setStrategy|strategy:strategy1:strategy2:False;latexEditorView:latexEditorView:latexEditorView:True;versionsStrategy:versionsStrategy:versionsStrategy:True
-happypath|VersionsManager|setStrategy|strategy:NULL:NULL:True;latexEditorView:latexEditorView:latexEditorView:True;versionsStrategy:versionsStrategy:versionsStrategy:True
-rainyday|VersionsManager|setStrategy|strategy:NULL:NOTNULL:False;latexEditorView:latexEditorView:latexEditorView:True;versionsStrategy:versionsStrategy:versionsStrategy:True
+test_type|class_name|method_name|directives|expected_result|expected_behavior
+happypath|VersionsManager|setStrategy|strategy:strategy|strategy|true
+rainyday|VersionsManager|setStrategy|strategy:strategy1;latexEditorView:latexEditorView;versionsStrategy:versionsStrategy|false|Exception
+happypath|VersionsManager|setStrategy|strategy:NULL;latexEditorView:latexEditorView;versionsStrategy:versionsStrategy|true|true
+rainyday|VersionsManager|setStrategy|strategy:NULL;latexEditorView:latexEditorView;versionsStrategy:versionsStrategy|false|Exception
+happypath|VersionsManager|setStrategy|strategy:"volatileStrategy"|"volatileStrategy"|true
+happypath|LatexEditorView|setStrategy|strategy:"stableStrategy"|"stableStrategy"|true
+happypath|LatexEditorView|setStrategy|strategy:"volatileStrategy"|"volatileStrategy"|true
+happypath|Document|setContents|contents:"Hello, World!"|"Hello, World!"|true
+happypath|VersionsStrategyFactory|createStrategy|type:"stableStrategy"|"StableVersionsStrategy"|true
+happypath|CommandFactory|createCommand|type:"SaveCommand"|"SaveCommand"|true
+rainyday|LatexEditorView|setStrategy|strategy:"invalidStrategy"|null|Exception
+rainyday|VersionsManager|setStrategy|strategy:null|null|false
+rainyday|Document|setContents|contents:null|null|Exception
+rainyday|VersionsStrategyFactory|createStrategy|type:"invalidType"|null|Exception
+rainyday|CommandFactory|createCommand|type:"UnknownCommand"|null|Exception

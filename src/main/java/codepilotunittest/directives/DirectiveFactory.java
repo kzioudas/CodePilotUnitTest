@@ -1,32 +1,38 @@
 package codepilotunittest.directives;
 
+import java.util.Map;
 
 public class DirectiveFactory {
 
     /**
-     * Factory method to create a directive based on a string.
+     * Creates a Directive with the given parameters, expected result, and behavior.
      *
-     * @param paramName        Name of the parameter.
-     * @param inputValue       Input value provided for the directive.
-     * @param responseExpected The expected response from the method.
-     * @param expected         The expected outcome of the test case.
-     * @return a Directive object representing the directive.
+     * @param parameters       A map of parameter names and values.
+     * @param expectedResult   The expected result of the method call.
+     * @param expectedBehavior The expected behavior (e.g., exception type).
+     * @return A Directive object.
      */
-    public static Directive createDirective(String paramName, String inputValue, String responseExpected,String expected) {
-        if (expected.equalsIgnoreCase("True")||expected.equalsIgnoreCase("False")) {
-            if (inputValue.equalsIgnoreCase("NULL")) {
-                return new NullDirective(paramName, inputValue, responseExpected, expected);
-            } else if (responseExpected.matches("range\\((\\d+)\\-(\\d+)\\)")) {
-                String[] rangeParts = responseExpected.substring(6, responseExpected.length() - 1).split("-");
-                int min = Integer.parseInt(rangeParts[0].trim());
-                int max = Integer.parseInt(rangeParts[1].trim());
-                return new RangeDirective(paramName, inputValue, min, max, expected);
-            } else {
-                return new SimpleValueDirective(paramName, inputValue, responseExpected, expected);
-            }
-        } else if (expected.toLowerCase().contains("exception")) {
-            return new ThrowsExceptionDirective(paramName, responseExpected, expected);
+    public static Directive createDirective(Map<String, String> parameters, String expectedResult, String expectedBehavior) {
+        // Handle null directives
+        if (parameters.containsValue("null")) {
+            return new NullDirective(parameters, expectedResult, expectedBehavior);
         }
-        return null;
+
+        // Handle range directives
+        if (expectedResult != null && expectedResult.startsWith("range(")) {
+            String range = expectedResult.substring(6, expectedResult.length() - 1); // Extract range values
+            String[] rangeParts = range.split("-");
+            int min = Integer.parseInt(rangeParts[0]);
+            int max = Integer.parseInt(rangeParts[1]);
+            return new RangeDirective(parameters, min, max, expectedResult, expectedBehavior);
+        }
+
+        // Handle exception directives
+        if (expectedBehavior != null && expectedBehavior.contains("Exception")) {
+            return new ThrowsExceptionDirective(parameters, expectedResult, expectedBehavior);
+        }
+
+        // Default to SimpleValueDirective
+        return new SimpleValueDirective(parameters, expectedResult, expectedBehavior);
     }
 }

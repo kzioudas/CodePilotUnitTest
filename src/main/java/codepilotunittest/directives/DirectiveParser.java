@@ -1,39 +1,37 @@
 package codepilotunittest.directives;
 
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * A parser for directive strings in the format "param: condition".
- */
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class DirectiveParser {
 
     /**
-     * Parses the directive string from the CSV into a list of Directive objects.
+     * Parses a directive with a list of parameters.
      *
-     * @param directiveString the string containing the directives
-     * @return a list of parsed directives
+     * @param parametersArray  The array of parameters (e.g., ["a:2", "b:4"]).
+     * @param expectedResult   The expected result of the method call.
+     * @param expectedBehavior The expected behavior (e.g., true, exception type).
+     * @return A Directive object.
      */
-    public List<Directive> parse(String directiveString) {
-        List<Directive> directives = new ArrayList<>();
+    public static Directive parseDirective(String[] parametersArray, String expectedResult, String expectedBehavior) {
+        Directive directive;
+        Map<String, String> parameters = new HashMap<>();
 
-        // Split by semicolon to get individual directives
-        String[] directiveParts = directiveString.split(";");
+        for (String parameter : parametersArray) {
+            String[] parts = parameter.split(":");
+            if (parts.length != 2) {
+                throw new IllegalArgumentException("Invalid parameter format: " + parameter);
+            }
 
-        for (String part : directiveParts) {
-            // Remove extra spaces around paramName and condition
-            String cleanedPart = part.replaceAll("\\s*:\\s*:\\s*:\\s*", ":").trim(); // Clean spaces around ':'
-
-            // Split each directive by ':'
-            String[] directiveElements = cleanedPart.split(":");
-            String paramName = directiveElements[0].trim();
-            String inputValue = directiveElements[1].trim();
-            String responceExpected = directiveElements[2].trim();
-            String expected = directiveElements[3].trim();
-            directives.add(DirectiveFactory.createDirective(paramName, inputValue, responceExpected,expected));
+            String name = parts[0].trim();
+            String value = parts[1].trim();
+            parameters.put(name, value);
 
         }
 
-        return directives;
+        return  DirectiveFactory.createDirective(parameters, expectedResult, expectedBehavior);
     }
 }

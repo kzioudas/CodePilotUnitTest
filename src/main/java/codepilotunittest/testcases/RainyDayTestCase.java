@@ -1,23 +1,28 @@
 package codepilotunittest.testcases;
+
 import codepilotunittest.directives.Directive;
 import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 
 import java.util.List;
 
+/**
+ * Represents a test case for the "rainy day" or edge case scenario.
+ */
 public class RainyDayTestCase implements TestCase {
-    private String testName;
-    private TestType testType;
-    private ClassRepresentation classToTest;
-    private MethodRepresentation methodToTest;
-    private List<Directive> directives;
 
-    public RainyDayTestCase(ClassRepresentation classToTest, MethodRepresentation methodToTest, List<Directive> directives) {
-        //this.testName = testName; make it with method name
-        this.testType = TestType.RAINY_DAY; // Setting test type as "rainyday"
+    private final String testName;
+    private final TestType testType;
+    private final ClassRepresentation classToTest;
+    private final MethodRepresentation methodToTest;
+    private final Directive directive;
+
+    public RainyDayTestCase(ClassRepresentation classToTest, MethodRepresentation methodToTest, Directive directive) {
+        this.testName = methodToTest.getMethodName() + "_rainyDay";
+        this.testType = TestType.RAINY_DAY;
         this.classToTest = classToTest;
         this.methodToTest = methodToTest;
-        this.directives = directives;
+        this.directive = directive;
     }
 
     @Override
@@ -34,14 +39,15 @@ public class RainyDayTestCase implements TestCase {
     public ClassRepresentation getClassToTest() {
         return classToTest;
     }
+
     @Override
     public MethodRepresentation getMethodToTest() {
         return methodToTest;
     }
 
     @Override
-    public List<Directive> getDirectives() {
-        return directives;
+    public Directive getDirective() {
+        return directive;
     }
 
     @Override
@@ -51,9 +57,7 @@ public class RainyDayTestCase implements TestCase {
                 ", testType=" + testType +
                 ", classToTest=" + classToTest.getClassName() +
                 ", methodToTest=" + methodToTest.getMethodName() +
-                ", directives=" + directives +
+                ", directives=" + directive +
                 '}';
     }
-
-
 }
