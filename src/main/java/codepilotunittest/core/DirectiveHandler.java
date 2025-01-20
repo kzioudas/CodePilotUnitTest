@@ -13,26 +13,33 @@ public class DirectiveHandler {
     /**
      * Finds the value for a parameter based on its directive.
      *
-     * @param directives The list of directives associated with the test case.
-     * @param paramName  The name of the parameter to find a value for.
-     * @return The value of the parameter as a String, or null if no directive is found.
+     * @param directive A  {@link Directive} objects to search through.
+     * @param paramName  The name of the parameter whose value is being retrieved.
+     * @return The formatted parameter value as a string, or {@code null} if no
+     *         matching directive or parameter is found.
      */
-    public static String findDirectiveValue(List<Directive> directives, String paramName) {
-        for (Directive directive : directives) {
-            if (directive.getParameterName().equals(paramName)) {
-                if (directive instanceof RangeDirective) {
-                    RangeDirective rangeDirective = (RangeDirective) directive;
+    public static String findDirectiveValue(Directive directive, String paramName) {
 
-                    return rangeDirective.getParameterValue();
-                }
-                if (directive.getParameterValue() == null) {
-                    return "null";
-                }
+        // Check if the directive contains the parameter
+        if (directive.getParameters().containsKey(paramName)) {
+            String paramValue = directive.getParameterValue(paramName);
 
-                return formatValueForType(directive.getParameterValue());
+            // Handle special cases for RangeDirective
+            if (directive instanceof RangeDirective) {
+                RangeDirective rangeDirective = (RangeDirective) directive;
+                return rangeDirective.getParameterValue(paramName);
             }
+
+            // Handle null values explicitly
+            if (paramValue == null) {
+                return "null";
+            }
+
+            // Format the value for its type
+            return formatValueForType(paramValue);
         }
-        // Return null if no directive is found
+
+        // Return null if no matching directive is found
         return null;
     }
 
@@ -42,13 +49,17 @@ public class DirectiveHandler {
      * @param value The raw value from the directive.
      * @return The formatted value as a String.
      */
-    public static String formatValueForType(String value) {
-        if (value.matches("^-?\\d+(\\.\\d+)?$")) { // Numeric value
-            return value;
-        } else if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) { // Boolean
-            return value.toLowerCase();
-        } else { // Assume string
-            return "\"" + value + "\"";
+    private static String formatValueForType(String value) {
+        if (value == null) {
+            return "null";
         }
+        if (value.matches("^\\d+(\\.\\d+)?$")) { // Numeric value
+            return value;
+        }
+        if ("true".equalsIgnoreCase(value) || "false".equalsIgnoreCase(value)) { // Boolean
+            return value.toLowerCase();
+        }
+        // Assume String for other cases
+        return "\"" + value + "\"";
     }
 }

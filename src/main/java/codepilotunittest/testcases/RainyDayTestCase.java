@@ -15,14 +15,14 @@ public class RainyDayTestCase implements TestCase {
     private final TestType testType;
     private final ClassRepresentation classToTest;
     private final MethodRepresentation methodToTest;
-    private final List<Directive> directives;
+    private final Directive directive;
 
-    public RainyDayTestCase(ClassRepresentation classToTest, MethodRepresentation methodToTest, List<Directive> directives) {
+    public RainyDayTestCase(ClassRepresentation classToTest, MethodRepresentation methodToTest, Directive directive) {
         this.testName = methodToTest.getMethodName() + "_rainyDay";
         this.testType = TestType.RAINY_DAY;
         this.classToTest = classToTest;
         this.methodToTest = methodToTest;
-        this.directives = directives;
+        this.directive = directive;
     }
 
     @Override
@@ -46,8 +46,8 @@ public class RainyDayTestCase implements TestCase {
     }
 
     @Override
-    public List<Directive> getDirectives() {
-        return directives;
+    public Directive getDirective() {
+        return directive;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class RainyDayTestCase implements TestCase {
                 ", testType=" + testType +
                 ", classToTest=" + classToTest.getClassName() +
                 ", methodToTest=" + methodToTest.getMethodName() +
-                ", directives=" + directives +
+                ", directives=" + directive +
                 '}';
     }
 }

@@ -1,15 +1,19 @@
 package codepilotunittest.directives;
 
+import java.util.Map;
+
 /**
  * Interface representing a directive in a test case.
  */
 public interface Directive {
+    Map<String, String> getParameters();
+
     /**
      * Gets the parameter name associated with the directive.
      *
      * @return the parameter name
      */
-    String getParameterName();
+    String getParameterName(int index);
 
     /**
      * Gets the type of the directive.
@@ -17,6 +21,10 @@ public interface Directive {
      * @return the directive type
      */
     String getDirectiveType();
+
+    String getExpectedResult();
+
+    String getExpectedBehavior();
 
     /**
      * Generates the assertion code for the directive.
@@ -30,7 +38,7 @@ public interface Directive {
      *
      * @return the parameter value
      */
-    String getParameterValue();
+    String getParameterValue(String key);
 
     /**
      * Validates a value against the directive's conditions.

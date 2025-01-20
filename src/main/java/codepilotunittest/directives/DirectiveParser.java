@@ -1,37 +1,37 @@
 package codepilotunittest.directives;
 
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * A parser for directive strings in test case definitions.
- */
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class DirectiveParser {
 
     /**
-     * Parses a directive string into a list of directives.
+     * Parses a directive with a list of parameters.
      *
-     * @param directiveString The directive string.
-     * @return a list of directives.
+     * @param parametersArray  The array of parameters (e.g., ["a:2", "b:4"]).
+     * @param expectedResult   The expected result of the method call.
+     * @param expectedBehavior The expected behavior (e.g., true, exception type).
+     * @return A Directive object.
      */
-    public List<Directive> parse(String directiveString) {
-        List<Directive> directives = new ArrayList<>();
+    public static Directive parseDirective(String[] parametersArray, String expectedResult, String expectedBehavior) {
+        Directive directive;
+        Map<String, String> parameters = new HashMap<>();
 
-        // Split directives by semicolon
-        String[] directiveParts = directiveString.split(";");
-
-        for (String part : directiveParts) {
-            String[] directiveElements = part.split(":");
-            if (directiveElements.length < 4) {
-                throw new IllegalArgumentException("Invalid directive format: " + part);
+        for (String parameter : parametersArray) {
+            String[] parts = parameter.split(":");
+            if (parts.length != 2) {
+                throw new IllegalArgumentException("Invalid parameter format: " + parameter);
             }
-            String paramName = directiveElements[0].trim();
-            String inputValue = directiveElements[1].trim();
-            String responseExpected = directiveElements[2].trim();
-            String expected = directiveElements[3].trim();
-            directives.add(DirectiveFactory.createDirective(paramName, inputValue, responseExpected, expected));
+
+            String name = parts[0].trim();
+            String value = parts[1].trim();
+            parameters.put(name, value);
+
         }
 
-        return directives;
+        return  DirectiveFactory.createDirective(parameters, expectedResult, expectedBehavior);
     }
 }

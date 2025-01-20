@@ -1,17 +1,36 @@
 package codepilotunittest.directives;
 
-public class ThrowsExceptionDirective implements Directive {
-    private final String parameterName;
-    private final String expectedException;
+import java.util.Map;
 
-    public ThrowsExceptionDirective(String parameterName, String responseExpected, String expected) {
-        this.parameterName = parameterName;
-        this.expectedException = expected;
+/**
+ * Directive that checks if a method throws a specific exception.
+ */
+public class ThrowsExceptionDirective implements Directive {
+    private final Map<String, String> parameters; // Key: Parameter name, Value: Input value
+    private final String expectedException;
+    private final String expectedBehavior;
+
+    /**
+     * Constructs a ThrowsExceptionDirective with the given parameters and expected exception.
+     *
+     * @param parameters        The parameters for the directive.
+     * @param expectedException The expected exception type.
+     * @param expectedBehavior
+     */
+    public ThrowsExceptionDirective(Map<String, String> parameters, String expectedException, String expectedBehavior) {
+        this.parameters = parameters;
+        this.expectedException = expectedException;
+        this.expectedBehavior = expectedBehavior;
     }
 
     @Override
-    public String getParameterName() {
-        return parameterName;
+    public Map<String, String> getParameters() {
+        return parameters;
+    }
+
+    @Override
+    public String getParameterName(int index) {
+        return parameters.keySet().toArray()[index].toString();
     }
 
     @Override
@@ -20,24 +39,49 @@ public class ThrowsExceptionDirective implements Directive {
     }
 
     @Override
+    public String getExpectedResult() {
+        return expectedException;
+    }
+
+    @Override
+    public String getExpectedBehavior() {
+        return expectedBehavior ;
+    }
+
+    @Override
     public String generateAssertion() {
+        StringBuilder params = new StringBuilder();
+        parameters.forEach((key, value) -> {
+            String formattedValue = value.matches("^\\d+(\\.\\d+)?$") ? value : "\"" + value + "\"";
+            params.append(formattedValue).append(", ");
+        });
+
+        // Remove trailing comma and space
+        if (params.length() > 0) {
+            params.setLength(params.length() - 2);
+        }
+
         return String.format(
-                "assertThrows(%s.class, () -> instance.%s(%s), \"Expected %s to throw %s\");",
-                expectedException, parameterName, parameterName, parameterName, expectedException
+                "assertThrows(%s.class, () -> instance.%s(%s), \"Expected method to throw %s\");",
+                expectedException, "methodName", params, expectedException
         );
     }
 
-    /**
-     * @return
-     * TODO FIX
-     */
     @Override
-    public String getParameterValue() {
-        return "";
+    public String getParameterValue(String key) {
+        return parameters.get(key).toString();
     }
 
     @Override
     public boolean validate(Object value) {
         return false; // Validation happens through exception checking in the test case.
+    }
+
+    @Override
+    public String toString() {
+        return "ThrowsExceptionDirective{" +
+                "parameters=" + parameters +
+                ", expectedException='" + expectedException + '\'' +
+                '}';
     }
 }

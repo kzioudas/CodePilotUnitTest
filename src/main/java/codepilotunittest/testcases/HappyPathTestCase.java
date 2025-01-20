@@ -15,14 +15,14 @@ public class HappyPathTestCase implements TestCase {
     private final TestType testType;
     private final ClassRepresentation classToTest;
     private final MethodRepresentation methodToTest;
-    private final List<Directive> directives;
+    private final Directive directive;
 
-    public HappyPathTestCase(ClassRepresentation classToTest, MethodRepresentation methodToTest, List<Directive> directives) {
+    public HappyPathTestCase(ClassRepresentation classToTest, MethodRepresentation methodToTest, Directive directive) {
         this.testName = methodToTest.getMethodName() + "_happyPath";
         this.testType = TestType.HAPPY_PATH;
         this.classToTest = classToTest;
         this.methodToTest = methodToTest;
-        this.directives = directives;
+        this.directive = directive;
     }
 
     @Override
@@ -46,8 +46,8 @@ public class HappyPathTestCase implements TestCase {
     }
 
     @Override
-    public List<Directive> getDirectives() {
-        return directives;
+    public Directive getDirective() {
+        return directive;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class HappyPathTestCase implements TestCase {
                 ", testType=" + testType +
                 ", classToTest=" + classToTest.getClassName() +
                 ", methodToTest=" + methodToTest.getMethodName() +
-                ", directives=" + directives +
+                ", directives=" + directive +
                 '}';
     }
 }

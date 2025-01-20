@@ -22,12 +22,12 @@ public class TestCaseFactory {
      * @throws IllegalArgumentException If the test type is unknown.
      */
     public static TestCase createTestCase(String testType, ClassRepresentation classToTest,
-                                          MethodRepresentation methodToTest, List<Directive> directives) {
+                                          MethodRepresentation methodToTest, Directive directive) {
         switch (testType.toLowerCase()) {
             case "rainyday":
-                return new RainyDayTestCase(classToTest, methodToTest, directives);
+                return new RainyDayTestCase(classToTest, methodToTest, directive);
             case "happypath":
-                return new HappyPathTestCase(classToTest, methodToTest, directives);
+                return new HappyPathTestCase(classToTest, methodToTest, directive);
             default:
                 throw new IllegalArgumentException("Unknown test type: " + testType);
         }

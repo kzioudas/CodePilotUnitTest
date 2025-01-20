@@ -13,11 +13,11 @@ import java.util.Map;
 public class ClassInitializationHandler {
 
     private final ClassRepresentation classRepresentation;
-    private final List<Directive> directives;
+    private final Directive directive;
 
-    public ClassInitializationHandler(ClassRepresentation classRepresentation, List<Directive> directives) {
+    public ClassInitializationHandler(ClassRepresentation classRepresentation, Directive directive) {
         this.classRepresentation = classRepresentation;
-        this.directives = directives;
+        this.directive = directive;
     }
 
     /**
@@ -45,7 +45,7 @@ public class ClassInitializationHandler {
         int paramCount = 0;
         for (Map.Entry<String, String> param : constructorParams.entrySet()) {
             String paramName = param.getKey();
-            String paramValue = DirectiveHandler.findDirectiveValue(directives, paramName);
+            String paramValue = DirectiveHandler.findDirectiveValue(directive, paramName);
 
             if (paramValue != null) {
                 if (paramCount > 0) {
