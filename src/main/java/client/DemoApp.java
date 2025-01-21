@@ -13,14 +13,13 @@ import java.util.Scanner;
 public class DemoApp {
     private MainEngine mainEngine;
     private ProjectRepresentation projectRepresentation;
-    private Path sourcePackagePath;
 
-    public void setUp(Path sourcePackagePath, Path sourcePackageTestPath) throws IOException, ClassNotFoundException {
-        this.sourcePackagePath = sourcePackagePath;
+
+    public void setUp(Path sourcePackagePath, Path sourcePackageTestPath) throws IOException {
         mainEngine = new MainEngine(sourcePackagePath, "example-project", sourcePackageTestPath);
         projectRepresentation = mainEngine.getProjectRepresentation();
         Map<String, List<TestCase>> testCases = mainEngine.getTestCases();
-        mainEngine.generateTests(testCases, sourcePackagePath);
+        mainEngine.generateTests(testCases);
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {

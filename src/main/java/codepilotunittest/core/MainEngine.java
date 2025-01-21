@@ -145,9 +145,9 @@ public class MainEngine {
         );
     }
     
-    public void generateTests(Map<String, List<TestCase>> testCasesByClass, Path projectDir) throws IOException {
+    public void generateTests(Map<String, List<TestCase>> testCasesByClass) throws IOException {
     	JUnitTestGenerator myJunitTestGenerator = new JUnitTestGenerator(this.projectRepresentation); 
-    	myJunitTestGenerator.generateTests(testCasesByClass, projectDir);
+    	myJunitTestGenerator.generateTests(testCasesByClass);
     }
     
 }

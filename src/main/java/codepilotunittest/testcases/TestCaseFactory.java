@@ -17,7 +17,7 @@ public class TestCaseFactory {
      * @param testType      The type of the test case.
      * @param classToTest   The class to be tested.
      * @param methodToTest  The method to be tested.
-     * @param directives    The directives for the test case.
+     * @param directive    The directives for the test case.
      * @return The created test case.
      * @throws IllegalArgumentException If the test type is unknown.
      */

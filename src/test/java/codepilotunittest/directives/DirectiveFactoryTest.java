@@ -1,5 +1,6 @@
 package codepilotunittest.directives;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -25,39 +26,39 @@ public class DirectiveFactoryTest {
     }
 
 
-//    @Test
-//    public void testCreateRangeDirective() {
-//        // Arrange
-//        String paramName = "param3";
-//        String directiveString = "range(1-10)";
-//
-//        // Act
-//        Directive directive = DirectiveFactory.createDirective(paramName,directiveString,"7","True" );
-//
-//        // Assert
-//        assertTrue(directive instanceof RangeDirective);
-//        RangeDirective rangeDirective = (RangeDirective) directive;
-//        assertEquals("param3", rangeDirective.getParameterName());
-//        assertEquals(1, rangeDirective.getMin());
-//        assertEquals(10, rangeDirective.getMax());
-//    }
+    @Test
+    public void testCreateRangeDirective() {
+        // Arrange
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("param3", "range(1-10)");
 
-//    @Test
-//    public void testCreateNotInRangeDirective() {
-//        // Arrange
-//        String paramName = "param4";
-//        String directiveString = "range(5-20)";
-//
-//        // Act
-//        Directive directive = DirectiveFactory.createDirective(paramName,directiveString,"8","OutOfBoundsException");
-//
-//        // Assert
-//        assertTrue(directive instanceof RangeDirective);
-//        RangeDirective rangeDirective = (RangeDirective) directive;
-//        assertEquals("param4", rangeDirective.getParameterName());
-//        assertEquals(5, rangeDirective.getMin());
-//        assertEquals(20, rangeDirective.getMax());
-//    }
+        // Act
+        Directive directive = DirectiveFactory.createDirective(parameters, "range(1-10)", "True");
+
+        // Assert
+        assertTrue(directive instanceof RangeDirective, "Should create a RangeDirective");
+        RangeDirective rangeDirective = (RangeDirective) directive;
+        assertEquals("param3", rangeDirective.getParameterName(0), "Parameter name should be 'param3'");
+        assertEquals(1, rangeDirective.getMin(), "Range min should be 1");
+        assertEquals(10, rangeDirective.getMax(), "Range max should be 10");
+    }
+
+    @Test
+    @DisplayName("Create ThrowsExceptionDirective")
+    public void testCreateThrowsExceptionDirective() {
+        // Arrange
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("param4", "throw");
+
+        // Act
+        Directive directive = DirectiveFactory.createDirective(parameters, "throw", "IllegalArgumentException");
+
+        // Assert
+        assertTrue(directive instanceof ThrowsExceptionDirective, "Should create a ThrowsExceptionDirective");
+        ThrowsExceptionDirective throwsExceptionDirective = (ThrowsExceptionDirective) directive;
+        assertEquals("param4", throwsExceptionDirective.getParameterName(0), "Parameter name should be 'param4'");
+        assertEquals("IllegalArgumentException", throwsExceptionDirective.getExpectedBehavior(), "Expected behavior should be 'IllegalArgumentException'");
+    }
 
     @Test
     public void testCreateSimpleValueDirective() {

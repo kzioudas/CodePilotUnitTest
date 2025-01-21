@@ -31,10 +31,9 @@ public class JUnitTestGenerator {
      * Generates JUnit test classes for all test cases grouped by class.
      *
      * @param testCasesByClass Map of class names to their corresponding test cases.
-     * @param projectDir        The directory of the project.
      * @throws IOException If file writing fails.
      */
-    public void generateTests(Map<String, List<TestCase>> testCasesByClass, Path projectDir) throws IOException {
+    public void generateTests(Map<String, List<TestCase>> testCasesByClass) throws IOException {
         for (String className : testCasesByClass.keySet()) {
             List<TestCase> testCases = testCasesByClass.get(className);
             ClassRepresentation classRepresentation = null;
@@ -48,11 +47,9 @@ public class JUnitTestGenerator {
             Path sourcePath = classRepresentation.getPath(); // Path of the source class file
             // Replace the main source directory with the test directory
             String sourcePathString = sourcePath.toString().replace("\\", "/");
-            System.out.println("Contains " + sourcePathString.contains("src/main/java"));
             if (sourcePathString.contains("src/main/java")) {
                 String testPathString = sourcePathString.replace("src/main/java", "src/test/java");
                 Path testPath = Paths.get(testPathString).getParent();
-                System.out.println(testPath);
                 // Ensure the test directory exists
                 Path testDirectory = testPath.getParent();
                 Files.createDirectories(testDirectory);
@@ -62,7 +59,7 @@ public class JUnitTestGenerator {
                 classGenerator.generate();
             } else {
             throw new IllegalStateException("Source path does not contain expected directory structure: " + sourcePath);
-        }
+            }
         }
     }
 
