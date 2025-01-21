@@ -52,6 +52,10 @@ public class TestClassGenerator {
         // Write the TestClass to a file
         try (FileWriter writer = new FileWriter(outputDir.resolve(classRepresentation.getClassName() + "Test.java").toFile())) {
             writer.write(testClass.render());
+            System.out.println("okay writing to" + outputDir);
+        } catch (IOException e){
+            System.out.println("Error writing to " + outputDir);
+            e.printStackTrace();
         }
     }
 }

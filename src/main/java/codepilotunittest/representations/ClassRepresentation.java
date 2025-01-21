@@ -4,6 +4,7 @@ import codepilotunittest.parser.tree.LeafNode;
 import codepilotunittest.parser.tree.NodeType;
 import codepilotunittest.parser.tree.Relationship;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -17,28 +18,31 @@ public class ClassRepresentation implements SrcElement {
     private final List<String> interfaces;
     private final List<MethodRepresentation> methods;
     private final Set<Relationship<LeafNode>> relationships;
+    private final Path path;
 
     /**
      * Constructor for ClassRepresentation.
      *
-     * @param className The name of the class.
-     * @param modifiers The list of modifiers (e.g., public, abstract) for the class.
-     * @param interfaces The list of interfaces implemented by the class.
-     * @param methods The list of methods defined in the class.
+     * @param className     The name of the class.
+     * @param modifiers     The list of modifiers (e.g., public, abstract) for the class.
+     * @param interfaces    The list of interfaces implemented by the class.
+     * @param methods       The list of methods defined in the class.
      * @param relationships The relationships involving this class (e.g., inheritance, association).
+     * @param path
      */
     public ClassRepresentation(
             String className,
             List<NodeType> modifiers,
             List<String> interfaces,
             List<MethodRepresentation> methods,
-            Set<Relationship<LeafNode>> relationships
-    ) {
+            Set<Relationship<LeafNode>> relationships,
+            Path path) {
         this.className = className;
         this.modifiers = modifiers;
         this.interfaces = interfaces;
         this.methods = methods;
         this.relationships = relationships;
+        this.path = path;
     }
 
     /**
@@ -50,6 +54,9 @@ public class ClassRepresentation implements SrcElement {
         return className;
     }
 
+    public Path getPath() {
+        return path;
+    }
     /**
      * Gets the list of modifiers applied to the class.
      *
@@ -132,6 +139,7 @@ public class ClassRepresentation implements SrcElement {
         }
 
         sb.append("}");
+        sb.append(getPath().toString());
         return sb.toString();
     }
 }

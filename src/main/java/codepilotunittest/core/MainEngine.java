@@ -120,7 +120,8 @@ public class MainEngine {
                 classModifiers,
                 interfaces,
                 methodRepresentations,
-                classRelationships
+                classRelationships,
+                leafNode.getPath()
         );
     }
 
@@ -144,9 +145,9 @@ public class MainEngine {
         );
     }
     
-    public void generateTests(Map<String, List<TestCase>> testCasesByClass, Path outputDir) throws IOException {
+    public void generateTests(Map<String, List<TestCase>> testCasesByClass, Path projectDir) throws IOException {
     	JUnitTestGenerator myJunitTestGenerator = new JUnitTestGenerator(this.projectRepresentation); 
-    	myJunitTestGenerator.generateTests(testCasesByClass, outputDir);
+    	myJunitTestGenerator.generateTests(testCasesByClass, projectDir);
     }
     
 }

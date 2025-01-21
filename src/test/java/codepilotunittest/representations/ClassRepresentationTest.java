@@ -79,8 +79,8 @@ class ClassRepresentationTest {
                 Arrays.asList(), // modifiers
                 Arrays.asList("Serializable", "Cloneable"), // interfaces
                 Arrays.asList(methodRepresentation), // methods
-                classRelationships
-        );
+                classRelationships,
+                endingNode.getPath());
     }
 
     @Test
