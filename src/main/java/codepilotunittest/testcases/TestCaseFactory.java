@@ -5,6 +5,7 @@ import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Factory class for creating test case instances.

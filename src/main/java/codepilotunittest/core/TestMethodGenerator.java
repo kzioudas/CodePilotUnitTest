@@ -42,13 +42,20 @@ public class TestMethodGenerator {
             return null;
         }
 
-        // Create a TestMethod object
+        // Create test method name
         String methodName = "test" + methodRepresentation.getMethodName() + "_" + testCase.getTestType().name().toLowerCase();
+
+        // Generate constructor initialization using directive's constructor parameters
+        String initializationBlock = generateInitializationBlock(directive.getConstructorParameters());
+
+        // Generate method call
         String methodCall = generateMethodCall(methodRepresentation, directive);
+
+        // Create TestMethod instance with method call passed in the constructor
         TestMethod testMethod = new TestMethod(methodName, methodCall);
 
         // Add initialization block
-        testMethod.addInitialization(generateInitializationBlock());
+        testMethod.addInitialization(initializationBlock);
 
         // Add parameter preparations
         for (Map.Entry<String, String> param : methodRepresentation.getParameters().entrySet()) {
@@ -60,31 +67,43 @@ public class TestMethodGenerator {
             }
         }
 
-
+        // Add assertion
         testMethod.addAssertion(directive.generateAssertion());
-
 
         return testMethod;
     }
 
+
     /**
      * Generates the initialization block for the class under test.
      *
+     * @param constructorParams The constructor parameters to use during initialization.
      * @return A string representing the initialization block.
      */
-    private String generateInitializationBlock() {
-        return classRepresentation.getClassName() + " instance = new " + classRepresentation.getClassName() + "();";
+    private String generateInitializationBlock(Map<String, String> constructorParams) {
+        StringBuilder initialization = new StringBuilder();
+        initialization.append(classRepresentation.getClassName()).append(" instance = new ")
+                .append(classRepresentation.getClassName()).append("(");
+
+        // Add constructor parameters
+        List<String> params = new ArrayList<>();
+        for (String value : constructorParams.values()) {
+            params.add(formatValue(value));
+        }
+        initialization.append(String.join(", ", params));
+
+        initialization.append(");");
+        return initialization.toString();
     }
 
     /**
      * Generates the method call statement for a given method and its corresponding directives.
      *
      * @param method     The {@link MethodRepresentation} representing the method to be called.
-     * @param directive A list of {@link Directive} objects containing the parameter values.
+     * @param directive  The {@link Directive} containing the parameter values.
      * @return A string representing the complete method call statement.
      */
     private String generateMethodCall(MethodRepresentation method, Directive directive) {
-        // Start building the method call
         StringBuilder sb = new StringBuilder();
 
         // Add return type and method name
@@ -97,8 +116,8 @@ public class TestMethodGenerator {
         List<String> params = new ArrayList<>();
         for (String paramName : method.getParameters().keySet()) {
             String paramValue = findDirectiveValue(directive, paramName);
-            if (paramValue != null) { // Skip parameters without matching directives
-                params.add(paramValue);
+            if (paramValue != null) {
+                params.add(formatValue(paramValue));
             }
         }
 
@@ -109,5 +128,30 @@ public class TestMethodGenerator {
         sb.append(");");
 
         return sb.toString();
+    }
+
+    /**
+     * Formats a value correctly based on its type.
+     * - Adds quotes for string values.
+     * - Leaves numbers as-is.
+     *
+     * @param value The value to format.
+     * @return A properly formatted value string.
+     */
+    private String formatValue(String value) {
+        if (isString(value)) {
+            return "\"" + value + "\"";
+        }
+        return value;
+    }
+
+    /**
+     * Checks if a value should be treated as a string.
+     *
+     * @param value The value to check.
+     * @return true if the value is a string, false otherwise.
+     */
+    private boolean isString(String value) {
+        return value.matches("[a-zA-Z].*") || value.matches("\".*\"");
     }
 }

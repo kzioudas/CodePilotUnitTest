@@ -1,10 +1,12 @@
-test_type|class_name|method_name|directives|expected_result|expected_behavior
-rainyday|Calculator|divide|a:10;b:0|ArithmeticException|Exception
-happypath|DocumentHandler|addDocument|document:"Sample Document"|"Sample Document"|true
-rainyday|DocumentHandler|getDocument|index:100|IndexOutOfBoundsException|Exception
-happypath|User|isAdult|age:25|true|true
-happypath|Calculator|add|a:2;b:4|range(1-10)|True
-happypath|Calculator|add|a:1;b:3|4|true
-rainyday|User|isAdult|age:15|false|false
-rainyday|User|updateName|name:""|IllegalArgumentException|Exception
-rainyday|DocumentHandler|addDocument|document:null|NullPointerException|Exception
+test_type|class_name|method_name|directives|constructor_params|expected_result|expected_behavior
+rainyday|Calculator|divide|a:10;b:0|-|ArithmeticException|Exception
+happypath|DocumentHandler|addDocument|document:"Sample Document"|-|"Sample Document"|true
+rainyday|DocumentHandler|getDocument|index:100|-|IndexOutOfBoundsException|Exception
+happypath|User|isAdult|age:25|-|true|true
+happypath|Calculator|add|a:2;b:4|-|range(1-10)|True
+happypath|Calculator|add|a:1;b:3|-|4|true
+happypath|Calculator|getPrecision|precision:4|<directives>|4|true
+happypath|User|getName|name:Nikos;age:15|<directives>|"Nikos"|True
+rainyday|User|isAdult|age:15|name:Nikos;age:15|false|false
+rainyday|User|updateName|name:null|name:Nikos;age:15|IllegalArgumentException|Exception
+rainyday|DocumentHandler|addDocument|document:null|-|NullPointerException|Exception

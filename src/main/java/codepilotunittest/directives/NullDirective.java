@@ -10,18 +10,21 @@ public class NullDirective implements Directive {
     protected final Map<String, String> parameters; // Key: Parameter name, Value: Parameter value
     protected final String expectedResult;
     protected final String expectedBehavior;
+    protected final Map<String, String> constructorParameters;
 
     /**
      * Constructs a NullDirective with specified parameters, expected result, and behavior.
      *
-     * @param parameters       The parameters for the directive.
-     * @param expectedResult   The expected result of the method call.
-     * @param expectedBehavior The expected behavior of the method call.
+     * @param parameters            The parameters for the directive.
+     * @param expectedResult        The expected result of the method call.
+     * @param expectedBehavior      The expected behavior of the method call.
+     * @param constructorParameters
      */
-    public NullDirective(Map<String, String> parameters, String expectedResult, String expectedBehavior) {
+    public NullDirective(Map<String, String> parameters, String expectedResult, String expectedBehavior, Map<String, String> constructorParameters) {
         this.parameters = parameters;
         this.expectedResult = expectedResult;
         this.expectedBehavior = expectedBehavior;
+        this.constructorParameters = constructorParameters;
     }
 
     @Override
@@ -70,6 +73,14 @@ public class NullDirective implements Directive {
     @Override
     public boolean validate(Object value) {
         return value == null;
+    }
+
+    /**
+     * @return a map containing parameter names and values for constructor initialization
+     */
+    @Override
+    public Map<String, String> getConstructorParameters() {
+        return constructorParameters;
     }
 
     @Override

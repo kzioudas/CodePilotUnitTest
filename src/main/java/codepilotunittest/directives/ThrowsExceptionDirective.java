@@ -9,18 +9,21 @@ public class ThrowsExceptionDirective implements Directive {
     private final Map<String, String> parameters; // Key: Parameter name, Value: Input value
     private final String expectedException;
     private final String expectedBehavior;
+    private final Map<String, String> constructorParameters;
 
     /**
      * Constructs a ThrowsExceptionDirective with the given parameters and expected exception.
      *
-     * @param parameters        The parameters for the directive.
-     * @param expectedException The expected exception type.
+     * @param parameters            The parameters for the directive.
+     * @param expectedException     The expected exception type.
      * @param expectedBehavior
+     * @param constructorParameters
      */
-    public ThrowsExceptionDirective(Map<String, String> parameters, String expectedException, String expectedBehavior) {
+    public ThrowsExceptionDirective(Map<String, String> parameters, String expectedException, String expectedBehavior, Map<String, String> constructorParameters) {
         this.parameters = parameters;
         this.expectedException = expectedException;
         this.expectedBehavior = expectedBehavior;
+        this.constructorParameters = constructorParameters;
     }
 
     @Override
@@ -75,6 +78,14 @@ public class ThrowsExceptionDirective implements Directive {
     @Override
     public boolean validate(Object value) {
         return false; // Validation happens through exception checking in the test case.
+    }
+
+    /**
+     * @return a map containing parameter names and values for constructor initialization
+     */
+    @Override
+    public Map<String, String> getConstructorParameters() {
+        return constructorParameters;
     }
 
     @Override

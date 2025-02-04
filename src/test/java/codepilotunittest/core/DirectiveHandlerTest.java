@@ -20,7 +20,7 @@ public class DirectiveHandlerTest {
         );
 
         // Create a directive instance
-        Directive directive = new SimpleValueDirective(parameters, "ExpectedResult", "ExpectedBehavior");
+        Directive directive = new SimpleValueDirective(parameters, "ExpectedResult", "ExpectedBehavior", Map.of());
 
         // Act: Retrieve parameter values
         String param1Value = directive.getParameterValue("param1");

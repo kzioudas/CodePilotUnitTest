@@ -1,37 +1,51 @@
 package codepilotunittest.directives;
 
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DirectiveParser {
 
     /**
-     * Parses a directive with a list of parameters.
+     * Parses a directive with a list of parameters and constructor parameters.
      *
-     * @param parametersArray  The array of parameters (e.g., ["a:2", "b:4"]).
-     * @param expectedResult   The expected result of the method call.
-     * @param expectedBehavior The expected behavior (e.g., true, exception type).
-     * @return A Directive object.
+     * @param parameters  The method parameters
+     * @param expectedResult    The expected result of the method call.
+     * @param expectedBehavior  The expected behavior (e.g., true, exception type, "constructor").
+     * @param constructorParams The constructor parameters
+     * @return A Directive object with both method and constructor parameters.
      */
-    public static Directive parseDirective(String[] parametersArray, String expectedResult, String expectedBehavior) {
-        Directive directive;
-        Map<String, String> parameters = new HashMap<>();
-
-        for (String parameter : parametersArray) {
-            String[] parts = parameter.split(":");
-            if (parts.length != 2) {
-                throw new IllegalArgumentException("Invalid parameter format: " + parameter);
+    public static Directive parseDirective(String parameters, String expectedResult, String expectedBehavior, String constructorParams) {
+        Map<String, String> methodParameters = new HashMap<>();
+        Map<String, String> constructorParameters = new HashMap<>();
+        String[] parametersArray = parameters.split(";");
+        String[] constructorParametersArray = constructorParams.split(";");
+        // Parse method parameters
+        if (!parameters.equals("-")) {
+            for (String parameter : parametersArray) {
+                String[] parts = parameter.split(":");
+                if (parts.length != 2) {
+                    throw new IllegalArgumentException("Invalid parameter format: " + parameter);
+                }
+                methodParameters.put(parts[0].trim(), parts[1].trim());
             }
-
-            String name = parts[0].trim();
-            String value = parts[1].trim();
-            parameters.put(name, value);
-
         }
 
-        return  DirectiveFactory.createDirective(parameters, expectedResult, expectedBehavior);
+        if ("<directives>".equalsIgnoreCase(constructorParams)){
+            // Reuse directive parameters if <directives> is specified
+            constructorParameters.putAll(methodParameters);
+        }else if(!constructorParams.equals("-")) {
+            for (String parameter : constructorParametersArray) {
+                String[] parts = parameter.split(":");
+                if (parts.length != 2) {
+                    throw new IllegalArgumentException("Invalid constructor parameter format: " + parameter);
+                }
+                constructorParameters.put(parts[0].trim(), parts[1].trim());
+            }
+        }
+
+        // Create the directive with both method and constructor parameters
+        Directive directive = DirectiveFactory.createDirective(methodParameters, expectedResult, expectedBehavior,constructorParameters);
+
+        return directive;
     }
 }

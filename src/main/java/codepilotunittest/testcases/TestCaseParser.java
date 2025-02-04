@@ -65,12 +65,15 @@ public class TestCaseParser {
                 String testType = parts[0].trim();
                 String classToTest = parts[1].trim();
                 String methodToTest = parts[2].trim();
-                String parametersString = parts[3].trim();
-                String expectedResult = parts[4].trim();
-                String expectedBehavior = parts[5].trim();
+                String directivesString = parts[3].trim();
+                String constructorParamsString = parts[4].trim();
+                String expectedResult = parts[5].trim();
+                String expectedBehavior = parts[6].trim();
 
-                // Parse the directives using DirectiveParser
-                Directive directives = directiveParser.parseDirective(parametersString.split(";"),expectedResult ,expectedBehavior);
+                // Parse directives
+                Directive directives = directiveParser.parseDirective(directivesString, expectedResult, expectedBehavior, constructorParamsString);
+
+                // Find class and method representations
                 ClassRepresentation classRepresentation = project.findClass(classToTest);
                 MethodRepresentation methodRepresentation = classRepresentation.findMethod(methodToTest);
 
@@ -92,6 +95,7 @@ public class TestCaseParser {
         return testCasesByClass;
     }
 
+
     /**
      * Validates if a CSV line has the required number of parts.
      *
@@ -99,7 +103,7 @@ public class TestCaseParser {
      * @return true if the line is valid, false otherwise.
      */
     private boolean isValidCsvLine(String[] parts) {
-        return parts.length == 6;
+        return parts.length == 7;
     }
 
     /**
@@ -110,9 +114,7 @@ public class TestCaseParser {
      * @throws IllegalArgumentException if any parameter in the method is missing from the directive.
      */
     private void validateDirectivesForMethod(MethodRepresentation methodRepresentation, Directive directive) {
-        // Loop through each parameter of the method
         for (String paramName : methodRepresentation.getParameters().keySet()) {
-            // Check if the directive contains the parameter
             if (!directive.getParameters().containsKey(paramName)) {
                 throw new IllegalArgumentException(
                         "Missing directive for parameter: " + paramName + " in method: " + methodRepresentation.getMethodName()

@@ -25,8 +25,7 @@ public class DirectiveHandler {
 
             // Handle special cases for RangeDirective
             if (directive instanceof RangeDirective) {
-                RangeDirective rangeDirective = (RangeDirective) directive;
-                return rangeDirective.getParameterValue(paramName);
+                return ((RangeDirective) directive).getParameterValue(paramName);
             }
 
             // Handle null values explicitly

@@ -14,22 +14,25 @@ public class RangeDirective implements Directive {
     protected final int max;
     protected final String expected;
     protected final String expectedBehavior;
+    protected final Map<String, String> constructorParameters;
 
     /**
      * Constructs a RangeDirective with specified parameters and range constraints.
      *
-     * @param parameters       The parameters for the directive.
-     * @param min              The minimum value of the range.
-     * @param max              The maximum value of the range.
-     * @param expected         The expected behavior or result.
+     * @param parameters            The parameters for the directive.
+     * @param min                   The minimum value of the range.
+     * @param max                   The maximum value of the range.
+     * @param expected              The expected behavior or result.
      * @param expectedBehavior
+     * @param constructorParameters
      */
-    public RangeDirective(Map<String, String> parameters, int min, int max, String expected, String expectedBehavior) {
+    public RangeDirective(Map<String, String> parameters, int min, int max, String expected, String expectedBehavior, Map<String, String> constructorParameters) {
         this.parameters = parameters;
         this.min = min;
         this.max = max;
         this.expected = expected;
         this.expectedBehavior = expectedBehavior;
+        this.constructorParameters = constructorParameters;
     }
 
     public int getMax() {
@@ -108,6 +111,14 @@ public class RangeDirective implements Directive {
             return intValue >= min && intValue <= max;
         }
         return false;
+    }
+
+    /**
+     * @return a map containing parameter names and values for constructor initialization
+     */
+    @Override
+    public Map<String, String> getConstructorParameters() {
+        return constructorParameters;
     }
 
     @Override

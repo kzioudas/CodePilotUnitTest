@@ -18,7 +18,7 @@ public class DirectiveTest {
      */
     @Test
     public void testNullDirective() {
-        Directive nullDirective = new NullDirective(Map.of("testParam", "null"), "null", "True");
+        Directive nullDirective = new NullDirective(Map.of("testParam", "null"), "null", "True", Map.of());
 
         assertEquals("null", nullDirective.getDirectiveType());
         assertFalse(nullDirective.validate("someValue"), "Expected 'someValue' to validate as false.");
@@ -30,7 +30,7 @@ public class DirectiveTest {
      */
     @Test
     public void testRangeDirective() {
-        Directive rangeDirective = new RangeDirective(Map.of("testParam", "5"), 1, 5,"true", "true");
+        Directive rangeDirective = new RangeDirective(Map.of("testParam", "5"), 1, 5,"true", "true", Map.of());
 
         assertEquals("range", rangeDirective.getDirectiveType());
         assertTrue(rangeDirective.validate(5));
@@ -46,7 +46,7 @@ public class DirectiveTest {
      */
     @Test
     public void testSimpleValueDirective() {
-        Directive simpleValueDirective = new SimpleValueDirective(Map.of("testParam", "expectedValue"), "expectedValue", "True");
+        Directive simpleValueDirective = new SimpleValueDirective(Map.of("testParam", "expectedValue"), "expectedValue", "True", Map.of());
 
         assertEquals("value", simpleValueDirective.getDirectiveType());
         assertTrue(simpleValueDirective.validate("expectedValue"), "Expected 'expectedValue' to validate as true.");
@@ -58,7 +58,7 @@ public class DirectiveTest {
      */
     @Test
     public void testThrowsExceptionDirective() {
-        Directive throwsExceptionDirective = new ThrowsExceptionDirective(Map.of("param1", "10", "param2", "0"), "ArithmeticException","ArithmeticException");
+        Directive throwsExceptionDirective = new ThrowsExceptionDirective(Map.of("param1", "10", "param2", "0"), "ArithmeticException","ArithmeticException", Map.of());
 
         assertEquals("throwsException", throwsExceptionDirective.getDirectiveType());
         assertEquals("ArithmeticException", throwsExceptionDirective.getExpectedBehavior());

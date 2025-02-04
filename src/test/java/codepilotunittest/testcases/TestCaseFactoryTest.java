@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,8 +45,10 @@ public class TestCaseFactoryTest {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("a", "10");
         parameters.put("b", "5");
+        Map<String, String> cParameters = new HashMap<>();
 
-        Directive directive = new SimpleValueDirective(parameters, "15", "True");
+
+        Directive directive = new SimpleValueDirective(parameters, "15", "True", cParameters);
 
         ClassRepresentation classRepresentation = projectRepresentation.findClass(classToTest);
         MethodRepresentation methodRepresentation = classRepresentation.findMethod(methodToTest);
@@ -77,8 +78,9 @@ public class TestCaseFactoryTest {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("a", "10");
         parameters.put("b", "0");
+        Map<String, String> cParameters = new HashMap<>();
 
-        Directive directive = new ThrowsExceptionDirective(parameters, "ArithmeticException", "Exception");
+        Directive directive = new ThrowsExceptionDirective(parameters, "ArithmeticException", "Exception", cParameters);
 
         ClassRepresentation classRepresentation = projectRepresentation.findClass(classToTest);
         MethodRepresentation methodRepresentation = classRepresentation.findMethod(methodToTest);
@@ -105,7 +107,8 @@ public class TestCaseFactoryTest {
         String classToTest = "Calculator";
         String methodToTest = "add";
         Map<String, String> parameters = Map.of("a", "10", "b", "5");
-        Directive directive = new ThrowsExceptionDirective(parameters, "15", "Exception");
+        Map<String, String> cParameters = new HashMap<>();
+        Directive directive = new ThrowsExceptionDirective(parameters, "15", "Exception", cParameters);
 
         ClassRepresentation classRepresentation = projectRepresentation.findClass(classToTest);
         MethodRepresentation methodRepresentation = classRepresentation.findMethod(methodToTest);

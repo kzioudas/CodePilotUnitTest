@@ -20,12 +20,12 @@ public class DirectiveParserTest {
     @Test
     public void testParseSimpleValueDirective() {
         // Arrange
-        String[] parametersArray = {"param1:5", "param2:10"};
+        String parametersArray = "param1:5;param2:10";
         String expectedResult = "15";
         String expectedBehavior = "true";
-
+        String constructorParameters = "param1:5;param2:10";
         // Act
-        Directive directive = DirectiveParser.parseDirective(parametersArray, expectedResult, expectedBehavior);
+        Directive directive = DirectiveParser.parseDirective(parametersArray, expectedResult, expectedBehavior,constructorParameters);
 
         // Assert
         assertTrue(directive instanceof SimpleValueDirective, "Expected a SimpleValueDirective");
@@ -45,19 +45,23 @@ public class DirectiveParserTest {
     @Test
     public void testParseRangeDirective() {
         // Arrange
-        String[] parametersArray = {"param1:5", "param2:10"};
+        String parametersArray = "param1:5;param2:10";
         String expectedResult = "range(1-10)";
         String expectedBehavior = "true";
+        String constructorParameters = "param1:5;param2:10";
 
         // Act
-        Directive directive = DirectiveParser.parseDirective(parametersArray, expectedResult, expectedBehavior);
+        Directive directive = DirectiveParser.parseDirective(parametersArray, expectedResult, expectedBehavior, constructorParameters);
 
         // Assert
         assertTrue(directive instanceof RangeDirective, "Expected a RangeDirective");
         RangeDirective rangeDirective = (RangeDirective) directive;
 
         Map<String, String> parameters = rangeDirective.getParameters();
+        Map<String, String> cParameters = rangeDirective.getConstructorParameters();
         assertEquals(2, parameters.size());
+        assertEquals("5", cParameters.get("param1"));
+        assertEquals("10", cParameters.get("param2"));
         assertTrue(parameters.containsKey("param1"));
         assertEquals(expectedResult, rangeDirective.getExpectedResult());
         assertEquals(expectedBehavior, rangeDirective.getExpectedBehavior());
@@ -69,12 +73,12 @@ public class DirectiveParserTest {
     @Test
     public void testParseThrowsExceptionDirective() {
         // Arrange
-        String[] parametersArray = {"param1:10", "param2:0"};
+        String parametersArray = "param1:10;param2:0";
         String expectedResult = null;
         String expectedBehavior = "ArithmeticException";
-
+        String constructorParameters = "param1:10;param2:0";
         // Act
-        Directive directive = DirectiveParser.parseDirective(parametersArray, expectedResult, expectedBehavior);
+        Directive directive = DirectiveParser.parseDirective(parametersArray, expectedResult, expectedBehavior, constructorParameters);
 
         // Assert
         assertTrue(directive instanceof ThrowsExceptionDirective, "Expected a ThrowsExceptionDirective");
@@ -94,13 +98,13 @@ public class DirectiveParserTest {
     @Test
     public void testParseInvalidParameterFormat() {
         // Arrange
-        String[] parametersArray = {"param1:5", "invalidFormat"};
+        String parametersArray = "param1:5;invalidFormat";
         String expectedResult = "15";
         String expectedBehavior = "true";
-
+        String constructorParameters =  "param1:5;invalidFormat";
         // Act & Assert
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                DirectiveParser.parseDirective(parametersArray, expectedResult, expectedBehavior)
+                DirectiveParser.parseDirective(parametersArray, expectedResult, expectedBehavior, constructorParameters)
         );
 
         assertTrue(exception.getMessage().contains("Invalid parameter format"), "Expected invalid format exception");

@@ -12,18 +12,20 @@ public class SimpleValueDirective implements Directive {
     private final Map<String, String> parameters; // Key: Parameter name, Value: Input value
     private final String expectedResult;          // Expected result (if any)
     private final String expectedBehavior;        // Expected behavior (e.g., true, exception type)
-
+    private final Map<String, String> constructorParameters;
     /**
      * Constructs a SimpleValueDirective with the given parameters, result, and behavior.
      *
-     * @param parameters       The parameters for the directive.
-     * @param expectedResult   The expected result of the directive.
-     * @param expectedBehavior The expected behavior of the directive.
+     * @param parameters            The parameters for the directive.
+     * @param expectedResult        The expected result of the directive.
+     * @param expectedBehavior      The expected behavior of the directive.
+     * @param constructorParameters
      */
-    public SimpleValueDirective(Map<String, String> parameters, String expectedResult, String expectedBehavior) {
+    public SimpleValueDirective(Map<String, String> parameters, String expectedResult, String expectedBehavior, Map<String, String> constructorParameters) {
         this.parameters = parameters;
         this.expectedResult = expectedResult;
         this.expectedBehavior = expectedBehavior;
+        this.constructorParameters = constructorParameters;
     }
 
     @Override
@@ -99,6 +101,14 @@ public class SimpleValueDirective implements Directive {
     @Override
     public boolean validate(Object value) {
         return parameters.containsValue(value.toString());
+    }
+
+    /**
+     * @return a map containing parameter names and values for constructor initialization
+     */
+    @Override
+    public Map<String, String> getConstructorParameters() {
+        return constructorParameters;
     }
 
     @Override

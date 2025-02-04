@@ -18,7 +18,7 @@ public class DirectiveFactoryTest {
         parameters.put("param1","null");
 
         // Act
-        Directive directive = DirectiveFactory.createDirective(parameters,"null" ,"True");
+        Directive directive = DirectiveFactory.createDirective(parameters,"null" ,"True",Map.of());
 
         // Assert
         assertTrue(directive instanceof NullDirective);
@@ -33,7 +33,7 @@ public class DirectiveFactoryTest {
         parameters.put("param3", "range(1-10)");
 
         // Act
-        Directive directive = DirectiveFactory.createDirective(parameters, "range(1-10)", "True");
+        Directive directive = DirectiveFactory.createDirective(parameters, "range(1-10)", "True",Map.of());
 
         // Assert
         assertTrue(directive instanceof RangeDirective, "Should create a RangeDirective");
@@ -51,7 +51,7 @@ public class DirectiveFactoryTest {
         parameters.put("param4", "throw");
 
         // Act
-        Directive directive = DirectiveFactory.createDirective(parameters, "throw", "IllegalArgumentException");
+        Directive directive = DirectiveFactory.createDirective(parameters, "throw", "IllegalArgumentException",Map.of());
 
         // Assert
         assertTrue(directive instanceof ThrowsExceptionDirective, "Should create a ThrowsExceptionDirective");
@@ -67,7 +67,7 @@ public class DirectiveFactoryTest {
         parameters.put("param5","5");
 
         // Act
-        Directive directive = DirectiveFactory.createDirective(parameters,"3","True");
+        Directive directive = DirectiveFactory.createDirective(parameters,"3","True",Map.of());
 
         // Assert
         assertTrue(directive instanceof SimpleValueDirective);

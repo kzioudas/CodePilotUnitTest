@@ -29,4 +29,7 @@ public class Calculator {
     public void setPrecision(int precision) {
         this.precision = precision;
     }
+    public int getPrecision() {
+        return precision;
+    }
 }
