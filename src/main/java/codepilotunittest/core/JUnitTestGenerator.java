@@ -57,7 +57,18 @@ public class JUnitTestGenerator {
                 // Use TestClassGenerator to handle the generation of test classes.
                 TestClassGenerator classGenerator = new TestClassGenerator(classRepresentation, testCases, testPath);
                 classGenerator.generate();
-            } else {
+
+            }else if(sourcePathString.contains("src/")){
+                Path testPath = Paths.get(sourcePathString).getParent();
+                // Ensure the test directory exists
+                Path testDirectory = testPath.getParent();
+                Files.createDirectories(testDirectory);
+
+                // Use TestClassGenerator to handle the generation of test classes.
+                TestClassGenerator classGenerator = new TestClassGenerator(classRepresentation, testCases, testPath);
+                classGenerator.generate();
+
+            }else{
             throw new IllegalStateException("Source path does not contain expected directory structure: " + sourcePath);
             }
         }

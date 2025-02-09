@@ -1,37 +1,15 @@
-test_type|class_name|method_name|directives
-happypath|CD|descriptionInDetail|descriptionInDetailParam:InputFordescriptionInDetail:ExpectedResponseFordescriptionInDetail:true
-rainyday|CD|descriptionInDetail|descriptionInDetailParam:InputFordescriptionInDetail:ExpectedResponseFordescriptionInDetail:false
-happypath|CD|descriptionShort|descriptionShortParam:InputFordescriptionShort:ExpectedResponseFordescriptionShort:true
-rainyday|CD|descriptionShort|descriptionShortParam:InputFordescriptionShort:ExpectedResponseFordescriptionShort:false
-happypath|CD|finalPrice|finalPriceParam:InputForfinalPrice:ExpectedResponseForfinalPrice:true
-rainyday|CD|finalPrice|finalPriceParam:InputForfinalPrice:ExpectedResponseForfinalPrice:false
-happypath|Item|id|idParam:InputForid:ExpectedResponseForid:true
-rainyday|Item|id|idParam:InputForid:ExpectedResponseForid:false
-happypath|Item|descriptionShort|descriptionShortParam:InputFordescriptionShort:ExpectedResponseFordescriptionShort:true
-rainyday|Item|descriptionShort|descriptionShortParam:InputFordescriptionShort:ExpectedResponseFordescriptionShort:false
-happypath|Item|title|titleParam:InputFortitle:ExpectedResponseFortitle:true
-rainyday|Item|title|titleParam:InputFortitle:ExpectedResponseFortitle:false
-happypath|Item|descriptionInDetail|descriptionInDetailParam:InputFordescriptionInDetail:ExpectedResponseFordescriptionInDetail:true
-rainyday|Item|descriptionInDetail|descriptionInDetailParam:InputFordescriptionInDetail:ExpectedResponseFordescriptionInDetail:false
-happypath|Item|originalPrice|originalPriceParam:InputFororiginalPrice:ExpectedResponseFororiginalPrice:true
-rainyday|Item|originalPrice|originalPriceParam:InputFororiginalPrice:ExpectedResponseFororiginalPrice:false
-happypath|Item|finalPrice|finalPriceParam:InputForfinalPrice:ExpectedResponseForfinalPrice:true
-rainyday|Item|finalPrice|finalPriceParam:InputForfinalPrice:ExpectedResponseForfinalPrice:false
-happypath|ItemFactory|createBook|createBookParam:InputForcreateBook:ExpectedResponseForcreateBook:true
-rainyday|ItemFactory|createBook|createBookParam:InputForcreateBook:ExpectedResponseForcreateBook:false
-happypath|ItemFactory|createItem|createItemParam:InputForcreateItem:ExpectedResponseForcreateItem:true
-rainyday|ItemFactory|createItem|createItemParam:InputForcreateItem:ExpectedResponseForcreateItem:false
-happypath|ItemFactory|createCD|createCDParam:InputForcreateCD:ExpectedResponseForcreateCD:true
-rainyday|ItemFactory|createCD|createCDParam:InputForcreateCD:ExpectedResponseForcreateCD:false
-happypath|ItemManager|removeItem|removeItemParam:InputForremoveItem:ExpectedResponseForremoveItem:true
-rainyday|ItemManager|removeItem|removeItemParam:InputForremoveItem:ExpectedResponseForremoveItem:false
-happypath|ItemManager|reportAllItems|reportAllItemsParam:InputForreportAllItems:ExpectedResponseForreportAllItems:true
-rainyday|ItemManager|reportAllItems|reportAllItemsParam:InputForreportAllItems:ExpectedResponseForreportAllItems:false
-happypath|ItemManager|addItem|addItemParam:InputForaddItem:ExpectedResponseForaddItem:true
-rainyday|ItemManager|addItem|addItemParam:InputForaddItem:ExpectedResponseForaddItem:false
-happypath|ShoppingCart|showDetails|showDetailsParam:InputForshowDetails:ExpectedResponseForshowDetails:true
-rainyday|ShoppingCart|showDetails|showDetailsParam:InputForshowDetails:ExpectedResponseForshowDetails:false
-happypath|ShoppingCart|removeItem|removeItemParam:InputForremoveItem:ExpectedResponseForremoveItem:true
-rainyday|ShoppingCart|removeItem|removeItemParam:InputForremoveItem:ExpectedResponseForremoveItem:false
-happypath|ShoppingCart|addItem|addItemParam:InputForaddItem:ExpectedResponseForaddItem:true
-rainyday|ShoppingCart|addItem|addItemParam:InputForaddItem:ExpectedResponseForaddItem:false
+test_type|class_name|method_name|directives|constructor_params|expected_result|expected_behavior
+happypath|Book|getDescriptionInDetail|title:The Great Gatsby;author:F. Scott Fitzgerald;year:1925;price:10.99;packaging:0;id:1|<directives>|"***Item id: 1***\nThe Great Gatsby\t\t Price:10.99\n by F. Scott Fitzgerald at 1925\nwith simple packaging.\n\n"|true
+happypath|Book|getDescriptionShort|title:1984;author:George Orwell;year:1949;price:8.99;packaging:1;id:2|<directives>|"1984\nby George Orwell at 1949\nwith hard packaging\n"|true
+happypath|Book|getFinalPrice|title:The Catcher in the Rye;author:J.D. Salinger;year:1951;price:12.50;packaging:0;id:3|<directives>|12.50|true
+rainyday|Book|getFinalPrice|title:null;author:null;year:0;price:0.00;packaging:0;id:4|<directives>|IllegalArgumentException|Exception
+rainyday|Book|getDescriptionInDetail|title:null;author:null;year:0;price:10.99;packaging:0;id:5|<directives>|NullPointerException|Exception
+rainyday|Book|getFinalPrice|title:The Alchemist;author:Paulo Coelho;year:1988;price:-5.99;packaging:0;id:7|<directives>|IllegalArgumentException|Exception
+
+happypath|CD|getDescriptionInDetail|title:Thriller;price:15.99;artist:Michael Jackson;discount:3.00;id:101|<directives>|"***Item id: 101*** \nThriller\t\t Price:15.99\n by Michael Jackson\nfinal price: 12.99\n\n"|true
+happypath|CD|getDescriptionShort|title:Back in Black;price:12.50;artist:AC/DC;discount:2.50;id:102|<directives>|"Back in Black\n by AC/DC"|true
+happypath|CD|getFinalPrice|title:The Wall;price:20.00;artist:Pink Floyd;discount:5.00;id:103|<directives>|15.00|true
+rainyday|CD|getFinalPrice|title:null;price:0.00;artist:null;discount:0.00;id:104|<directives>|IllegalArgumentException|Exception
+rainyday|CD|getDescriptionInDetail|title:null;price:10.99;artist:null;discount:2.00;id:105|<directives>|NullPointerException|Exception
+rainyday|CD|getFinalPrice|title:Nevermind;price:-10.00;artist:Nirvana;discount:5.00;id:106|<directives>|IllegalArgumentException|Exception
+
