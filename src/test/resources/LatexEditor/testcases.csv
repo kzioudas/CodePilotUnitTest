@@ -1,16 +1,21 @@
-test_type|class_name|method_name|directives|expected_result|expected_behavior
-happypath|VersionsManager|setStrategy|strategy:strategy|strategy|true
-rainyday|VersionsManager|setStrategy|strategy:strategy1;latexEditorView:latexEditorView;versionsStrategy:versionsStrategy|false|Exception
-happypath|VersionsManager|setStrategy|strategy:NULL;latexEditorView:latexEditorView;versionsStrategy:versionsStrategy|true|true
-rainyday|VersionsManager|setStrategy|strategy:NULL;latexEditorView:latexEditorView;versionsStrategy:versionsStrategy|false|Exception
-happypath|VersionsManager|setStrategy|strategy:"volatileStrategy"|"volatileStrategy"|true
-happypath|LatexEditorView|setStrategy|strategy:"stableStrategy"|"stableStrategy"|true
-happypath|LatexEditorView|setStrategy|strategy:"volatileStrategy"|"volatileStrategy"|true
-happypath|Document|setContents|contents:"Hello, World!"|"Hello, World!"|true
-happypath|VersionsStrategyFactory|createStrategy|type:"stableStrategy"|"StableVersionsStrategy"|true
-happypath|CommandFactory|createCommand|type:"SaveCommand"|"SaveCommand"|true
-rainyday|LatexEditorView|setStrategy|strategy:"invalidStrategy"|null|Exception
-rainyday|VersionsManager|setStrategy|strategy:null|null|false
-rainyday|Document|setContents|contents:null|null|Exception
-rainyday|VersionsStrategyFactory|createStrategy|type:"invalidType"|null|Exception
-rainyday|CommandFactory|createCommand|type:"UnknownCommand"|null|Exception
+test_type|class_name|method_name|directives|constructor_params|expected_result|expected_behavior
+happypath|Document|getContents|-|author:"Author";date:"2024-01-01";copyright:"All Rights Reserved";versionID:"1";contents:"Sample Text"|"Sample Text"|true
+rainyday|Document|getContents|-|author:null;date:null;copyright:null;versionID:null;contents:null|NullPointerException|Exception
+happypath|Document|getVersionID|-|versionID:"0"|0|true
+rainyday|Document|getVersionID|-|versionID:null|NullPointerException|Exception
+happypath|VersionsManager|isEnabled|-|strategy:"stable"|true|true
+rainyday|VersionsManager|isEnabled|-|strategy:"disabled"|false|false
+happypath|VersionsManager|getStrategy|-|-|StableVersionsStrategy|true
+happypath|VersionsManager|getType|-|-|"reportTemplate"|true
+rainyday|VersionsManager|getType|-|-|null|false
+happypath|VersionsStrategyFactory|createStrategy|type:"stable"|-|StableVersionsStrategy|true
+happypath|VersionsStrategyFactory|createStrategy|type:"volatile"|-|VolatileVersionsStrategy|true
+rainyday|VersionsStrategyFactory|createStrategy|type:"unknown"|-|null|false
+happypath|LatexEditorView|getStrategy|-|-|"stable"|true
+happypath|LatexEditorView|getFilename|-|-|"document.tex"|true
+rainyday|LatexEditorView|getFilename|-|-|null|false
+happypath|LatexEditorView|getText|-|-|"Sample LaTeX Content"|true
+happypath|CommandFactory|createCommand|type:"changeVersionsStrategy"|versionsManager: new VersionManager()|ChangeVersionsStrategyCommand(versionsManager)|true
+rainyday|CommandFactory|createCommand|type:"changeVersionsStrategy"|versionsManager: new VersionManager()|DisableVersionsManagementCommand(versionsManager)|false
+rainyday|CommandFactory|createCommand|type:null|versionsManager:null|NullPointerException|Exception
+happypath|LoadCommand|getVersionsManager|-|versionsManager: new VersionManager()|new VersionManager()|true

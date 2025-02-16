@@ -55,12 +55,9 @@ public class NullDirective implements Directive {
     @Override
     public String generateAssertion() {
         StringBuilder assertions = new StringBuilder();
-        for (String paramName : parameters.keySet()) {
-            assertions.append(String.format(
-                    "assertNull(%s, \"Expected %s to be null\");%n",
-                    paramName, paramName
-            ));
-        }
+
+        assertions.append(String.format("assertNull(result, \"Expected result to be null\");%n"));
+
         return assertions.toString();
     }
 

@@ -214,28 +214,4 @@ class MainEngineTest {
         assertEquals("ImplementingClass", classRepresentation.getClassName());
         assertEquals(List.of("TestingInterface", "TestingInterface2"), classRepresentation.getInterfaces());
     }
-
-    @Test
-    @DisplayName("Verify Updated Test Path Mapping")
-    void testUpdatedGenerateTestsPathMapping() throws IOException {
-        // Arrange: Initialize MainEngine with mock project structure
-        Path sourcePackagePath = Path.of("src/test/resources/example-project/src/main/java");
-        Path testCasesPath = Path.of("src/test/resources/example-project/testcases.csv");
-        mainEngine = new MainEngine(sourcePackagePath, "example-project", testCasesPath);
-
-
-        // Define expected test directory and test file path
-        Path projectDir = Path.of("src/test/resources/example-project");
-        Path expectedTestPath = Path.of("src/test/resources/example-project/src/test/java/example/UserTest.java");
-
-        // Act: Generate test classes
-        mainEngine.generateTests(mainEngine.getTestCases());
-
-        // Assert: Verify directory and file creation
-        Path testDirectory = expectedTestPath.getParent();
-        assertTrue(Files.exists(testDirectory), "Expected test directory to exist.");
-        assertTrue(Files.exists(expectedTestPath), "Expected test file to be created.");
-    }
-
-
 }

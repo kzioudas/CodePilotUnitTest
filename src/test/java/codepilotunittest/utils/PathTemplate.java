@@ -295,7 +295,7 @@ public class PathTemplate
                 PathConstructor.constructPath("src",
                         "test",
                         "resources",
-                        "testcases.csv"))));
+                        "LatexEditor/testcases.csv"))));
         public final Path path;
         TestCases(Path path) {
             this.path = path;

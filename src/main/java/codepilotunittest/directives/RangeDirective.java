@@ -94,6 +94,12 @@ public class RangeDirective implements Directive {
                 generatedAssertions.add(assertion);  // Add to set to avoid duplicates
             }
         }
+        if (generatedAssertions.isEmpty()){
+            assertions.append( String.format(
+                    "assertTrue(result >= %d && result <= %d, \"Expected result to be within range [%d, %d]\");%n",
+                    min, max, min, max
+            ));
+        }
 
         return assertions.toString();
     }

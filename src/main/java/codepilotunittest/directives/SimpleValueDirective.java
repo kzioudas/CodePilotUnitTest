@@ -89,6 +89,12 @@ public class SimpleValueDirective implements Directive {
                 generatedAssertions.add(assertion);
             }
         }
+        if (generatedAssertions.isEmpty()){
+            assertions.append( String.format(
+                    "assertEquals(result, %s, \"Expected result to equal %s\");%n"
+                    , expectedResult, expectedResult
+            ));
+        }
 
         return assertions.toString();
     }

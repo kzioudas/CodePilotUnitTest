@@ -2,7 +2,7 @@ test_type|class_name|method_name|directives|constructor_params|expected_result|e
 rainyday|Calculator|divide|a:10;b:0|-|ArithmeticException|Exception
 happypath|DocumentHandler|addDocument|document:"Sample Document"|-|"Sample Document"|true
 rainyday|DocumentHandler|getDocument|index:100|-|IndexOutOfBoundsException|Exception
-happypath|User|isAdult|age:25|-|true|true
+happypath|User|isAdult|age:25|<directives>|true|true
 happypath|Calculator|add|a:2;b:4|-|range(1-10)|True
 happypath|Calculator|add|a:1;b:3|-|4|true
 happypath|Calculator|getPrecision|precision:4|<directives>|4|true

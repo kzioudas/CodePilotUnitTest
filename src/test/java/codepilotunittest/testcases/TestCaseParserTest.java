@@ -31,7 +31,7 @@ public class TestCaseParserTest {
         Map<String, List<TestCase>> testCases = testCaseParser.parseTestCases(Path.of("src/test/resources/LatexEditor/testcases.csv"));
 
         // Assert: Check that we have two test cases
-        assertEquals(5, testCases.size());
+        assertEquals(6, testCases.size());
 
         // First TestCase (RainyDay)
         TestCase testCase1 = testCases.get("VersionsManager").get(0);
@@ -40,7 +40,7 @@ public class TestCaseParserTest {
         assertEquals(TestType.HAPPY_PATH, testCase1.getTestType());
         assertEquals(projectRepresentation.findClass("VersionsManager"), testCase1.getClassToTest());
         try {
-            assertEquals(projectRepresentation.findClass("VersionsManager").findMethod("setStrategy"), testCase1.getMethodToTest());
+            assertEquals(projectRepresentation.findClass("VersionsManager").findMethod("isEnabled"), testCase1.getMethodToTest());
         } catch (MethodNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -54,7 +54,7 @@ public class TestCaseParserTest {
         assertEquals(TestType.HAPPY_PATH, testCase2.getTestType());
         assertEquals(projectRepresentation.findClass("VersionsManager"), testCase2.getClassToTest());
         try {
-            assertEquals(projectRepresentation.findClass("VersionsManager").findMethod("setStrategy"), testCase2.getMethodToTest());
+            assertEquals(projectRepresentation.findClass("VersionsManager").findMethod("isEnabled"), testCase2.getMethodToTest());
         } catch (MethodNotFoundException e) {
             throw new RuntimeException(e);
         }

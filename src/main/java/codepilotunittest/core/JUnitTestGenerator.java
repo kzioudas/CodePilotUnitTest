@@ -69,7 +69,7 @@ public class JUnitTestGenerator {
                 classGenerator.generate();
 
             }else{
-            throw new IllegalStateException("Source path does not contain expected directory structure: " + sourcePath);
+               throw new IllegalStateException("Source path does not contain expected directory structure: " + sourcePath);
             }
         }
     }
