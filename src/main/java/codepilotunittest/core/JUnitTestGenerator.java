@@ -5,7 +5,9 @@ import codepilotunittest.representations.ProjectRepresentation;
 import codepilotunittest.testcases.TestCase;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -29,10 +31,9 @@ public class JUnitTestGenerator {
      * Generates JUnit test classes for all test cases grouped by class.
      *
      * @param testCasesByClass Map of class names to their corresponding test cases.
-     * @param outputDir        The directory to output the generated test files.
      * @throws IOException If file writing fails.
      */
-    public void generateTests(Map<String, List<TestCase>> testCasesByClass, Path outputDir) throws IOException {
+    public void generateTests(Map<String, List<TestCase>> testCasesByClass) throws IOException {
         for (String className : testCasesByClass.keySet()) {
             List<TestCase> testCases = testCasesByClass.get(className);
             ClassRepresentation classRepresentation = null;
@@ -42,9 +43,35 @@ public class JUnitTestGenerator {
                 throw new RuntimeException(e);
             }
 
-            // Use TestClassGenerator to handle the generation of test classes.
-            TestClassGenerator classGenerator = new TestClassGenerator(classRepresentation, testCases, outputDir);
-            classGenerator.generate();
+            // Calculate the output directory for the test class
+            Path sourcePath = classRepresentation.getPath(); // Path of the source class file
+            // Replace the main source directory with the test directory
+            String sourcePathString = sourcePath.toString().replace("\\", "/");
+            if (sourcePathString.contains("src/main/java")) {
+                String testPathString = sourcePathString.replace("src/main/java", "src/test/java");
+                Path testPath = Paths.get(testPathString).getParent();
+                // Ensure the test directory exists
+                Path testDirectory = testPath.getParent();
+                Files.createDirectories(testDirectory);
+
+                // Use TestClassGenerator to handle the generation of test classes.
+                TestClassGenerator classGenerator = new TestClassGenerator(classRepresentation, testCases, testPath);
+                classGenerator.generate();
+
+            }else if(sourcePathString.contains("src/")){
+                Path testPath = Paths.get(sourcePathString).getParent();
+                // Ensure the test directory exists
+                Path testDirectory = testPath.getParent();
+                Files.createDirectories(testDirectory);
+
+                // Use TestClassGenerator to handle the generation of test classes.
+                TestClassGenerator classGenerator = new TestClassGenerator(classRepresentation, testCases, testPath);
+                classGenerator.generate();
+
+            }else{
+               throw new IllegalStateException("Source path does not contain expected directory structure: " + sourcePath);
+            }
         }
     }
+
 }

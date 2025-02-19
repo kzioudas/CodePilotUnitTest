@@ -42,7 +42,7 @@ public interface TestCase {
     /**
      * Gets the directives for this test case.
      *
-     * @return a list of directives
+     * @return the directive
      */
-    List<Directive> getDirectives();
+    Directive getDirective();
 }

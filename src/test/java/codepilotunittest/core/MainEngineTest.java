@@ -10,9 +10,12 @@ import codepilotunittest.representations.MethodRepresentation;
 import codepilotunittest.representations.ProjectRepresentation;
 
 
+import codepilotunittest.testcases.TestCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,7 +26,6 @@ class MainEngineTest {
 
     private MainEngine mainEngine;
     private Map<Path, PackageNode> packageNodes;
-    private Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships;
     @SuppressWarnings("unused")
 	private Map<PackageNode, Set<Relationship<PackageNode>>> packageNodeRelationships;
     private ProjectRepresentation projectRepresentation;
@@ -110,7 +112,6 @@ class MainEngineTest {
         // Then
         assertNotNull(classRepresentation);
         assertEquals("EnumSample", classRepresentation.getClassName());
-        //assertEquals("enum", classRepresentation.getType());
         assertEquals(0, classRepresentation.getMethods().size());
     }
 
@@ -166,22 +167,6 @@ class MainEngineTest {
         assertEquals(List.of(ModifierType.get("private")), methodRepresentation.getModifiers());
     }
 
-//    @Test
-//    void testNestedClassRepresentation() {
-//        // Test with a nested class
-//        LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("InnerClassSample");
-//
-//        // Assume InnerClassSample has an inner class
-//        LeafNode innerLeafNode = leafNode.getInnerClasses().get("InnerClassSample$Inner");
-//
-//        // When
-//        ClassRepresentation classRepresentation = MainEngine.buildClassRepresentation(innerLeafNode, leafNodeRelationships);
-//
-//        // Then
-//        assertNotNull(classRepresentation);
-//        assertEquals("InnerClassSample$Inner", classRepresentation.getClassName());
-//        assertEquals(0, classRepresentation.getMethods().size());
-//    }
 
     @Test
     @DisplayName("Multiple Package Structure Test")
@@ -209,19 +194,6 @@ class MainEngineTest {
         assertEquals(0, projectRepresentation.getClasses().size());
     }
 
-//    @Test
-//    void testMalformedClassFile() {
-//        // Test handling of a malformed class file (e.g., missing brackets)
-//        LeafNode leafNode = packageNodes.values().iterator().next().getLeafNodes().get("MalformedClass");
-//
-//        // When
-//        ClassRepresentation classRepresentation = MainEngine.buildClassRepresentation(leafNode, leafNodeRelationships);
-//
-//        // Then
-//        assertNotNull(classRepresentation);
-//        assertEquals("MalformedClass", classRepresentation.getClassName());
-//        assertTrue(classRepresentation.getMethods().isEmpty()); // Assuming it couldn't parse methods
-//    }
 
     @Test
     @DisplayName("Multiple Inheritance Test")

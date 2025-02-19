@@ -5,6 +5,7 @@ import codepilotunittest.representations.ClassRepresentation;
 import codepilotunittest.representations.MethodRepresentation;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Factory class for creating test case instances.
@@ -17,17 +18,17 @@ public class TestCaseFactory {
      * @param testType      The type of the test case.
      * @param classToTest   The class to be tested.
      * @param methodToTest  The method to be tested.
-     * @param directives    The directives for the test case.
+     * @param directive    The directives for the test case.
      * @return The created test case.
      * @throws IllegalArgumentException If the test type is unknown.
      */
     public static TestCase createTestCase(String testType, ClassRepresentation classToTest,
-                                          MethodRepresentation methodToTest, List<Directive> directives) {
+                                          MethodRepresentation methodToTest, Directive directive) {
         switch (testType.toLowerCase()) {
             case "rainyday":
-                return new RainyDayTestCase(classToTest, methodToTest, directives);
+                return new RainyDayTestCase(classToTest, methodToTest, directive);
             case "happypath":
-                return new HappyPathTestCase(classToTest, methodToTest, directives);
+                return new HappyPathTestCase(classToTest, methodToTest, directive);
             default:
                 throw new IllegalArgumentException("Unknown test type: " + testType);
         }

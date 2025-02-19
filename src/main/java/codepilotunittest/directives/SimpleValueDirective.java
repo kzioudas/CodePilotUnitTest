@@ -1,27 +1,41 @@
 package codepilotunittest.directives;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * Directive for a simple value (e.g., "par value 5").
+ * Directive for a simple value (e.g., "param value 5").
  */
 public class SimpleValueDirective implements Directive {
 
-
-    private final String parameterName;
-    private final String inputValue;
-    private final String responceExpected;
-    private final String expected;
-
-    public SimpleValueDirective(String parameterName, String inputValue, String responceExpected, String expected) {
-        this.parameterName = parameterName;
-        this.inputValue = inputValue;
-        this.responceExpected = responceExpected;
-        this.expected = expected;
+    private final Map<String, String> parameters; // Key: Parameter name, Value: Input value
+    private final String expectedResult;          // Expected result (if any)
+    private final String expectedBehavior;        // Expected behavior (e.g., true, exception type)
+    private final Map<String, String> constructorParameters;
+    /**
+     * Constructs a SimpleValueDirective with the given parameters, result, and behavior.
+     *
+     * @param parameters            The parameters for the directive.
+     * @param expectedResult        The expected result of the directive.
+     * @param expectedBehavior      The expected behavior of the directive.
+     * @param constructorParameters
+     */
+    public SimpleValueDirective(Map<String, String> parameters, String expectedResult, String expectedBehavior, Map<String, String> constructorParameters) {
+        this.parameters = parameters;
+        this.expectedResult = expectedResult;
+        this.expectedBehavior = expectedBehavior;
+        this.constructorParameters = constructorParameters;
     }
 
     @Override
-    public String getParameterName() {
-        return parameterName;
+    public Map<String, String> getParameters() {
+        return parameters;
+    }
+
+    @Override
+    public String getParameterName(int index) {
+        return parameters.keySet().toArray()[index].toString();
     }
 
     @Override
@@ -29,46 +43,86 @@ public class SimpleValueDirective implements Directive {
         return "value";
     }
 
-    //todo fix that
-    /**
-     * @return
-     */
-    //ToDo for other types (String,int etc)
-    public String generateAssertion() {
-        // Adjust based on the expected return type (e.g., quotes for String)
-        String formattedValue = inputValue.matches("^\\d+(\\.\\d+)?$") ? inputValue : "\"" + inputValue + "\"";
+    @Override
+    public String getExpectedResult() {
+        return expectedResult;
+    }
 
-        // Handle boolean return type
-        if ("true".equalsIgnoreCase(responceExpected) || "false".equalsIgnoreCase(responceExpected)) {
-            boolean expectedValue = Boolean.parseBoolean(responceExpected);
-            return String.format(
-                    "assert%s(result, \"Expected %s to be %s\");",
-                    expectedValue ? "True" : "False",
-                    parameterName,
-                    parameterName,
-                    expected
-            );
+    @Override
+    public String getExpectedBehavior() {
+        return expectedBehavior;
+    }
+    //ToDo FIX THIS
+    @Override
+    public String generateAssertion() {
+        StringBuilder assertions = new StringBuilder();
+        Set<String> generatedAssertions = new HashSet<>();
+
+        for (Map.Entry<String, String> entry : parameters.entrySet()) {
+            String paramName = entry.getKey();
+            String paramValue = entry.getValue();
+
+            // Adjust based on the type of value
+            String formattedValue = paramValue.matches("^\\d+(\\.\\d+)?$") ? paramValue : "\"" + paramValue + "\"";
+
+            // Handle boolean expected result
+            String assertion = "";
+            if ("true".equalsIgnoreCase(expectedResult) || "false".equalsIgnoreCase(expectedResult)) {
+                boolean expectedValue = Boolean.parseBoolean(expectedResult);
+                assertion = String.format(
+                        "assert%s(result, \"Expected %s to be %s\");%n",
+                        expectedValue ? "True" : "False",
+                        paramName,
+                        expectedResult
+                );
+            } else {
+                // Default case for other types
+                assertion = String.format(
+                        "assertEquals(result, %s, \"Expected result to equal %s\");%n"
+                        , expectedResult, expectedResult
+                );
+            }
+
+            // Check for duplicate assertions
+            if (!generatedAssertions.contains(assertion)) {
+                assertions.append(assertion);
+                generatedAssertions.add(assertion);
+            }
+        }
+        if (generatedAssertions.isEmpty()){
+            assertions.append( String.format(
+                    "assertEquals(result, %s, \"Expected result to equal %s\");%n"
+                    , expectedResult, expectedResult
+            ));
         }
 
-        // Default case for other types
-        return String.format(
-                "assertEquals(%s, %s, \"Expected %s to equal %s\");",
-                formattedValue, parameterName, parameterName, formattedValue
-        );
+        return assertions.toString();
     }
 
-
-    public String getParameterValue() {
-        return inputValue;
+    @Override
+    public String getParameterValue(String key) {
+        return parameters.get(key).toString();
     }
 
-
-    public String toString(){
-        return "SimpleValueDirective [parameterName=" + parameterName + ", parameterValue=" + inputValue + "]" + generateAssertion();
-    }
     @Override
     public boolean validate(Object value) {
-        return value.equals(inputValue);
+        return parameters.containsValue(value.toString());
+    }
+
+    /**
+     * @return a map containing parameter names and values for constructor initialization
+     */
+    @Override
+    public Map<String, String> getConstructorParameters() {
+        return constructorParameters;
+    }
+
+    @Override
+    public String toString() {
+        return "SimpleValueDirective{" +
+                "parameters=" + parameters +
+                ", expectedResult='" + expectedResult + '\'' +
+                ", expectedBehavior='" + expectedBehavior + '\'' +
+                '}';
     }
 }
-

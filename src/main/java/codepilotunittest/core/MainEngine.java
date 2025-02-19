@@ -10,8 +10,7 @@ import codepilotunittest.representations.ProjectRepresentation;
 import codepilotunittest.parser.tree.LeafNode.Method;
 import codepilotunittest.testcases.TestCase;
 import codepilotunittest.testcases.TestCaseParser;
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
+
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -22,8 +21,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MainEngine {
-	//COMMENTED OUT SINCE IT'S NOT USED
-	//private static final Logger logger = LogManager.getLogger(MainEngine.class);
     ParserType parserType = ParserType.JAVAPARSER;
     private Parser parser = ProjectParserFactory.createProjectParser(parserType);
     private Map<Path, PackageNode> packageNodes;
@@ -33,35 +30,24 @@ public class MainEngine {
     private TestCaseParser testCaseParser;
     private Map<String, List<TestCase>> testCases;
     public MainEngine(Path sourcePackagePath,String projectName) {
-
         this.packageNodes = parser.parseSourcePackage(sourcePackagePath);
-
         // Create relationships between leaf nodes (e.g., classes and methods)
         this.leafNodeRelationships = parser.createRelationships(packageNodes);
-
         // Identify relationships between package nodes
         this.packageNodeRelationships = parser.identifyPackageNodeRelationships(leafNodeRelationships);
-
         // Build a representation of the entire project
         this.projectRepresentation = buildProjectRepresentation(projectName, packageNodes, packageNodeRelationships, leafNodeRelationships);
-
     }
 
     public MainEngine(Path sourcePackagePath,String projectName,Path testCasesPath) throws IOException {
-
         this.packageNodes = parser.parseSourcePackage(sourcePackagePath);
-
         // Create relationships between leaf nodes (e.g., classes and methods)
         this.leafNodeRelationships = parser.createRelationships(packageNodes);
-
         // Identify relationships between package nodes
         this.packageNodeRelationships = parser.identifyPackageNodeRelationships(leafNodeRelationships);
-
         // Build a representation of the entire project
         this.projectRepresentation = buildProjectRepresentation( projectName, packageNodes, packageNodeRelationships, leafNodeRelationships);
-
         this.testCaseParser = new TestCaseParser(projectRepresentation);
-
         this.testCases = testCaseParser.parseTestCases(testCasesPath);
     }
 
@@ -103,10 +89,8 @@ public class MainEngine {
                 classRepresentations.add(buildClassRepresentation(leafNode, leafNodeRelationships));
             }
         }
-
         // Collect all project-level relationships
         Set<Relationship<PackageNode>> projectRelationships = packageNodeRelationships.values().stream().flatMap(Set::stream).collect(Collectors.toSet());
-
         // Create and return a ProjectRepresentation object
         return new ProjectRepresentation(projectName, classRepresentations, projectRelationships);
     }
@@ -120,27 +104,24 @@ public class MainEngine {
      */
     private static ClassRepresentation buildClassRepresentation(LeafNode leafNode, Map<LeafNode, Set<Relationship<LeafNode>>> leafNodeRelationships) {
         List<MethodRepresentation> methodRepresentations = new ArrayList<>();
-
         // Create MethodRepresentation objects for each method in the class
         for (Method method : leafNode.getMethods()) {
             Set<Relationship<LeafNode>> methodRelationships = leafNodeRelationships.getOrDefault(leafNode, Set.of());
-            List<String> testAnnotations = new ArrayList<>();//parserWrapper.getMethodTestAnnotations(leafNode).get(leafNode.methods().indexOf(method));
-            methodRepresentations.add(buildMethodRepresentation(method, methodRelationships, testAnnotations));
+            methodRepresentations.add(buildMethodRepresentation(method, methodRelationships));
         }
 
         List<NodeType> classModifiers = new ArrayList<>();
                 classModifiers.add(leafNode.getNodeType());
         List<String> interfaces = leafNode.getImplementedInterfaces();
         Set<Relationship<LeafNode>> classRelationships = leafNodeRelationships.getOrDefault(leafNode, Set.of());
-        List<String> classTestAnnotations = new ArrayList<>();
-
         // Create and return a ClassRepresentation object
         return new ClassRepresentation(
                 leafNode.getNodeName(),
                 classModifiers,
                 interfaces,
                 methodRepresentations,
-                classRelationships
+                classRelationships,
+                leafNode.getPath()
         );
     }
 
@@ -149,14 +130,12 @@ public class MainEngine {
      *
      * @param method            The method record representing the method.
      * @param relationships     The relationships of the method.
-     * @param testAnnotations   The test annotations of the method.
      * @return                  A MethodRepresentation object.
      */
-    private static MethodRepresentation buildMethodRepresentation(Method method, Set<Relationship<LeafNode>> relationships, List<String> testAnnotations) {
+    private static MethodRepresentation buildMethodRepresentation(Method method, Set<Relationship<LeafNode>> relationships) {
         Map<String, String> parameters = method.getParameters();
         List<ModifierType> modifiers = new ArrayList<>();
         modifiers.add(method.getMethodModifierType());
-
         return new MethodRepresentation(
                 method.getMethodName(),
                 method.getMethodReturnType(),
@@ -166,9 +145,9 @@ public class MainEngine {
         );
     }
     
-    public void generateTests(Map<String, List<TestCase>> testCasesByClass, Path outputDir) throws IOException {
+    public void generateTests(Map<String, List<TestCase>> testCasesByClass) throws IOException {
     	JUnitTestGenerator myJunitTestGenerator = new JUnitTestGenerator(this.projectRepresentation); 
-    	myJunitTestGenerator.generateTests(testCasesByClass, outputDir);
+    	myJunitTestGenerator.generateTests(testCasesByClass);
     }
     
 }
